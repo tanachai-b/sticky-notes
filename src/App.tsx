@@ -1,7 +1,13 @@
 import cx from "classnames";
 import { ReactNode, useEffect, useState } from "react";
 
-import { Board, FileName, NoteData, ToolBar, ToolButton } from "./components";
+import {
+  Board,
+  FileSaveStatus,
+  NoteData,
+  ToolBar,
+  ToolButton,
+} from "./components";
 import { useFileSystemApi } from "./hooks";
 import { sampleData } from "./sampleData";
 
@@ -43,7 +49,7 @@ export default function App() {
         <ToolButton icon="save_as" label="Save As" onClick={handleSaveAs} />
       </ToolBar>
 
-      <FileName fileName={fileHandle?.name} isSaving={isSaving} />
+      <FileSaveStatus fileName={fileHandle?.name} isSaving={isSaving} />
     </Container>
   );
 }

@@ -2,7 +2,7 @@ import cx from "classnames";
 
 import { useResizeObserver } from "../hooks";
 
-export function FileName({
+export function FileSaveStatus({
   fileName,
   isSaving,
 }: {

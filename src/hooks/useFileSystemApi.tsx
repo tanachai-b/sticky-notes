@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { NoteData } from "../components";
+import { useInterval } from "./useInterval";
 
 export function useFileSystemApi({
   notes,
@@ -17,6 +18,7 @@ export function useFileSystemApi({
 
   const [fileHandle, setFileHandle] = useState<FileSystemFileHandle>();
 
+  const saveInterval = 500;
   const [lastChangeTime, setLastChangeTime] = useState<number>(Date.now());
   const [isSaved, setIsSaved] = useState<boolean>(false);
   const [isSaving, setIsSaving] = useState<boolean>(false);
@@ -74,22 +76,13 @@ export function useFileSystemApi({
     setLastChangeTime(Date.now());
   }
 
-  const [saveTriggered, triggerSave] = useState({});
-
-  useEffect(() => {
-    const saveInterval = setInterval(() => triggerSave({}), 500);
-    return () => clearInterval(saveInterval);
-  }, []);
-
-  useEffect(() => {
-    autoSave();
-  }, [saveTriggered]);
+  useInterval(autoSave, saveInterval);
 
   async function autoSave() {
     if (!fileHandle) return;
 
     const timeDiff = Date.now() - lastChangeTime;
-    if (isSaved || isSaving || timeDiff < 500) return;
+    if (isSaved || isSaving || timeDiff < saveInterval) return;
 
     try {
       setIsSaving(true);

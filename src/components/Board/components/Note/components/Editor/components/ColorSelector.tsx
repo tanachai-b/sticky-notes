@@ -61,21 +61,29 @@ function Color({
         className={cx(
           "size-x30",
           "rounded-full",
+
           "border",
           "border-black-light",
+
           "bg-white",
+
           "p-x2",
+
           "transition-all",
           "group-hover:scale-150",
         )}
       >
         <div className={cx("size-full", "rounded-full", color)}>
-          <Icon
-            icon="check"
-            className={cx("text-black-light", "text-[25px]", {
-              invisible: !isSelected,
-            })}
-          />
+          <div
+            className={cx(
+              { invisible: !isSelected },
+
+              "text-black-light",
+              "text-[25px]",
+            )}
+          >
+            <Icon icon="check" />
+          </div>
         </div>
       </div>
     </div>

@@ -52,16 +52,16 @@ export function ToolButton({
   onClick?: () => void;
 } = {}) {
   return (
-    <ToolButtonContainer onClick={onClick}>
+    <ButtonContainer onClick={onClick}>
       <div className="text-[30px]">
         <Icon icon={icon} />
       </div>
-      <ToolButtonLabel>{label}</ToolButtonLabel>
-    </ToolButtonContainer>
+      <ButtonLabel>{label}</ButtonLabel>
+    </ButtonContainer>
   );
 }
 
-export function ToolButtonContainer({
+function ButtonContainer({
   onClick,
   children,
 }: {
@@ -94,7 +94,7 @@ export function ToolButtonContainer({
   );
 }
 
-function ToolButtonLabel({ children }: { children?: ReactNode } = {}) {
+function ButtonLabel({ children }: { children?: ReactNode } = {}) {
   return (
     <div
       className={cx(

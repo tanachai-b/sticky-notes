@@ -13,11 +13,13 @@ export function ToolBar({
   return (
     <div
       className={cx(
-        "p-x30",
         "flex",
         "items-start",
 
+        "p-x30",
+
         "pointer-events-none",
+
         className,
       )}
     >
@@ -44,11 +46,11 @@ export function ToolBar({
 
 export function ToolButton({
   icon,
-  text,
+  label,
   onClick,
 }: {
   icon?: string;
-  text?: string;
+  label?: string;
   onClick?: () => void;
 } = {}) {
   return (
@@ -102,7 +104,7 @@ export function ToolButton({
           "pointer-events-none",
         )}
       >
-        {text}
+        {label}
       </div>
     </div>
   );

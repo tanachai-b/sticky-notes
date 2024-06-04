@@ -35,14 +35,7 @@ export default function App() {
 
   return (
     <div
-      className={cx(
-        "h-full",
-
-        "flex",
-        "flex-col",
-
-        "text-x13",
-      )}
+      className={cx("h-full", "flex", "flex-col", "text-x13")}
       onContextMenu={(e) => e.preventDefault()}
     >
       <Board
@@ -52,9 +45,9 @@ export default function App() {
       />
 
       <ToolBar className={cx("absolute", "size-full")}>
-        <ToolButton icon="note_add" text="New" onClick={handleNew} />
-        <ToolButton icon="folder_open" text="Open" onClick={handleOpen} />
-        <ToolButton icon="save_as" text="Save As" onClick={handleSaveAs} />
+        <ToolButton icon="note_add" label="New" onClick={handleNew} />
+        <ToolButton icon="folder_open" label="Open" onClick={handleOpen} />
+        <ToolButton icon="save_as" label="Save As" onClick={handleSaveAs} />
       </ToolBar>
 
       <FileName

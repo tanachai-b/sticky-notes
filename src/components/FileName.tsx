@@ -12,11 +12,11 @@ export function FileName({
   return (
     <div
       className={cx(
-        "p-x30",
-
         "flex",
-        "items-start",
-        "justify-center",
+        "flex-col",
+        "items-center",
+
+        "pt-x30",
 
         "pointer-events-none",
 
@@ -27,48 +27,48 @@ export function FileName({
         className={cx(
           "rounded-full",
 
+          "bg-black-light",
+          "bg-opacity-75",
+          "backdrop-blur-x2",
+
           "border",
           "border-white-dark",
           "border-opacity-25",
 
-          "bg-black-light",
-          "bg-opacity-75",
-
-          "backdrop-blur-x2",
-
-          "transition-all",
-
           "flex",
           "flex-row",
 
-          "whitespace-pre",
-          "overflow-hidden",
+          "pointer-events-auto",
+
+          "transition-all",
         )}
         style={{ width: `${width + 2}px` }}
       >
         <div
           ref={ref}
           className={cx(
-            "px-x10",
-            "py-x5",
-
             "flex",
             "flex-row",
             "gap-x10",
+
+            "px-x10",
+            "py-x5",
           )}
         >
-          <div className={cx("text-white-dark", "text-opacity-50")}>
+          <div
+            className={cx(
+              "text-white-dark",
+              "text-opacity-50",
+              "whitespace-pre",
+            )}
+          >
             {fileName ?? "Unsaved"}
           </div>
 
-          {fileName ? (
-            <div
-              className={cx("text-white-dark", "text-opacity-100", "italic")}
-            >
+          {fileName && (
+            <div className={cx("text-white-dark", "italic")}>
               {isSaving ? "saving..." : "saved"}
             </div>
-          ) : (
-            <></>
           )}
         </div>
       </div>

@@ -27,12 +27,10 @@ export default function App() {
   useEffect(() => setNotes(sampleData), []);
 
   useEffect(() => {
-    window.onbeforeunload = isSaving
-      ? () => "There are unsaved changes!"
-      : () => {};
+    window.onbeforeunload = () => (isSaving ? "" : null);
   }, [isSaving]);
 
-  async function handleNotesChange(notes: NoteData[]) {
+  async function onNotesChange(notes: NoteData[]) {
     setNotes(notes);
     setIsSampleData(false);
 
@@ -41,7 +39,7 @@ export default function App() {
 
   return (
     <Container>
-      <Board notes={notes} onNotesChange={handleNotesChange} />
+      <Board notes={notes} onNotesChange={onNotesChange} />
 
       <ToolBar>
         <ToolButton icon="note_add" label="New" onClick={handleNew} />

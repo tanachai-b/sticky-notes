@@ -11,11 +11,13 @@ export function Backdrop({
     <div
       className={cx(
         "absolute",
-        "w-full",
-        "h-full",
+        "size-full",
+
         "transition-all",
+
         "bg-black-light",
         isEditing ? "bg-opacity-25" : "bg-opacity-0",
+
         { "backdrop-blur-x2": isEditing },
         { "pointer-events-none": !isEditing },
       )}

@@ -54,8 +54,6 @@ export function ToolButton({
   return (
     <div
       className={cx(
-        "relative",
-
         "flex",
         "flex-row",
         "items-center",
@@ -77,7 +75,9 @@ export function ToolButton({
       )}
       onClick={onClick}
     >
-      <Icon icon={icon} className="text-x30" />
+      <div className="text-[30px]">
+        <Icon icon={icon} />
+      </div>
       <div
         className={cx(
           "absolute",

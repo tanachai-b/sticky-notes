@@ -65,10 +65,13 @@ function DeleteButton({ onClick: onDelete }: { onClick?: () => void } = {}) {
             "items-center",
             "justify-center",
             "cursor-pointer",
+
+            "text-white",
+            "text-[25px]",
           )}
           onClick={onDelete}
         >
-          <Icon icon="close" className={cx("text-white", "text-[25px]")} />
+          <Icon icon="close" />
         </div>
       </div>
 

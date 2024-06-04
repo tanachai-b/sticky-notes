@@ -17,12 +17,12 @@ export default function App() {
 
   const {
     fileHandle,
-    isSaving,
+    isSaved,
     haveUnsavedChanges,
     handleNew,
     handleOpen,
     handleSaveAs,
-    resetWriteTimer,
+    handleNotesChange,
   } = useFileSystemApi({ notes, setNotes, isSampleData });
 
   useEffect(() => setNotes(sampleData), []);
@@ -34,8 +34,7 @@ export default function App() {
   async function onNotesChange(notes: NoteData[]) {
     setNotes(notes);
     setIsSampleData(false);
-
-    resetWriteTimer(notes);
+    handleNotesChange();
   }
 
   return (
@@ -48,7 +47,7 @@ export default function App() {
         <ToolButton icon="save_as" label="Save As" onClick={handleSaveAs} />
       </ToolBar>
 
-      <FileSaveStatus fileName={fileHandle?.name} isSaving={isSaving} />
+      <FileSaveStatus fileName={fileHandle?.name} isSaving={!isSaved} />
     </Container>
   );
 }

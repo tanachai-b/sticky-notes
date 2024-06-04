@@ -1,3 +1,3 @@
 export * from "./Board";
-export * from "./FileName";
+export * from "./FileSaveStatus";
 export * from "./ToolBar";

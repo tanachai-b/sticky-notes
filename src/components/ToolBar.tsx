@@ -32,6 +32,8 @@ export function ToolBar({ children }: { children?: ReactNode } = {}) {
           "border-opacity-25",
 
           "backdrop-blur-x2",
+
+          "py-x10",
         )}
       >
         {children}
@@ -50,18 +52,30 @@ export function ToolButton({
   onClick?: () => void;
 } = {}) {
   return (
+    <ToolButtonContainer onClick={onClick}>
+      <div className="text-[30px]">
+        <Icon icon={icon} />
+      </div>
+      <ToolButtonLabel>{label}</ToolButtonLabel>
+    </ToolButtonContainer>
+  );
+}
+
+export function ToolButtonContainer({
+  onClick,
+  children,
+}: {
+  onClick?: () => void;
+  children?: ReactNode;
+} = {}) {
+  return (
     <div
       className={cx(
         "flex",
         "flex-row",
         "items-center",
+
         "p-x15",
-
-        "first:pt-x20",
-        "first:rounded-t-full",
-
-        "last:pb-x20",
-        "last:rounded-b-full",
 
         "text-white-dark",
         "text-opacity-25",
@@ -70,38 +84,43 @@ export function ToolButton({
         "transition-all",
         "cursor-pointer",
         "group",
+
+        "relative",
       )}
       onClick={onClick}
     >
-      <div className="text-[30px]">
-        <Icon icon={icon} />
-      </div>
-      <div
-        className={cx(
-          "absolute",
-          "left-[70px]",
+      {children}
+    </div>
+  );
+}
 
-          "rounded-x7",
-          "px-x5",
-          "py-x2",
+function ToolButtonLabel({ children }: { children?: ReactNode } = {}) {
+  return (
+    <div
+      className={cx(
+        "absolute",
+        "left-[70px]",
 
-          "text-x15",
-          "whitespace-pre",
+        "rounded-x7",
+        "px-x5",
+        "py-x2",
 
-          "bg-black-light",
-          "bg-opacity-75",
+        "text-x15",
+        "whitespace-pre",
 
-          "text-white-dark",
-          "opacity-0",
-          "group-hover:opacity-100",
+        "bg-black-light",
+        "bg-opacity-75",
 
-          "transition-all",
-          "cursor-default",
-          "pointer-events-none",
-        )}
-      >
-        {label}
-      </div>
+        "text-white-dark",
+        "opacity-0",
+        "group-hover:opacity-100",
+
+        "transition-all",
+
+        "pointer-events-none",
+      )}
+    >
+      {children}
     </div>
   );
 }

@@ -3,15 +3,20 @@ import cx from "classnames";
 import { useResizeObserver } from "../hooks";
 
 export function FileName({
-  className,
   fileName,
   isSaving,
-}: { className?: string; fileName?: string; isSaving?: boolean } = {}) {
+}: {
+  fileName?: string;
+  isSaving?: boolean;
+} = {}) {
   const { ref, width } = useResizeObserver();
 
   return (
     <div
       className={cx(
+        "absolute",
+        "size-full",
+
         "flex",
         "flex-col",
         "items-center",
@@ -19,12 +24,12 @@ export function FileName({
         "pt-x30",
 
         "pointer-events-none",
-
-        className,
       )}
     >
       <div
         className={cx(
+          "pointer-events-auto",
+
           "rounded-full",
 
           "bg-black-light",
@@ -37,8 +42,6 @@ export function FileName({
 
           "flex",
           "flex-row",
-
-          "pointer-events-auto",
 
           "transition-all",
         )}

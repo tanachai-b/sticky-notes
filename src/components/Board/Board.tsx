@@ -14,11 +14,9 @@ export type NoteData = {
 };
 
 export function Board({
-  className,
   notes = [],
   onNotesChange,
 }: {
-  className?: string;
   notes?: NoteData[];
   onNotesChange?: (notes: NoteData[]) => void;
 } = {}) {
@@ -64,7 +62,14 @@ export function Board({
   return (
     <div
       ref={boardRef}
-      className={cx("relative", "overflow-hidden", "bg-black-light", className)}
+      className={cx(
+        "h-full",
+
+        "bg-black-light",
+        "overflow-hidden",
+
+        "relative",
+      )}
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
       onMouseLeave={handleMouseUp}

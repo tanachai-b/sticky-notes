@@ -1,5 +1,5 @@
 import cx from "classnames";
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 
 import { Board, FileName, NoteData, ToolBar, ToolButton } from "./components";
 import { useFileSystemApi } from "./hooks";
@@ -34,27 +34,36 @@ export default function App() {
   }
 
   return (
-    <div
-      className={cx("h-full", "flex", "flex-col", "text-x13")}
-      onContextMenu={(e) => e.preventDefault()}
-    >
-      <Board
-        className={cx("h-full")}
-        notes={notes}
-        onNotesChange={(notes) => handleNotesChange(notes)}
-      />
+    <Container>
+      <Board notes={notes} onNotesChange={handleNotesChange} />
 
-      <ToolBar className={cx("absolute", "size-full")}>
+      <ToolBar>
         <ToolButton icon="note_add" label="New" onClick={handleNew} />
         <ToolButton icon="folder_open" label="Open" onClick={handleOpen} />
         <ToolButton icon="save_as" label="Save As" onClick={handleSaveAs} />
       </ToolBar>
 
-      <FileName
-        className={cx("absolute", "size-full")}
-        fileName={fileHandle?.name}
-        isSaving={isSaving}
-      />
+      <FileName fileName={fileHandle?.name} isSaving={isSaving} />
+    </Container>
+  );
+}
+
+function Container({ children }: { children: ReactNode }) {
+  return (
+    <div
+      className={cx(
+        "h-full",
+
+        "flex",
+        "flex-col",
+
+        "text-x13",
+
+        "relative",
+      )}
+      onContextMenu={(e) => e.preventDefault()}
+    >
+      {children}
     </div>
   );
 }

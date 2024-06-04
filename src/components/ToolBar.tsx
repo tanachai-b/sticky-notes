@@ -3,28 +3,25 @@ import { ReactNode } from "react";
 
 import { Icon } from "src/base-components";
 
-export function ToolBar({
-  className,
-  children,
-}: {
-  className?: string;
-  children?: ReactNode;
-} = {}) {
+export function ToolBar({ children }: { children?: ReactNode } = {}) {
   return (
     <div
       className={cx(
+        "absolute",
+        "size-full",
+
         "flex",
         "items-start",
 
         "p-x30",
 
         "pointer-events-none",
-
-        className,
       )}
     >
       <div
         className={cx(
+          "pointer-events-auto",
+
           "rounded-full",
 
           "bg-black-light",
@@ -34,7 +31,6 @@ export function ToolBar({
           "border-white-dark",
           "border-opacity-25",
 
-          "pointer-events-auto",
           "backdrop-blur-x2",
         )}
       >

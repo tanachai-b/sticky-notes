@@ -35,7 +35,7 @@ export default function App() {
 
   return (
     <div
-      className={cx("h-full", "flex", "flex-col", "select-none")}
+      className={cx("h-full", "flex", "flex-col", "select-none", "text-x13")}
       onContextMenu={(e) => e.preventDefault()}
     >
       <div className={cx("grow", "relative", "size-full", "flex")}>

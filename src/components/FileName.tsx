@@ -1,25 +1,25 @@
 import cx from "classnames";
-import { useEffect, useRef, useState } from "react";
+
+import { useResizeObserver } from "../hooks";
 
 export function FileName({
   className,
   fileName,
   isSaving,
-}: {
-  className?: string;
-  fileName?: string;
-  isSaving?: boolean;
-} = {}) {
-  const { ref, size } = useObserveSize();
+}: { className?: string; fileName?: string; isSaving?: boolean } = {}) {
+  const { ref, width } = useResizeObserver();
 
   return (
     <div
       className={cx(
-        "pointer-events-none",
         "p-x30",
+
         "flex",
         "items-start",
         "justify-center",
+
+        "pointer-events-none",
+
         className,
       )}
     >
@@ -44,7 +44,7 @@ export function FileName({
           "whitespace-pre",
           "overflow-hidden",
         )}
-        style={{ width: `${size.w + 2}px` }}
+        style={{ width: `${width + 2}px` }}
       >
         <div
           ref={ref}
@@ -74,24 +74,4 @@ export function FileName({
       </div>
     </div>
   );
-}
-
-function useObserveSize() {
-  const ref = useRef<HTMLDivElement>(null);
-
-  const [size, setSize] = useState({ w: 0, h: 0 });
-
-  useEffect(() => observeSize(ref.current, setSize), [ref.current]);
-
-  function observeSize(
-    component: HTMLDivElement | null,
-    onChange: (size: { w: number; h: number }) => void,
-  ) {
-    if (!component) return;
-    new ResizeObserver(() =>
-      onChange({ w: component.offsetWidth, h: component.offsetHeight }),
-    ).observe(component);
-  }
-
-  return { ref, size };
 }

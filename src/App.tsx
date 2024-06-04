@@ -35,28 +35,33 @@ export default function App() {
 
   return (
     <div
-      className={cx("h-full", "flex", "flex-col", "select-none", "text-x13")}
+      className={cx(
+        "h-full",
+
+        "flex",
+        "flex-col",
+
+        "text-x13",
+      )}
       onContextMenu={(e) => e.preventDefault()}
     >
-      <div className={cx("grow", "relative", "size-full", "flex")}>
-        <Board
-          className={cx("absolute", "size-full")}
-          notes={notes}
-          onNotesChange={(notes) => handleNotesChange(notes)}
-        />
+      <Board
+        className={cx("h-full")}
+        notes={notes}
+        onNotesChange={(notes) => handleNotesChange(notes)}
+      />
 
-        <ToolBar className={cx("absolute", "size-full")}>
-          <ToolButton icon="note_add" text="New" onClick={handleNew} />
-          <ToolButton icon="folder_open" text="Open" onClick={handleOpen} />
-          <ToolButton icon="save_as" text="Save As" onClick={handleSaveAs} />
-        </ToolBar>
+      <ToolBar className={cx("absolute", "size-full")}>
+        <ToolButton icon="note_add" text="New" onClick={handleNew} />
+        <ToolButton icon="folder_open" text="Open" onClick={handleOpen} />
+        <ToolButton icon="save_as" text="Save As" onClick={handleSaveAs} />
+      </ToolBar>
 
-        <FileName
-          className={cx("absolute", "size-full")}
-          fileName={fileHandle?.name}
-          isSaving={isSaving}
-        />
-      </div>
+      <FileName
+        className={cx("absolute", "size-full")}
+        fileName={fileHandle?.name}
+        isSaving={isSaving}
+      />
     </div>
   );
 }

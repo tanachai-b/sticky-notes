@@ -18,6 +18,7 @@ export default function App() {
   const {
     fileHandle,
     isSaving,
+    haveUnsavedChanges,
     handleNew,
     handleOpen,
     handleSaveAs,
@@ -27,8 +28,8 @@ export default function App() {
   useEffect(() => setNotes(sampleData), []);
 
   useEffect(() => {
-    window.onbeforeunload = () => (isSaving ? "" : null);
-  }, [isSaving]);
+    window.onbeforeunload = () => (haveUnsavedChanges ? "" : null);
+  }, [haveUnsavedChanges]);
 
   async function onNotesChange(notes: NoteData[]) {
     setNotes(notes);

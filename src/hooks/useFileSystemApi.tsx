@@ -84,6 +84,7 @@ export function useFileSystemApi({
   return {
     fileHandle,
     isSaving,
+    haveUnsavedChanges,
     handleNew,
     handleOpen,
     handleSaveAs,

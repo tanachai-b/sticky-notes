@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { NoteData } from "../components";
 
@@ -16,11 +16,15 @@ export function useFileSystemApi({
   };
 
   const [fileHandle, setFileHandle] = useState<FileSystemFileHandle>();
-  const [writeTimer, setWriteTimer] = useState<NodeJS.Timeout>();
-  const isSaving = useMemo(() => writeTimer != null, [writeTimer]);
+
+  const [lastChangeTime, setLastChangeTime] = useState<number>(Date.now());
+  const [isSaved, setIsSaved] = useState<boolean>(false);
+  const [isSaving, setIsSaving] = useState<boolean>(false);
 
   const haveUnsavedChanges =
-    isSaving || (!fileHandle && notes.length > 0 && !isSampleData);
+    (fileHandle && !isSaved) ||
+    isSaving ||
+    (!fileHandle && notes.length > 0 && !isSampleData);
 
   function confirmUnsavedChanges() {
     return confirm("There's some unsaved changes!");
@@ -30,7 +34,6 @@ export function useFileSystemApi({
     if (haveUnsavedChanges && !confirmUnsavedChanges()) return;
 
     setFileHandle(undefined);
-    clearTimeout(writeTimer);
     setNotes([]);
   }
 
@@ -46,7 +49,7 @@ export function useFileSystemApi({
       const text = await file.text();
       setNotes(JSON.parse(text));
     } catch (e) {
-      return;
+      console.error(e);
     }
   }
 
@@ -62,32 +65,54 @@ export function useFileSystemApi({
       await writable.write(JSON.stringify(notes, undefined, 4));
       await writable.close();
     } catch (e) {
-      return;
+      console.error(e);
     }
   }
 
-  function resetWriteTimer(notes: NoteData[]) {
-    clearTimeout(writeTimer);
+  function handleNotesChange() {
+    setIsSaved(false);
+    setLastChangeTime(Date.now());
+  }
 
+  const [saveTriggered, triggerSave] = useState({});
+
+  useEffect(() => {
+    const saveInterval = setInterval(() => triggerSave({}), 500);
+    return () => clearInterval(saveInterval);
+  }, []);
+
+  useEffect(() => {
+    autoSave();
+  }, [saveTriggered]);
+
+  async function autoSave() {
     if (!fileHandle) return;
 
-    setWriteTimer(
-      setTimeout(async () => {
-        const writable = await fileHandle.createWritable();
-        await writable.write(JSON.stringify(notes, undefined, 4));
-        await writable.close();
-        setWriteTimer(undefined);
-      }, 1000),
-    );
+    const timeDiff = Date.now() - lastChangeTime;
+    if (isSaved || isSaving || timeDiff < 500) return;
+
+    try {
+      setIsSaving(true);
+
+      const writable = await fileHandle.createWritable();
+      await writable.write(JSON.stringify(notes, undefined, 4));
+      await writable.close();
+
+      setIsSaving(false);
+      setIsSaved(true);
+    } catch (e) {
+      setIsSaving(false);
+      console.error(e);
+    }
   }
 
   return {
     fileHandle,
-    isSaving,
+    isSaved,
     haveUnsavedChanges,
     handleNew,
     handleOpen,
     handleSaveAs,
-    resetWriteTimer,
+    handleNotesChange,
   };
 }

@@ -29,59 +29,67 @@ export function Text({
       className={cx(
         "absolute",
 
-        "w-full",
-        "max-w-full",
-        "max-h-full",
+        "size-full",
 
         "flex",
-        "justify-stretch",
+        "items-center",
+        "justify-center",
 
-        "text-x30",
-        "font-handwriting",
-        "font-light",
-        "text-black-light",
-
-        "text-center",
-        "whitespace-pre-wrap",
-        "select-none",
+        "overflow-hidden",
       )}
     >
       <div
         className={cx(
           "w-full",
-          "h-fit",
           "min-h-[5rem]",
 
-          "p-x10",
+          "text-x30",
+          "font-handwriting",
+          "font-light",
+          "text-black-light",
 
-          "break-words",
+          "text-center",
+          "whitespace-pre-wrap",
+          "select-none",
 
-          { "opacity-0": isEditing },
+          "relative",
         )}
       >
-        {text}
+        <div
+          className={cx(
+            "p-x10",
+
+            "break-words",
+
+            { "opacity-0": isEditing },
+          )}
+        >
+          {text}
+        </div>
+
+        <textarea
+          ref={ref}
+          className={cx(
+            "absolute",
+            "left-0",
+            "top-0",
+
+            "size-full",
+
+            "resize-none",
+            "outline-none",
+            "bg-transparent",
+
+            "p-x10",
+            "text-center",
+
+            "overflow-hidden",
+          )}
+          hidden={!isEditing}
+          value={text}
+          onChange={(e) => onChange?.(e.target.value ?? "")}
+        />
       </div>
-
-      <textarea
-        ref={ref}
-        className={cx(
-          "absolute",
-
-          "size-full",
-          "resize-none",
-          "outline-none",
-
-          "bg-transparent",
-
-          "p-x10",
-          "text-center",
-
-          "overflow-hidden",
-        )}
-        hidden={!isEditing}
-        value={text}
-        onChange={(e) => onChange?.(e.target.value ?? "")}
-      />
     </div>
   );
 }

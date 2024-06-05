@@ -1,4 +1,4 @@
-export const sampleData = [
+export const sampleNotes = [
   {
     text: "Buy\neggs, pork, pancake mix",
     color: 0,

@@ -28,7 +28,6 @@ export function Text({
     <div
       className={cx(
         "absolute",
-
         "size-full",
 
         "flex",
@@ -50,7 +49,6 @@ export function Text({
 
           "text-center",
           "whitespace-pre-wrap",
-          "select-none",
 
           "relative",
         )}
@@ -59,6 +57,7 @@ export function Text({
           className={cx(
             "p-x10",
 
+            "select-none",
             "break-words",
 
             { "opacity-0": isEditing },

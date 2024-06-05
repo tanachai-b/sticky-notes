@@ -39,13 +39,6 @@ export function Paper({
         editing ? "shadow-x50" : dragging ? "shadow-x20" : "shadow-x10",
         "transition-all",
 
-        "flex",
-        "flex-col",
-        "items-center",
-        "justify-center",
-
-        "overflow-hidden",
-
         "pointer-events-auto",
       )}
       style={{ transform: `rotate(${rotate}deg)` }}

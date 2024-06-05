@@ -6,11 +6,9 @@ import { useInterval } from "./useInterval";
 export function useFileSystemApi({
   notes,
   setNotes,
-  isSampleData,
 }: {
   notes: NoteData[];
   setNotes: (notes: NoteData[]) => void;
-  isSampleData: boolean;
 }) {
   const filePickerOptions: OpenFilePickerOptions = {
     types: [{ description: "JSON", accept: { "application/json": [".json"] } }],
@@ -20,27 +18,22 @@ export function useFileSystemApi({
 
   const saveInterval = 500;
   const [lastChangeTime, setLastChangeTime] = useState<number>(Date.now());
-  const [isSaved, setIsSaved] = useState<boolean>(false);
+  const [isSaved, setIsSaved] = useState<boolean>(true);
   const [isSaving, setIsSaving] = useState<boolean>(false);
-
-  const haveUnsavedChanges =
-    (fileHandle && !isSaved) ||
-    isSaving ||
-    (!fileHandle && notes.length > 0 && !isSampleData);
 
   function confirmUnsavedChanges() {
     return confirm("There's some unsaved changes!");
   }
 
-  async function handleNew() {
-    if (haveUnsavedChanges && !confirmUnsavedChanges()) return;
+  async function onNew() {
+    if (!isSaved && !confirmUnsavedChanges()) return;
 
     setFileHandle(undefined);
     setNotes([]);
   }
 
-  async function handleOpen() {
-    if (haveUnsavedChanges && !confirmUnsavedChanges()) return;
+  async function onOpen() {
+    if (!isSaved && !confirmUnsavedChanges()) return;
 
     try {
       const [fileHandle] = await window.showOpenFilePicker(filePickerOptions);
@@ -55,8 +48,8 @@ export function useFileSystemApi({
     }
   }
 
-  async function handleSaveAs() {
-    if (haveUnsavedChanges && !confirmUnsavedChanges()) return;
+  async function onSaveAs() {
+    if (!isSaved && !confirmUnsavedChanges()) return;
 
     try {
       const fileHandle = await window.showSaveFilePicker(filePickerOptions);
@@ -71,7 +64,7 @@ export function useFileSystemApi({
     }
   }
 
-  function handleNotesChange() {
+  function onNotesChange() {
     setIsSaved(false);
     setLastChangeTime(Date.now());
   }
@@ -102,10 +95,9 @@ export function useFileSystemApi({
   return {
     fileHandle,
     isSaved,
-    haveUnsavedChanges,
-    handleNew,
-    handleOpen,
-    handleSaveAs,
-    handleNotesChange,
+    onNew,
+    onOpen,
+    onSaveAs,
+    onNotesChange,
   };
 }

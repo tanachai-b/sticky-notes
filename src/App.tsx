@@ -9,47 +9,45 @@ import {
   ToolButton,
 } from "./components";
 import { useFileSystemApi } from "./hooks";
-import { sampleData } from "./sampleData";
+import { sampleNotes } from "./sampleData";
 
 export default function App() {
   const [notes, setNotes] = useState<NoteData[]>([]);
-  const [isSampleData, setIsSampleData] = useState<boolean>(true);
 
-  const {
-    fileHandle,
-    isSaved,
-    haveUnsavedChanges,
-    handleNew,
-    handleOpen,
-    handleSaveAs,
-    handleNotesChange,
-  } = useFileSystemApi({ notes, setNotes, isSampleData });
-
-  useEffect(() => setNotes(sampleData), []);
+  const { fileHandle, isSaved, onNew, onOpen, onSaveAs, onNotesChange } =
+    useFileSystemApi({ notes, setNotes });
 
   useEffect(() => {
-    window.onbeforeunload = () => (haveUnsavedChanges ? "" : null);
-  }, [haveUnsavedChanges]);
+    if (notes.length === 0) setNotes(sampleNotes);
+  }, []);
 
-  async function onNotesChange(notes: NoteData[]) {
-    setNotes(notes);
-    setIsSampleData(false);
-    handleNotesChange();
-  }
+  usePreventCloseUnsaved(!isSaved);
 
   return (
     <Container>
-      <Board notes={notes} onNotesChange={onNotesChange} />
+      <Board
+        notes={notes}
+        onNotesChange={(notes) => {
+          setNotes(notes);
+          onNotesChange();
+        }}
+      />
 
       <ToolBar>
-        <ToolButton icon="note_add" label="New" onClick={handleNew} />
-        <ToolButton icon="folder_open" label="Open" onClick={handleOpen} />
-        <ToolButton icon="save_as" label="Save As" onClick={handleSaveAs} />
+        <ToolButton icon="note_add" label="New" onClick={onNew} />
+        <ToolButton icon="folder_open" label="Open" onClick={onOpen} />
+        <ToolButton icon="save_as" label="Save As" onClick={onSaveAs} />
       </ToolBar>
 
       <FileSaveStatus fileName={fileHandle?.name} isSaving={!isSaved} />
     </Container>
   );
+}
+
+function usePreventCloseUnsaved(isUnsaved: boolean) {
+  useEffect(() => {
+    window.onbeforeunload = () => (isUnsaved ? "" : null);
+  }, [isUnsaved]);
 }
 
 function Container({ children }: { children: ReactNode }) {

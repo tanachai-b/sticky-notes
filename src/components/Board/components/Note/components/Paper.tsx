@@ -39,6 +39,8 @@ export function Paper({
         editing ? "shadow-x50" : dragging ? "shadow-x20" : "shadow-x10",
         "transition-all",
 
+        "overflow-hidden",
+
         "pointer-events-auto",
       )}
       style={{ transform: `rotate(${rotate}deg)` }}

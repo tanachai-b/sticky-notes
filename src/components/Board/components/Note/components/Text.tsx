@@ -26,31 +26,57 @@ export function Text({
 
   return (
     <div
-      className={cx("absolute", "w-full", "max-w-full", "max-h-full", "flex")}
+      className={cx(
+        "absolute",
+
+        "w-full",
+        "max-w-full",
+        "max-h-full",
+
+        "flex",
+        "justify-stretch",
+
+        "text-x30",
+        "font-handwriting",
+        "font-light",
+        "text-black-light",
+
+        "text-center",
+        "whitespace-pre-wrap",
+        "select-none",
+      )}
     >
       <div
         className={cx(
           "w-full",
           "h-fit",
-          "p-x10",
-          "break-words",
           "min-h-[5rem]",
+
+          "p-x10",
+
+          "break-words",
+
           { "opacity-0": isEditing },
         )}
       >
         {text}
       </div>
+
       <textarea
         ref={ref}
         className={cx(
           "absolute",
+
           "size-full",
           "resize-none",
           "outline-none",
+
           "bg-transparent",
-          "overflow-hidden",
-          "text-center",
+
           "p-x10",
+          "text-center",
+
+          "overflow-hidden",
         )}
         hidden={!isEditing}
         value={text}

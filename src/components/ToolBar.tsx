@@ -71,6 +71,8 @@ function ButtonContainer({
   return (
     <div
       className={cx(
+        "group",
+
         "flex",
         "flex-row",
         "items-center",
@@ -81,9 +83,8 @@ function ButtonContainer({
         "text-opacity-25",
         "hover:text-opacity-90",
 
-        "transition-all",
         "cursor-pointer",
-        "group",
+        "transition-all",
 
         "relative",
       )}

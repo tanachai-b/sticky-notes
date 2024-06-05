@@ -24,20 +24,6 @@ export function Paper({
         "w-[250px]",
         "h-[250px]",
 
-        "text-x30",
-        "font-light",
-        "text-black-light",
-        "font-handwriting",
-        "select-none",
-        "whitespace-pre-wrap",
-        "text-center",
-        "overflow-hidden",
-
-        "flex",
-        "flex-col",
-        "items-center",
-        "justify-center",
-
         "rounded-x5",
         [
           "bg-yellow-light",
@@ -49,8 +35,16 @@ export function Paper({
           "bg-green-yellowish-light",
           "bg-white",
         ][color],
+
         editing ? "shadow-x50" : dragging ? "shadow-x20" : "shadow-x10",
         "transition-all",
+
+        "flex",
+        "flex-col",
+        "items-center",
+        "justify-center",
+
+        "overflow-hidden",
 
         "pointer-events-auto",
       )}

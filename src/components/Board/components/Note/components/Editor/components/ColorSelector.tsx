@@ -53,7 +53,13 @@ function Color({
 } = {}) {
   return (
     <div
-      className={cx("p-x2", "group", "cursor-pointer")}
+      className={cx(
+        "group",
+
+        "p-x2",
+
+        "cursor-pointer",
+      )}
       onMouseOver={onMouseOver}
       onClick={onClick}
     >
@@ -69,8 +75,8 @@ function Color({
 
           "p-x2",
 
-          "transition-all",
           "group-hover:scale-150",
+          "transition-all",
         )}
       >
         <div className={cx("size-full", "rounded-full", color)}>

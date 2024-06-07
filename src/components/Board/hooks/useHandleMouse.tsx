@@ -2,12 +2,17 @@ import { MouseEvent, useState } from "react";
 
 import { NoteData } from "../Board";
 
-export function useHandleMouse(
-  notes: NoteData[],
-  isEditing: boolean,
-  setIsEditing: (isEditing: boolean) => void,
-  onNotesChange?: (notes: NoteData[]) => void,
-) {
+export function useHandleMouse({
+  notes,
+  onNotesChange,
+  isEditing,
+  setIsEditing,
+}: {
+  notes: NoteData[];
+  onNotesChange?: (notes: NoteData[]) => void;
+  isEditing: boolean;
+  setIsEditing: (isEditing: boolean) => void;
+}) {
   const [isNoteMouseDown, setIsNoteMouseDown] = useState<boolean>(false);
   const [isBoardMouseDown, setIsBoardMouseDown] = useState<boolean>(false);
   const [mouse, setMouse] = useState<{ x: number; y: number }>({ x: 0, y: 0 });

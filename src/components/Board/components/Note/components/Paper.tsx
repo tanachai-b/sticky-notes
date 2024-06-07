@@ -4,8 +4,8 @@ import { MouseEvent, ReactNode } from "react";
 export function Paper({
   color = 0,
   rotate,
-  isDragging: dragging,
-  isEditing: editing,
+  isDragging,
+  isEditing,
   onMouseDown,
   onDoubleClick,
   children,
@@ -36,7 +36,7 @@ export function Paper({
           "bg-white",
         ][color],
 
-        editing ? "shadow-x50" : dragging ? "shadow-x20" : "shadow-x10",
+        isEditing ? "shadow-x50" : isDragging ? "shadow-x20" : "shadow-x10",
         "transition-all",
 
         "overflow-hidden",

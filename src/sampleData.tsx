@@ -1,4 +1,6 @@
-export const sampleNotes = [
+import { NoteData } from "./components";
+
+export const sampleNotes: NoteData[] = [
   {
     text: "Buy\neggs, pork, pancake mix",
     color: 0,

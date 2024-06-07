@@ -11,6 +11,7 @@ export type NoteData = {
   x: number;
   y: number;
   rotate: number;
+  zIndex: number;
 };
 
 export function Board({

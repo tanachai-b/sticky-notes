@@ -22,7 +22,7 @@ export function Board({
 } = {}) {
   const { boardRef, inScreenNotes, boardSize } = useInScreenNotes(notes);
 
-  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [editingNote, setEditingNote] = useState<string>();
 
   const {
     isNoteMouseDown,
@@ -30,10 +30,10 @@ export function Board({
     handleMouseDown,
     handleMouseMove,
     handleMouseUp,
-  } = useHandleMouse({ notes, onNotesChange, isEditing, setIsEditing });
+  } = useHandleMouse({ notes, onNotesChange, editingNote, setEditingNote });
 
   const { handleTextChange, handleColorChange, addNote, moveViewPortToNote } =
-    useHandleNotes({ notes, onNotesChange, setIsEditing });
+    useHandleNotes({ notes, onNotesChange, setEditingNote });
 
   function handleBoardMouseDown(e: MouseEvent) {
     const { button, clientX, clientY } = e;
@@ -67,18 +67,18 @@ export function Board({
           key={key}
           {...{ text, color, x, y, rotate }}
           isDragging={isNoteMouseDown}
-          isEditing={isEditing}
+          isEditing={editingNote === key}
           onMouseDown={
             isDraggable
               ? (e) => handleNoteMouseDown(e.button, key)
               : () => moveViewPortToNote(key, notes, boardSize, onNotesChange)
           }
-          onDoubleClick={isDraggable ? () => setIsEditing(true) : () => {}}
-          onBackdropClick={() => setIsEditing(false)}
+          onDoubleClick={isDraggable ? () => setEditingNote(key) : () => {}}
+          onBackdropClick={() => setEditingNote(undefined)}
           onTextChange={(text) => handleTextChange(key, text)}
           onColorChange={(color) => handleColorChange(key, color)}
           onDelete={() => {
-            setIsEditing(false);
+            setEditingNote(undefined);
 
             const updatedNotes = notes.filter((note) => note.key !== key);
             onNotesChange?.(updatedNotes);

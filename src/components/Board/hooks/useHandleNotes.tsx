@@ -4,11 +4,11 @@ import { NoteData } from "../Board";
 export function useHandleNotes({
   notes,
   onNotesChange,
-  setIsEditing,
+  setEditingNote,
 }: {
   notes: NoteData[];
   onNotesChange?: (notes: NoteData[]) => void;
-  setIsEditing: (isEditing: boolean) => void;
+  setEditingNote: (key: string) => void;
 }) {
   function handleTextChange(key: string, text: string): void {
     const updatedNotes = notes.map((note) =>
@@ -26,8 +26,9 @@ export function useHandleNotes({
 
   const { getNewNote } = useGetNewNote();
   function addNote(x: number, y: number) {
-    onNotesChange?.([...notes, getNewNote(x, y)]);
-    setIsEditing(true);
+    const newNote = getNewNote(x, y);
+    onNotesChange?.([...notes, newNote]);
+    setEditingNote(newNote.key);
   }
 
   function moveViewPortToNote(

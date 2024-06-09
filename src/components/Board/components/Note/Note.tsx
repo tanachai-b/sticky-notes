@@ -1,7 +1,7 @@
 import cx from "classnames";
 import { MouseEvent, useState } from "react";
 
-import { Editor, Paper, Shadings, Text } from "./components";
+import { Backdrop, Editor, Paper, Shadings, Text } from "./components";
 
 export function Note({
   text,
@@ -13,6 +13,7 @@ export function Note({
   isEditing,
   onMouseDown,
   onDoubleClick,
+  onBackdropClick,
   onTextChange,
   onColorChange,
   onDelete,
@@ -26,6 +27,7 @@ export function Note({
   isEditing?: boolean;
   onMouseDown?: (e: MouseEvent) => void;
   onDoubleClick?: () => void;
+  onBackdropClick?: () => void;
   onTextChange?: (text: string) => void;
   onColorChange?: (color: number) => void;
   onDelete?: () => void;
@@ -33,28 +35,32 @@ export function Note({
   const [previewColor, setPreviewColor] = useState<number>();
 
   return (
-    <div
-      className={cx("absolute", "flex", "flex-row", "pointer-events-none")}
-      style={{ left: x, top: y }}
-    >
-      <Paper
-        color={previewColor ?? color}
-        rotate={rotate}
-        isDragging={isDragging}
-        isEditing={isEditing}
-        onMouseDown={onMouseDown}
-        onDoubleClick={onDoubleClick}
+    <>
+      <Backdrop isEditing={isEditing} onMouseDown={onBackdropClick} />
+
+      <div
+        className={cx("absolute", "flex", "flex-row", "pointer-events-none")}
+        style={{ left: x, top: y }}
       >
-        <Shadings />
-        <Text text={text} isEditing={isEditing} onChange={onTextChange} />
-      </Paper>
-      <Editor
-        visible={isEditing}
-        selectedColor={color}
-        onPreviewColor={(color) => setPreviewColor(color)}
-        onSelectColor={(color) => onColorChange?.(color)}
-        onDelete={onDelete}
-      />
-    </div>
+        <Paper
+          color={previewColor ?? color}
+          rotate={rotate}
+          isDragging={isDragging}
+          isEditing={isEditing}
+          onMouseDown={onMouseDown}
+          onDoubleClick={onDoubleClick}
+        >
+          <Shadings />
+          <Text text={text} isEditing={isEditing} onChange={onTextChange} />
+        </Paper>
+        <Editor
+          visible={isEditing}
+          selectedColor={color}
+          onPreviewColor={(color) => setPreviewColor(color)}
+          onSelectColor={(color) => onColorChange?.(color)}
+          onDelete={onDelete}
+        />
+      </div>
+    </>
   );
 }

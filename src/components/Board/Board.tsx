@@ -1,7 +1,7 @@
 import cx from "classnames";
 import { MouseEvent, useState } from "react";
 
-import { Backdrop, Note } from "./components";
+import { Note } from "./components";
 import { useHandleMouse, useHandleNotes, useInScreenNotes } from "./hooks";
 
 export type NoteData = {
@@ -62,8 +62,6 @@ export function Board({
         onDoubleClick={(e) => addNote(e.clientX, e.clientY)}
       />
 
-      <Backdrop isEditing={isEditing} onMouseDown={() => setIsEditing(false)} />
-
       {inScreenNotes.map(({ key, text, color, rotate, x, y, isDraggable }) => (
         <Note
           key={key}
@@ -76,6 +74,7 @@ export function Board({
               : () => moveViewPortToNote(key, notes, boardSize, onNotesChange)
           }
           onDoubleClick={isDraggable ? () => setIsEditing(true) : () => {}}
+          onBackdropClick={() => setIsEditing(false)}
           onTextChange={(text) => handleTextChange(key, text)}
           onColorChange={(color) => handleColorChange(key, color)}
           onDelete={() => {

@@ -17,10 +17,10 @@ export function useHandleMouse({
   const [isBoardMouseDown, setIsBoardMouseDown] = useState<boolean>(false);
   const [mouse, setMouse] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
 
-  function handleNoteMouseDown(button: number, index: number) {
+  function handleNoteMouseDown(button: number, key: string) {
     if (isEditing) return;
 
-    onNotesChange?.(moveNoteToTop(notes, index));
+    onNotesChange?.(moveNoteToTop(notes, key));
 
     if (button === 0) {
       setIsNoteMouseDown(true);
@@ -66,10 +66,10 @@ export function useHandleMouse({
   };
 }
 
-function moveNoteToTop(notes: NoteData[], index: number) {
+function moveNoteToTop(notes: NoteData[], key: string): NoteData[] {
   return [
-    ...notes.filter((_value, noteIndex) => noteIndex !== index),
-    notes[index],
+    ...notes.filter((note) => note.key !== key),
+    notes.find((note) => note.key === key) as NoteData,
   ];
 }
 

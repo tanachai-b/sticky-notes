@@ -62,52 +62,30 @@ export function Board({
         onDoubleClick={(e) => addNote(e.clientX, e.clientY)}
       />
 
-      {inScreenNotes.map(
-        ({ text, color, x, y, rotate, key, isDraggable }, index) => {
-          if (index === inScreenNotes.length - 1) return;
-          return (
-            <Note
-              key={key}
-              {...{ text, color, x, y, rotate }}
-              onMouseDown={
-                isDraggable
-                  ? (e) => handleNoteMouseDown(e.button, index)
-                  : () =>
-                      moveViewPortToNote(index, notes, boardSize, onNotesChange)
-              }
-            />
-          );
-        },
-      )}
-
       <Backdrop isEditing={isEditing} onMouseDown={() => setIsEditing(false)} />
 
-      {inScreenNotes.map(
-        ({ text, color, x, y, rotate, key, isDraggable }, index) => {
-          if (index !== inScreenNotes.length - 1) return;
-          return (
-            <Note
-              key={key}
-              {...{ text, color, x, y, rotate }}
-              isDragging={isNoteMouseDown}
-              isEditing={isEditing}
-              onMouseDown={
-                isDraggable
-                  ? (e) => handleNoteMouseDown(e.button, index)
-                  : () =>
-                      moveViewPortToNote(index, notes, boardSize, onNotesChange)
-              }
-              onDoubleClick={isDraggable ? () => setIsEditing(true) : () => {}}
-              onTextChange={handleTextChange}
-              onColorChange={handleColorChange}
-              onDelete={() => {
-                setIsEditing(false);
-                onNotesChange?.([...notes.slice(0, -1)]);
-              }}
-            />
-          );
-        },
-      )}
+      {inScreenNotes.map(({ key, text, color, rotate, x, y, isDraggable }) => (
+        <Note
+          key={key}
+          {...{ text, color, x, y, rotate }}
+          isDragging={isNoteMouseDown}
+          isEditing={isEditing}
+          onMouseDown={
+            isDraggable
+              ? (e) => handleNoteMouseDown(e.button, key)
+              : () => moveViewPortToNote(key, notes, boardSize, onNotesChange)
+          }
+          onDoubleClick={isDraggable ? () => setIsEditing(true) : () => {}}
+          onTextChange={(text) => handleTextChange(key, text)}
+          onColorChange={(color) => handleColorChange(key, color)}
+          onDelete={() => {
+            setIsEditing(false);
+
+            const updatedNotes = notes.filter((note) => note.key !== key);
+            onNotesChange?.(updatedNotes);
+          }}
+        />
+      ))}
     </div>
   );
 }

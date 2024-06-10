@@ -10,19 +10,18 @@ export function useHandleNotes({
   onNotesChange?: (notes: NoteData[]) => void;
   setIsEditing: (isEditing: boolean) => void;
 }) {
-  function handleTextChange(text: string): void {
-    onNotesChange?.([
-      ...notes.slice(0, -1),
-      { ...notes[notes.length - 1], text },
-    ]);
+  function handleTextChange(key: string, text: string): void {
+    const updatedNotes = notes.map((note) =>
+      note.key === key ? { ...note, text } : note,
+    );
+    onNotesChange?.(updatedNotes);
   }
 
-  function handleColorChange(color: number): void {
-    onNotesChange?.([
-      ...notes.slice(0, -1),
-      { ...notes[notes.length - 1], color },
-    ]);
-    setIsEditing(false);
+  function handleColorChange(key: string, color: number): void {
+    const updatedNotes = notes.map((note) =>
+      note.key === key ? { ...note, color } : note,
+    );
+    onNotesChange?.(updatedNotes);
   }
 
   const { getNewNote } = useGetNewNote();
@@ -32,7 +31,7 @@ export function useHandleNotes({
   }
 
   function moveViewPortToNote(
-    index: number,
+    key: string,
     notes: NoteData[],
     boardSize: { w: number; h: number },
     onNotesChange: ((notes: NoteData[]) => void) | undefined,
@@ -40,8 +39,12 @@ export function useHandleNotes({
     let currentNotes = notes;
 
     const interval = setInterval(() => {
-      const targetX = currentNotes[index].x;
-      const targetY = currentNotes[index].y;
+      const targetNote = currentNotes.find(
+        (note) => note.key === key,
+      ) as NoteData;
+
+      const targetX = targetNote.x;
+      const targetY = targetNote.y;
 
       const offsetX = (-targetX + boardSize.w / 2 - 250 / 2) / 2;
       const offsetY = (-targetY + boardSize.h / 2 - 250 / 2) / 2;
@@ -51,9 +54,9 @@ export function useHandleNotes({
       }
 
       const newNotes = currentNotes.map(({ x, y, ...rest }) => ({
-        ...rest,
         x: x + Math.floor(offsetX),
         y: y + Math.floor(offsetY),
+        ...rest,
       }));
 
       currentNotes = newNotes;

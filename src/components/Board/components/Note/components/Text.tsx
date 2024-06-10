@@ -57,7 +57,6 @@ export function Text({
           className={cx(
             "p-x10",
 
-            "select-none",
             "break-words",
 
             { "opacity-0": isEditing },

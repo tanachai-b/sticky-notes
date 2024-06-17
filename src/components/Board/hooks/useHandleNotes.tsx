@@ -8,7 +8,7 @@ export function useHandleNotes({
 }: {
   notes: NoteData[];
   onNotesChange?: (notes: NoteData[]) => void;
-  setEditingNote: (key: string) => void;
+  setEditingNote: (key?: string) => void;
 }) {
   function handleTextChange(key: string, text: string): void {
     const updatedNotes = notes.map((note) =>
@@ -22,6 +22,7 @@ export function useHandleNotes({
       note.key === key ? { ...note, color } : note,
     );
     onNotesChange?.(updatedNotes);
+    setEditingNote(undefined);
   }
 
   const { getNewNote } = useGetNewNote();

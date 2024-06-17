@@ -25,6 +25,12 @@ export function useHandleNotes({
     setEditingNote(undefined);
   }
 
+  function handleDelete(key: string) {
+    const updatedNotes = notes.filter((note) => note.key !== key);
+    onNotesChange?.(updatedNotes);
+    setEditingNote(undefined);
+  }
+
   const { getNewNote } = useGetNewNote();
   function addNote(x: number, y: number) {
     const newNote = getNewNote(x, y);
@@ -67,5 +73,11 @@ export function useHandleNotes({
     }, 1000 / 60);
   }
 
-  return { handleTextChange, handleColorChange, addNote, moveViewPortToNote };
+  return {
+    handleTextChange,
+    handleColorChange,
+    handleDelete,
+    addNote,
+    moveViewPortToNote,
+  };
 }

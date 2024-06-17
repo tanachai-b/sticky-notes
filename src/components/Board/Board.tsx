@@ -25,7 +25,7 @@ export function Board({
   const [editingNote, setEditingNote] = useState<string>();
 
   const {
-    isNoteMouseDown,
+    mouseDownNote,
     handleNoteMouseDown,
     handleMouseDown,
     handleMouseMove,
@@ -66,7 +66,7 @@ export function Board({
         <Note
           key={key}
           {...{ text, color, x, y, rotate }}
-          isDragging={isNoteMouseDown}
+          isDragging={mouseDownNote === key}
           isEditing={editingNote === key}
           onMouseDown={
             isDraggable

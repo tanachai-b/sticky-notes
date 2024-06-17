@@ -13,7 +13,7 @@ export function useHandleMouse({
   editingNote?: string;
   setEditingNote: (key: string) => void;
 }) {
-  const [isNoteMouseDown, setIsNoteMouseDown] = useState<boolean>(false);
+  const [mouseDownNote, setMouseDownNote] = useState<string>();
   const [isBoardMouseDown, setIsBoardMouseDown] = useState<boolean>(false);
   const [mouse, setMouse] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
 
@@ -23,7 +23,7 @@ export function useHandleMouse({
     onNotesChange?.(moveNoteToTop(notes, key));
 
     if (button === 0) {
-      setIsNoteMouseDown(true);
+      setMouseDownNote(key);
     } else if (button === 2) {
       setEditingNote(key);
     }
@@ -42,7 +42,7 @@ export function useHandleMouse({
     const offsetX = clientX - mouse.x;
     const offsetY = clientY - mouse.y;
 
-    if (isNoteMouseDown) {
+    if (mouseDownNote != null) {
       onNotesChange?.(moveTopNote(notes, offsetX, offsetY));
     } else if (isBoardMouseDown) {
       onNotesChange?.(moveAllNotes(notes, offsetX, offsetY));
@@ -53,12 +53,12 @@ export function useHandleMouse({
   function handleMouseUp() {
     if (editingNote != null) return;
 
-    setIsNoteMouseDown(false);
+    setMouseDownNote(undefined);
     setIsBoardMouseDown(false);
   }
 
   return {
-    isNoteMouseDown,
+    mouseDownNote,
     handleNoteMouseDown,
     handleMouseDown,
     handleMouseMove,

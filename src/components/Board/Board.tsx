@@ -5,12 +5,12 @@ import { Note } from "./components";
 import { useHandleMouse, useHandleNotes, useInScreenNotes } from "./hooks";
 
 export type NoteData = {
+  key: string;
   text: string;
   color: number;
-  key: string;
-  rotate: number;
   x: number;
   y: number;
+  rotate: number;
 };
 
 export function Board({

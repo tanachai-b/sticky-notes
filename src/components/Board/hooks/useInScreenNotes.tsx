@@ -45,6 +45,6 @@ function forceNotesInScreen(
     ...rest,
     x: Math.min(Math.max(x, minX), maxX),
     y: Math.min(Math.max(y, minY), maxY),
-    isDraggable: x > minX && x < maxX && y > minY && y < maxY,
+    isInScreen: x > minX && x < maxX && y > minY && y < maxY,
   }));
 }

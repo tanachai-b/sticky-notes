@@ -67,18 +67,18 @@ export function Board({
         onDoubleClick={(e) => addNote(e.clientX, e.clientY)}
       />
 
-      {inScreenNotes.map(({ key, text, color, rotate, x, y, isDraggable }) => (
+      {inScreenNotes.map(({ key, text, color, rotate, x, y, isInScreen }) => (
         <Note
           key={key}
           {...{ text, color, x, y, rotate }}
           isDragging={mouseDownNote === key}
           isEditing={editingNote === key}
           onMouseDown={
-            isDraggable
+            isInScreen
               ? (e) => handleNoteMouseDown(e.button, key)
               : () => moveViewPortToNote(key, notes, boardSize, onNotesChange)
           }
-          onDoubleClick={isDraggable ? () => setEditingNote(key) : () => {}}
+          onDoubleClick={isInScreen ? () => setEditingNote(key) : () => {}}
           onBackdropClick={() => setEditingNote(undefined)}
           onTextChange={(text) => handleTextChange(key, text)}
           onColorChange={(color) => handleColorChange(key, color)}

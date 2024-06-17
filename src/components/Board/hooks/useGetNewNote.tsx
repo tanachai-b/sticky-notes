@@ -16,12 +16,12 @@ export function useGetNewNote() {
     setLastColors(lastSixColors);
 
     return {
+      key: Math.floor(Math.random() * 1000000).toString(36),
       text: "",
       color: newColor,
-      key: Math.floor(Math.random() * 1000000).toString(36),
-      rotate: Math.floor((10 * Math.random() - 10 / 2) * 10) / 10,
       x: x - 250 / 2,
       y: y - 250 / 2,
+      rotate: Math.floor((10 * Math.random() - 10 / 2) * 10) / 10,
     };
   }
 

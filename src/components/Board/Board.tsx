@@ -32,8 +32,13 @@ export function Board({
     handleMouseUp,
   } = useHandleMouse({ notes, onNotesChange, editingNote, setEditingNote });
 
-  const { handleTextChange, handleColorChange, addNote, moveViewPortToNote } =
-    useHandleNotes({ notes, onNotesChange, setEditingNote });
+  const {
+    handleTextChange,
+    handleColorChange,
+    handleDelete,
+    addNote,
+    moveViewPortToNote,
+  } = useHandleNotes({ notes, onNotesChange, setEditingNote });
 
   function handleBoardMouseDown(e: MouseEvent) {
     const { button, clientX, clientY } = e;
@@ -77,12 +82,7 @@ export function Board({
           onBackdropClick={() => setEditingNote(undefined)}
           onTextChange={(text) => handleTextChange(key, text)}
           onColorChange={(color) => handleColorChange(key, color)}
-          onDelete={() => {
-            setEditingNote(undefined);
-
-            const updatedNotes = notes.filter((note) => note.key !== key);
-            onNotesChange?.(updatedNotes);
-          }}
+          onDelete={() => handleDelete(key)}
         />
       ))}
     </div>

@@ -56,6 +56,7 @@ export function ToolButton({
       <div className="text-[30px]">
         <Icon icon={icon} />
       </div>
+
       <ButtonLabel>{label}</ButtonLabel>
     </ButtonContainer>
   );

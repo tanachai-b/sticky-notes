@@ -51,8 +51,10 @@ export function Note({
           onDoubleClick={onDoubleClick}
         >
           <Shadings />
+
           <Text text={text} isEditing={isEditing} onChange={onTextChange} />
         </Paper>
+
         <Editor
           visible={isEditing}
           selectedColor={color}

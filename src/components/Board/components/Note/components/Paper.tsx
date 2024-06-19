@@ -1,12 +1,12 @@
 import cx from "classnames";
-import { MouseEvent, ReactNode } from "react";
+import { PointerEvent, ReactNode } from "react";
 
 export function Paper({
   color = 0,
   rotate,
   isDragging,
   isEditing,
-  onMouseDown,
+  onPointerDown,
   onDoubleClick,
   children,
 }: {
@@ -14,7 +14,7 @@ export function Paper({
   rotate?: number;
   isDragging?: boolean;
   isEditing?: boolean;
-  onMouseDown?: (e: MouseEvent) => void;
+  onPointerDown?: (e: PointerEvent) => void;
   onDoubleClick?: () => void;
   children?: ReactNode;
 } = {}) {
@@ -44,7 +44,7 @@ export function Paper({
         "pointer-events-auto",
       )}
       style={{ transform: `rotate(${rotate}deg)` }}
-      onMouseDown={onMouseDown}
+      onPointerDown={onPointerDown}
       onDoubleClick={onDoubleClick}
     >
       {children}

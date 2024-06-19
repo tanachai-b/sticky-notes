@@ -1,5 +1,5 @@
 import cx from "classnames";
-import { MouseEvent, useState } from "react";
+import { PointerEvent, useState } from "react";
 
 import { Backdrop, Editor, Paper, Shadings, Text } from "./components";
 
@@ -11,7 +11,7 @@ export function Note({
   rotate = 0,
   isDragging,
   isEditing,
-  onMouseDown,
+  onPointerDown,
   onDoubleClick,
   onBackdropClick,
   onTextChange,
@@ -25,7 +25,7 @@ export function Note({
   rotate?: number;
   isDragging?: boolean;
   isEditing?: boolean;
-  onMouseDown?: (e: MouseEvent) => void;
+  onPointerDown?: (e: PointerEvent) => void;
   onDoubleClick?: () => void;
   onBackdropClick?: () => void;
   onTextChange?: (text: string) => void;
@@ -36,7 +36,7 @@ export function Note({
 
   return (
     <>
-      <Backdrop isEditing={isEditing} onMouseDown={onBackdropClick} />
+      <Backdrop isEditing={isEditing} onPointerDown={onBackdropClick} />
 
       <div
         className={cx("absolute", "flex", "flex-row", "pointer-events-none")}
@@ -47,7 +47,7 @@ export function Note({
           rotate={rotate}
           isDragging={isDragging}
           isEditing={isEditing}
-          onMouseDown={onMouseDown}
+          onPointerDown={onPointerDown}
           onDoubleClick={onDoubleClick}
         >
           <Shadings />

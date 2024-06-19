@@ -25,14 +25,14 @@ export function ColorSelector({
   return (
     <div
       className={cx("flex", "flex-col")}
-      onMouseLeave={() => onPreviewColor?.()}
+      onPointerLeave={() => onPreviewColor?.()}
     >
       {colors.map((color, index) => (
         <Color
           key={index}
           color={color}
           isSelected={selectedColor === index}
-          onMouseOver={() => onPreviewColor?.(index)}
+          onPointerOver={() => onPreviewColor?.(index)}
           onClick={() => onSelectColor?.(index)}
         />
       ))}
@@ -43,12 +43,12 @@ export function ColorSelector({
 function Color({
   color,
   isSelected,
-  onMouseOver,
+  onPointerOver,
   onClick,
 }: {
   color?: string;
   isSelected?: boolean;
-  onMouseOver?: () => void;
+  onPointerOver?: () => void;
   onClick?: () => void;
 } = {}) {
   return (
@@ -60,7 +60,7 @@ function Color({
 
         "cursor-pointer",
       )}
-      onMouseOver={onMouseOver}
+      onPointerOver={onPointerOver}
       onClick={onClick}
     >
       <div

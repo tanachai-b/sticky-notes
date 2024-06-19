@@ -1,8 +1,8 @@
-import { MouseEvent, useState } from "react";
+import { PointerEvent, useState } from "react";
 
 import { NoteData } from "../Board";
 
-export function useHandleMouse({
+export function useHandlePointer({
   notes,
   onNotesChange,
   editingNote,
@@ -13,49 +13,49 @@ export function useHandleMouse({
   editingNote?: string;
   setEditingNote: (key: string) => void;
 }) {
-  const [mouseDownNote, setMouseDownNote] = useState<string>();
-  const [isBoardMouseDown, setIsBoardMouseDown] = useState<boolean>(false);
+  const [pointerDownNote, setPointerDownNote] = useState<string>();
+  const [isBoardPointerDown, setIsBoardPointerDown] = useState<boolean>(false);
 
-  function handleNoteMouseDown(button: number, key: string) {
+  function handleNotePointerDown(button: number, key: string) {
     if (editingNote != null) return;
 
     onNotesChange?.(moveNoteToTop(notes, key));
 
     if (button === 0) {
-      setMouseDownNote(key);
+      setPointerDownNote(key);
     } else if (button === 2) {
       setEditingNote(key);
     }
   }
 
-  function handleMouseDown() {
+  function handlePointerDown() {
     if (editingNote != null) return;
-    setIsBoardMouseDown(true);
+    setIsBoardPointerDown(true);
   }
 
-  function handleMouseMove({ movementX, movementY }: MouseEvent) {
+  function handlePointerMove({ movementX, movementY }: PointerEvent) {
     if (editingNote != null) return;
 
-    if (mouseDownNote != null) {
+    if (pointerDownNote != null) {
       onNotesChange?.(moveTopNote(notes, movementX, movementY));
-    } else if (isBoardMouseDown) {
+    } else if (isBoardPointerDown) {
       onNotesChange?.(moveAllNotes(notes, movementX, movementY));
     }
   }
 
-  function handleMouseUp() {
+  function handlePointerUp() {
     if (editingNote != null) return;
 
-    setMouseDownNote(undefined);
-    setIsBoardMouseDown(false);
+    setPointerDownNote(undefined);
+    setIsBoardPointerDown(false);
   }
 
   return {
-    mouseDownNote,
-    handleNoteMouseDown,
-    handleMouseDown,
-    handleMouseMove,
-    handleMouseUp,
+    pointerDownNote,
+    handleNotePointerDown,
+    handlePointerDown,
+    handlePointerMove,
+    handlePointerUp,
   };
 }
 

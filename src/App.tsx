@@ -35,7 +35,9 @@ export default function App() {
 
       <ToolBar>
         <ToolButton icon="note_add" label="New" onClick={onNew} />
+
         <ToolButton icon="folder_open" label="Open" onClick={onOpen} />
+
         <ToolButton icon="save_as" label="Save As" onClick={onSaveAs} />
       </ToolBar>
 

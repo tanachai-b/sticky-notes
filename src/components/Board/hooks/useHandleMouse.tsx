@@ -15,7 +15,6 @@ export function useHandleMouse({
 }) {
   const [mouseDownNote, setMouseDownNote] = useState<string>();
   const [isBoardMouseDown, setIsBoardMouseDown] = useState<boolean>(false);
-  const [mouse, setMouse] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
 
   function handleNoteMouseDown(button: number, key: string) {
     if (editingNote != null) return;
@@ -29,25 +28,19 @@ export function useHandleMouse({
     }
   }
 
-  function handleMouseDown({ clientX, clientY }: MouseEvent) {
+  function handleMouseDown() {
     if (editingNote != null) return;
-
     setIsBoardMouseDown(true);
-    setMouse({ x: clientX, y: clientY });
   }
 
-  function handleMouseMove({ clientX, clientY }: MouseEvent) {
+  function handleMouseMove({ movementX, movementY }: MouseEvent) {
     if (editingNote != null) return;
 
-    const offsetX = clientX - mouse.x;
-    const offsetY = clientY - mouse.y;
-
     if (mouseDownNote != null) {
-      onNotesChange?.(moveTopNote(notes, offsetX, offsetY));
+      onNotesChange?.(moveTopNote(notes, movementX, movementY));
     } else if (isBoardMouseDown) {
-      onNotesChange?.(moveAllNotes(notes, offsetX, offsetY));
+      onNotesChange?.(moveAllNotes(notes, movementX, movementY));
     }
-    setMouse({ x: clientX, y: clientY });
   }
 
   function handleMouseUp() {

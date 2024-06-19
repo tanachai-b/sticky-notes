@@ -42,7 +42,7 @@ export function Board({
 
   function handleBoardMouseDown(e: MouseEvent) {
     const { button, clientX, clientY } = e;
-    if (button === 0) handleMouseDown(e);
+    if (button === 0) handleMouseDown();
     if (button === 2) addNote(clientX, clientY);
   }
 

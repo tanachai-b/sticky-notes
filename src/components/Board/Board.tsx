@@ -67,6 +67,7 @@ export function Board({
         className={cx("absolute", "size-full")}
         onPointerDown={handleBoardPointerDown}
         onDoubleClick={(e) => addNote(e.clientX, e.clientY)}
+        onContextMenu={(e) => addNote(e.clientX, e.clientY)}
       />
 
       {inScreenNotes.map(({ key, text, color, rotate, x, y, isInScreen }) => (

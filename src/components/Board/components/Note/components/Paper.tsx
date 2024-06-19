@@ -46,6 +46,7 @@ export function Paper({
       style={{ transform: `rotate(${rotate}deg)` }}
       onPointerDown={onPointerDown}
       onDoubleClick={onDoubleClick}
+      onContextMenu={onDoubleClick}
     >
       {children}
     </div>

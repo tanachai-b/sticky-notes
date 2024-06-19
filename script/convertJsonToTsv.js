@@ -31,6 +31,6 @@ function concatItemValues(headers, item) {
 }
 
 function convertValueToString(value) {
-  if (`${value}`.includes("\n")) return `"${value}"`;
+  if (`${value}`.includes("\n")) return `"${value.replaceAll('"', '""')}"`;
   return value;
 }

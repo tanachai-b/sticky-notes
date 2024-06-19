@@ -1,6 +1,6 @@
 key	text	color	x	y	rotate
 k06p	"Buy
-eggs, pork, pancake mix"	0	173	89	-1.4
+eggs, ""pork"", pancake mix"	0	173	89	-1.4
 b4pl	"Dentist
 2024-01-20
 11:00"	6	279	311	1.7

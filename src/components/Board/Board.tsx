@@ -27,10 +27,11 @@ export function Board({
   const {
     pointerDownNote,
     handleNotePointerDown,
+    handleNoteDoubleClick,
     handlePointerDown,
     handlePointerMove,
     handlePointerUp,
-  } = useHandlePointer({ notes, onNotesChange, editingNote, setEditingNote });
+  } = useHandlePointer({ notes, onNotesChange, setEditingNote });
 
   const {
     handleTextChange,
@@ -41,9 +42,7 @@ export function Board({
   } = useHandleNotes({ notes, onNotesChange, setEditingNote });
 
   function handleBoardPointerDown(e: PointerEvent) {
-    const { button, clientX, clientY } = e;
-    if (button === 0) handlePointerDown();
-    if (button === 2) addNote(clientX, clientY);
+    if (e.button === 0) handlePointerDown();
   }
 
   return (
@@ -81,7 +80,9 @@ export function Board({
               ? (e) => handleNotePointerDown(e.button, key)
               : () => moveViewPortToNote(key, notes, boardSize, onNotesChange)
           }
-          onDoubleClick={isInScreen ? () => setEditingNote(key) : () => {}}
+          onDoubleClick={
+            isInScreen ? () => handleNoteDoubleClick(key) : () => {}
+          }
           onBackdropClick={() => setEditingNote(undefined)}
           onTextChange={(text) => handleTextChange(key, text)}
           onColorChange={(color) => handleColorChange(key, color)}

@@ -1,8 +1,8 @@
 import cx from "classnames";
-import { MouseEvent, useState } from "react";
+import { PointerEvent, useState } from "react";
 
 import { Note } from "./components";
-import { useHandleMouse, useHandleNotes, useInScreenNotes } from "./hooks";
+import { useHandleNotes, useHandlePointer, useInScreenNotes } from "./hooks";
 
 export type NoteData = {
   key: string;
@@ -25,12 +25,12 @@ export function Board({
   const [editingNote, setEditingNote] = useState<string>();
 
   const {
-    mouseDownNote,
-    handleNoteMouseDown,
-    handleMouseDown,
-    handleMouseMove,
-    handleMouseUp,
-  } = useHandleMouse({ notes, onNotesChange, editingNote, setEditingNote });
+    pointerDownNote,
+    handleNotePointerDown,
+    handlePointerDown,
+    handlePointerMove,
+    handlePointerUp,
+  } = useHandlePointer({ notes, onNotesChange, editingNote, setEditingNote });
 
   const {
     handleTextChange,
@@ -40,9 +40,9 @@ export function Board({
     moveViewPortToNote,
   } = useHandleNotes({ notes, onNotesChange, setEditingNote });
 
-  function handleBoardMouseDown(e: MouseEvent) {
+  function handleBoardPointerDown(e: PointerEvent) {
     const { button, clientX, clientY } = e;
-    if (button === 0) handleMouseDown();
+    if (button === 0) handlePointerDown();
     if (button === 2) addNote(clientX, clientY);
   }
 
@@ -57,13 +57,13 @@ export function Board({
 
         "relative",
       )}
-      onMouseMove={handleMouseMove}
-      onMouseUp={handleMouseUp}
-      onMouseLeave={handleMouseUp}
+      onPointerMove={handlePointerMove}
+      onPointerUp={handlePointerUp}
+      onPointerLeave={handlePointerUp}
     >
       <div
         className={cx("absolute", "size-full")}
-        onMouseDown={handleBoardMouseDown}
+        onPointerDown={handleBoardPointerDown}
         onDoubleClick={(e) => addNote(e.clientX, e.clientY)}
       />
 
@@ -71,11 +71,11 @@ export function Board({
         <Note
           key={key}
           {...{ text, color, x, y, rotate }}
-          isDragging={mouseDownNote === key}
+          isDragging={pointerDownNote === key}
           isEditing={editingNote === key}
-          onMouseDown={
+          onPointerDown={
             isInScreen
-              ? (e) => handleNoteMouseDown(e.button, key)
+              ? (e) => handleNotePointerDown(e.button, key)
               : () => moveViewPortToNote(key, notes, boardSize, onNotesChange)
           }
           onDoubleClick={isInScreen ? () => setEditingNote(key) : () => {}}

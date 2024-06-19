@@ -2,10 +2,10 @@ import cx from "classnames";
 
 export function Backdrop({
   isEditing,
-  onMouseDown,
+  onPointerDown,
 }: {
   isEditing?: boolean;
-  onMouseDown?: () => void;
+  onPointerDown?: () => void;
 } = {}) {
   return (
     <div
@@ -21,7 +21,7 @@ export function Backdrop({
         { "backdrop-blur-x2": isEditing },
         { "pointer-events-none": !isEditing },
       )}
-      onMouseDown={onMouseDown}
+      onPointerDown={onPointerDown}
     />
   );
 }

@@ -56,6 +56,8 @@ export function Board({
         "overflow-hidden",
 
         "relative",
+
+        "touch-none",
       )}
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}

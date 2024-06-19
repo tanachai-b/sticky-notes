@@ -1,7 +1,7 @@
 import cx from "classnames";
+import { ReactNode, useState } from "react";
 
-import { ReactNode } from "react";
-import { useResizeObserver } from "../hooks";
+import { ObserveResize } from "src/base-components";
 
 export function FileSaveStatus({
   fileName,
@@ -45,7 +45,7 @@ function SaveStatusBackdrop({ children }: { children?: ReactNode } = {}) {
 }
 
 function SaveStatusContainer({ children }: { children?: ReactNode } = {}) {
-  const { ref, width } = useResizeObserver();
+  const [width, setWidth] = useState<number>(0);
 
   return (
     <div
@@ -69,19 +69,20 @@ function SaveStatusContainer({ children }: { children?: ReactNode } = {}) {
       )}
       style={{ width: `${width + 2}px` }}
     >
-      <div
-        ref={ref}
-        className={cx(
-          "flex",
-          "flex-row",
-          "gap-x5",
+      <ObserveResize onResize={({ width }) => setWidth(width)}>
+        <div
+          className={cx(
+            "flex",
+            "flex-row",
+            "gap-x5",
 
-          "px-x10",
-          "py-x5",
-        )}
-      >
-        {children}
-      </div>
+            "px-x10",
+            "py-x5",
+          )}
+        >
+          {children}
+        </div>
+      </ObserveResize>
     </div>
   );
 }

@@ -66,6 +66,8 @@ function SaveStatusContainer({ children }: { children?: ReactNode } = {}) {
         "flex-row",
 
         "transition-all",
+
+        "overflow-hidden",
       )}
       style={{ width: `${width + 2}px` }}
     >

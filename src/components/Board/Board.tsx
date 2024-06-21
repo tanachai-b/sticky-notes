@@ -31,7 +31,7 @@ export function Board({
     handlePointerDown,
     handlePointerMove,
     handlePointerUp,
-  } = useHandlePointer({ notes, onNotesChange, setEditingNote });
+  } = useHandlePointer({ notes, onNotesChange, editingNote, setEditingNote });
 
   const {
     handleTextChange,

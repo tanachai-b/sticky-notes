@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { NoteData } from "../components";
+import { NoteData } from "src/components";
+import { generateSave, updateSave } from "src/saving";
 import { useInterval } from "./useInterval";
 
 export function useFileSystemApi({
@@ -37,12 +38,18 @@ export function useFileSystemApi({
     try {
       const [fileHandle] = await window.showOpenFilePicker(filePickerOptions);
       await fileHandle.createWritable();
-      setFileHandle(fileHandle);
 
       const file = await fileHandle.getFile();
       const text = await file.text();
-      setNotes(JSON.parse(text));
+
+      const save = JSON.parse(text);
+      const updatedSave = updateSave(save);
+      const notes = updatedSave.notes;
+
+      setFileHandle(fileHandle);
+      setNotes(notes);
     } catch (e) {
+      setNotes([]);
       console.error(e);
     }
   }
@@ -56,7 +63,7 @@ export function useFileSystemApi({
       setFileHandle(fileHandle);
 
       const writable = await fileHandle.createWritable();
-      await writable.write(JSON.stringify(notes, undefined, 4));
+      await writable.write(JSON.stringify(generateSave(notes), undefined, 2));
       await writable.close();
     } catch (e) {
       console.error(e);
@@ -80,7 +87,7 @@ export function useFileSystemApi({
       setIsSaving(true);
 
       const writable = await fileHandle.createWritable();
-      await writable.write(JSON.stringify(notes, undefined, 4));
+      await writable.write(JSON.stringify(generateSave(notes), undefined, 2));
       await writable.close();
 
       setIsSaving(false);

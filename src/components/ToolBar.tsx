@@ -1,7 +1,7 @@
 import cx from "classnames";
 import { ReactNode } from "react";
 
-export function ToolBar({ children }: { children?: ReactNode } = {}) {
+export function ToolBar({ children }: { children: ReactNode }) {
   return (
     <div
       className={cx(

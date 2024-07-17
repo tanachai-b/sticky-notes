@@ -10,14 +10,14 @@ export function Paper({
   onDoubleClick,
   children,
 }: {
-  color?: number;
-  rotate?: number;
-  isDragging?: boolean;
-  isEditing?: boolean;
-  onPointerDown?: (e: PointerEvent) => void;
-  onDoubleClick?: () => void;
-  children?: ReactNode;
-} = {}) {
+  color: number;
+  rotate: number;
+  isDragging: boolean;
+  isEditing: boolean;
+  onPointerDown: (e: PointerEvent) => void;
+  onDoubleClick: () => void;
+  children: ReactNode;
+}) {
   return (
     <div
       className={cx(

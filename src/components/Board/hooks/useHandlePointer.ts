@@ -8,21 +8,21 @@ export function useHandlePointer({
   setEditingNote,
 }: {
   notes: NoteData[];
-  onNotesChange?: (notes: NoteData[]) => void;
+  onNotesChange: (notes: NoteData[]) => void;
   editingNote?: string;
-  setEditingNote: (key?: string) => void;
+  setEditingNote: (key: string) => void;
 }) {
   const [pointerDownNote, setPointerDownNote] = useState<string>();
   const [isBoardPointerDown, setIsBoardPointerDown] = useState<boolean>(false);
 
   function handleNotePointerDown(button: number, key: string) {
-    onNotesChange?.(moveNoteToTop(notes, key));
+    onNotesChange(moveNoteToTop(notes, key));
 
     if (button === 0) setPointerDownNote(key);
   }
 
   function handleNoteDoubleClick(key: string) {
-    onNotesChange?.(moveNoteToTop(notes, key));
+    onNotesChange(moveNoteToTop(notes, key));
     setEditingNote(key);
   }
 
@@ -33,9 +33,9 @@ export function useHandlePointer({
   function handlePointerMove({ movementX, movementY }: PointerEvent) {
     if (pointerDownNote != null) {
       if (editingNote != null) return;
-      onNotesChange?.(moveTopNote(notes, movementX, movementY));
+      onNotesChange(moveTopNote(notes, movementX, movementY));
     } else if (isBoardPointerDown) {
-      onNotesChange?.(moveAllNotes(notes, movementX, movementY));
+      onNotesChange(moveAllNotes(notes, movementX, movementY));
     }
   }
 

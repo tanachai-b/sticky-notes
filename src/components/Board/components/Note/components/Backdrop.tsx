@@ -4,9 +4,9 @@ export function Backdrop({
   isEditing,
   onPointerDown,
 }: {
-  isEditing?: boolean;
-  onPointerDown?: () => void;
-} = {}) {
+  isEditing: boolean;
+  onPointerDown: () => void;
+}) {
   return (
     <div
       className={cx(

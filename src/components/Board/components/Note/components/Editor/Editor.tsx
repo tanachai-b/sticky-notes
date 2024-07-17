@@ -9,12 +9,12 @@ export function Editor({
   onSelectColor,
   onDelete,
 }: {
-  visible?: boolean;
-  selectedColor?: number;
-  onPreviewColor?: (colorIndex?: number) => void;
-  onSelectColor?: (colorIndex: number) => void;
-  onDelete?: () => void;
-} = {}) {
+  visible: boolean;
+  selectedColor: number;
+  onPreviewColor: (colorIndex?: number) => void;
+  onSelectColor: (colorIndex: number) => void;
+  onDelete: () => void;
+}) {
   return (
     <div
       className={cx(
@@ -41,7 +41,7 @@ export function Editor({
   );
 }
 
-function DeleteButton({ onClick: onDelete }: { onClick?: () => void } = {}) {
+function DeleteButton({ onClick: onDelete }: { onClick: () => void }) {
   return (
     <div
       className={cx(

@@ -16,9 +16,9 @@ export function Board({
   notes = [],
   onNotesChange,
 }: {
-  notes?: NoteData[];
-  onNotesChange?: (notes: NoteData[]) => void;
-} = {}) {
+  notes: NoteData[];
+  onNotesChange: (notes: NoteData[]) => void;
+}) {
   const { boardRef, inScreenNotes, boardSize } = useInScreenNotes(notes);
 
   const [editingNote, setEditingNote] = useState<string>();

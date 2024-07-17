@@ -6,9 +6,9 @@ export function ColorSelector({
   onPreviewColor,
   onSelectColor,
 }: {
-  selectedColor?: number;
-  onPreviewColor?: (colorIndex?: number) => void;
-  onSelectColor?: (colorIndex: number) => void;
+  selectedColor: number;
+  onPreviewColor: (colorIndex?: number) => void;
+  onSelectColor: (colorIndex: number) => void;
 }) {
   const colors = [
     "bg-yellow-light",
@@ -22,14 +22,14 @@ export function ColorSelector({
   ];
 
   return (
-    <div className={cx("flex", "flex-col")} onPointerLeave={() => onPreviewColor?.()}>
+    <div className={cx("flex", "flex-col")} onPointerLeave={() => onPreviewColor()}>
       {colors.map((color, index) => (
         <Color
           key={index}
           color={color}
           isSelected={selectedColor === index}
-          onPointerOver={() => onPreviewColor?.(index)}
-          onClick={() => onSelectColor?.(index)}
+          onPointerOver={() => onPreviewColor(index)}
+          onClick={() => onSelectColor(index)}
         />
       ))}
     </div>
@@ -42,11 +42,11 @@ function Color({
   onPointerOver,
   onClick,
 }: {
-  color?: string;
-  isSelected?: boolean;
-  onPointerOver?: () => void;
-  onClick?: () => void;
-} = {}) {
+  color: string;
+  isSelected: boolean;
+  onPointerOver: () => void;
+  onClick: () => void;
+}) {
   return (
     <div
       className={cx(

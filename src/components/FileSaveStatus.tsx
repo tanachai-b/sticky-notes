@@ -2,13 +2,7 @@ import cx from "classnames";
 import { ReactNode, useState } from "react";
 import { ObserveResize } from "src/common-components";
 
-export function FileSaveStatus({
-  fileName,
-  isSaving,
-}: {
-  fileName?: string;
-  isSaving?: boolean;
-} = {}) {
+export function FileSaveStatus({ fileName, isSaving }: { fileName?: string; isSaving: boolean }) {
   return (
     <SaveStatusBackdrop>
       <SaveStatusContainer>
@@ -20,7 +14,7 @@ export function FileSaveStatus({
   );
 }
 
-function SaveStatusBackdrop({ children }: { children?: ReactNode } = {}) {
+function SaveStatusBackdrop({ children }: { children: ReactNode }) {
   return (
     <div
       className={cx(
@@ -41,7 +35,7 @@ function SaveStatusBackdrop({ children }: { children?: ReactNode } = {}) {
   );
 }
 
-function SaveStatusContainer({ children }: { children?: ReactNode } = {}) {
+function SaveStatusContainer({ children }: { children: ReactNode }) {
   const [width, setWidth] = useState<number>(0);
 
   return (
@@ -86,12 +80,12 @@ function SaveStatusContainer({ children }: { children?: ReactNode } = {}) {
   );
 }
 
-function FileName({ children }: { children?: ReactNode } = {}) {
+function FileName({ children }: { children: ReactNode }) {
   return (
     <div className={cx("text-white-dark", "text-opacity-50", "whitespace-pre")}>{children}</div>
   );
 }
 
-function SavingStatus({ children }: { children?: ReactNode } = {}) {
+function SavingStatus({ children }: { children: ReactNode }) {
   return <div className={cx("text-white-dark", "italic")}>{children}</div>;
 }

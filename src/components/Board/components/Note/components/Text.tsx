@@ -6,10 +6,10 @@ export function Text({
   isEditing,
   onChange,
 }: {
-  text?: string;
-  isEditing?: boolean;
-  onChange?: (text: string) => void;
-} = {}) {
+  text: string;
+  isEditing: boolean;
+  onChange: (text: string) => void;
+}) {
   const ref = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
@@ -82,7 +82,7 @@ export function Text({
           )}
           hidden={!isEditing}
           value={text}
-          onChange={(e) => onChange?.(e.target.value)}
+          onChange={(e) => onChange(e.target.value)}
         />
       </div>
     </div>

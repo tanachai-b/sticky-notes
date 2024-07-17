@@ -17,20 +17,20 @@ export function Note({
   onColorChange,
   onDelete,
 }: {
-  text?: string;
-  color?: number;
-  x?: number;
-  y?: number;
-  rotate?: number;
-  isDragging?: boolean;
-  isEditing?: boolean;
-  onPointerDown?: (e: PointerEvent) => void;
-  onDoubleClick?: () => void;
-  onBackdropClick?: () => void;
-  onTextChange?: (text: string) => void;
-  onColorChange?: (color: number) => void;
-  onDelete?: () => void;
-} = {}) {
+  text: string;
+  color: number;
+  x: number;
+  y: number;
+  rotate: number;
+  isDragging: boolean;
+  isEditing: boolean;
+  onPointerDown: (e: PointerEvent) => void;
+  onDoubleClick: () => void;
+  onBackdropClick: () => void;
+  onTextChange: (text: string) => void;
+  onColorChange: (color: number) => void;
+  onDelete: () => void;
+}) {
   const [previewColor, setPreviewColor] = useState<number>();
 
   return (
@@ -58,7 +58,7 @@ export function Note({
           visible={isEditing}
           selectedColor={color}
           onPreviewColor={(color) => setPreviewColor(color)}
-          onSelectColor={(color) => onColorChange?.(color)}
+          onSelectColor={(color) => onColorChange(color)}
           onDelete={onDelete}
         />
       </div>

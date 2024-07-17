@@ -7,30 +7,30 @@ export function useHandleNotes({
   setEditingNote,
 }: {
   notes: NoteData[];
-  onNotesChange?: (notes: NoteData[]) => void;
+  onNotesChange: (notes: NoteData[]) => void;
   setEditingNote: (key?: string) => void;
 }) {
   function handleTextChange(key: string, text: string): void {
     const updatedNotes = notes.map((note) => (note.key === key ? { ...note, text } : note));
-    onNotesChange?.(updatedNotes);
+    onNotesChange(updatedNotes);
   }
 
   function handleColorChange(key: string, color: number): void {
     const updatedNotes = notes.map((note) => (note.key === key ? { ...note, color } : note));
-    onNotesChange?.(updatedNotes);
+    onNotesChange(updatedNotes);
     setEditingNote(undefined);
   }
 
   function handleDelete(key: string) {
     const updatedNotes = notes.filter((note) => note.key !== key);
-    onNotesChange?.(updatedNotes);
+    onNotesChange(updatedNotes);
     setEditingNote(undefined);
   }
 
   const { getNewNote } = useGetNewNote();
   function addNote(x: number, y: number) {
     const newNote = getNewNote(x, y);
-    onNotesChange?.([...notes, newNote]);
+    onNotesChange([...notes, newNote]);
     setEditingNote(newNote.key);
   }
 

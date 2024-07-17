@@ -1,6 +1,6 @@
 import cx from "classnames";
 
-import { Icon } from "src/base-components";
+import { Icon } from "src/common-components";
 
 export function ColorSelector({
   selectedColor,

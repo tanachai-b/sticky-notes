@@ -1,7 +1,7 @@
 import cx from "classnames";
 import { ReactNode, useState } from "react";
 
-import { ObserveResize } from "src/base-components";
+import { ObserveResize } from "src/common-components";
 
 export function FileSaveStatus({
   fileName,

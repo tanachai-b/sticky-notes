@@ -1,8 +1,8 @@
 import { allUpdaters, allVersions } from "./save-updaters";
-import { Save_v0_2_0 } from "./save-versions";
+import { Save_v0_3_0 } from "./save-versions";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function updateSave(input: any): Save_v0_2_0 {
+export function updateSave(input: any): Save_v0_3_0 {
   const version = getVersion(input);
 
   const startIndex = Math.max(allVersions.indexOf(version), 0);
@@ -16,6 +16,8 @@ export function updateSave(input: any): Save_v0_2_0 {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function getVersion(input: any): string {
+  if (input.app === "sticky-notes" && input.saveApi != null) return input.saveApi;
+
   if (input.appName === "sticky-notes" && input.appVersion != null) return input.appVersion;
 
   return "0.1.0";

@@ -9,6 +9,7 @@ export type NoteData = {
   x: number;
   y: number;
   rotate: number;
+  zIndex: number;
 };
 
 export function Board({
@@ -33,20 +34,22 @@ export function Board({
     <Container onResize={setBoardSize}>
       <Backdrop onDrag={(dx, dy) => moveAllNotes(dx, dy)} onAddNote={addNote} />
 
-      {notes.map(({ key, ...rest }) => (
-        <Note
-          key={key}
-          noteData={{ key, ...rest }}
-          isEditing={editingNote === key}
-          boardSize={boardSize}
-          onPanTo={() => panToNote(key)}
-          onBringToFront={() => bringNoteToFront(key)}
-          onStartEditing={() => setEditingNote(key)}
-          onStopEditing={() => setEditingNote(undefined)}
-          onChange={(noteData) => editNote(key, noteData)}
-          onDelete={() => deleteNote(key)}
-        />
-      ))}
+      {notes
+        .sort((a, b) => a.zIndex - b.zIndex)
+        .map(({ key, ...rest }) => (
+          <Note
+            key={key}
+            noteData={{ key, ...rest }}
+            isEditing={editingNote === key}
+            boardSize={boardSize}
+            onPanTo={() => panToNote(key)}
+            onBringToFront={() => bringNoteToFront(key)}
+            onStartEditing={() => setEditingNote(key)}
+            onStopEditing={() => setEditingNote(undefined)}
+            onChange={(noteData) => editNote(key, noteData)}
+            onDelete={() => deleteNote(key)}
+          />
+        ))}
     </Container>
   );
 }

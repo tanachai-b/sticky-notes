@@ -1,10 +1,10 @@
 import { NoteData } from "src/components";
-import { Save_v0_2_0 } from "./save-versions";
+import { Save_v0_3_0 } from "./save-versions";
 
-export function generateSave(notes: NoteData[]): Save_v0_2_0 {
+export function generateSave(notes: NoteData[]): Save_v0_3_0 {
   return {
-    appName: "sticky-notes",
-    appVersion: "0.2.0",
-    notes: notes,
+    app: "sticky-notes",
+    saveApi: "0.3.0",
+    notes: notes.sort((a, b) => a.text.localeCompare(b.text)),
   };
 }

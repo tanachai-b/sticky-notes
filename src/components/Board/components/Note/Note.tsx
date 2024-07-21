@@ -34,7 +34,10 @@ export function Note({
 
       <div
         className={cx("absolute", "flex", "flex-row", "invisible")}
-        style={{ left: inScreenX, top: inScreenY }}
+        style={{
+          left: inScreenX + (boardSize.width - 250) / 2,
+          top: inScreenY + (boardSize.height - 250) / 2,
+        }}
       >
         <Paper
           color={previewColor ?? noteData.color}
@@ -71,10 +74,10 @@ export function Note({
   function inScreen() {
     const peek = 20;
 
-    const minX = -250 + peek;
-    const minY = -250 + peek;
-    const maxX = boardSize.width - peek;
-    const maxY = boardSize.height - peek;
+    const minX = -(boardSize.width + 250) / 2 + peek;
+    const minY = -(boardSize.height + 250) / 2 + peek;
+    const maxX = (boardSize.width + 250) / 2 - peek;
+    const maxY = (boardSize.height + 250) / 2 - peek;
 
     const inScreenX = Math.min(Math.max(noteData.x, minX), maxX);
     const inScreenY = Math.min(Math.max(noteData.y, minY), maxY);

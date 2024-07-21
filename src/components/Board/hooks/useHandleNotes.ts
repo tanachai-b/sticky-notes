@@ -32,11 +32,8 @@ export function useHandleNotes({
       const x = target.x;
       const y = target.y;
 
-      const cx = boardSize.width / 2 - 250 / 2;
-      const cy = boardSize.height / 2 - 250 / 2;
-
-      const dx = cx - x;
-      const dy = cy - y;
+      const dx = 0 - x;
+      const dy = 0 - y;
 
       const vx = Math.floor(dx / 2);
       const vy = Math.floor(dy / 2);
@@ -71,8 +68,8 @@ export function useHandleNotes({
       key: Math.floor(Math.random() * 1000000).toString(36),
       text: "",
       color: getNewColor(),
-      x: x - 250 / 2,
-      y: y - 250 / 2,
+      x: x - boardSize.width / 2,
+      y: y - boardSize.height / 2,
       rotate: Math.floor((10 * Math.random() - 10 / 2) * 10) / 10,
     };
 

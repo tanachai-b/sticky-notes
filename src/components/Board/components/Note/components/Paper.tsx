@@ -1,25 +1,32 @@
 import cx from "classnames";
-import { PointerEvent, ReactNode } from "react";
+import { PointerEvent, ReactNode, useRef } from "react";
+import { useDraggable } from "src/common-hooks";
 
 export function Paper({
-  color = 0,
+  color,
   rotate,
-  isDragging,
   isEditing,
+  onMove,
   onPointerDown,
   onDoubleClick,
+  onContextMenu,
   children,
 }: {
   color: number;
   rotate: number;
-  isDragging: boolean;
   isEditing: boolean;
+  onMove: (dx: number, dy: number) => void;
   onPointerDown: (e: PointerEvent) => void;
   onDoubleClick: () => void;
+  onContextMenu: () => void;
   children: ReactNode;
 }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const { isPointerDown } = useDraggable({ ref, onDrag: !isEditing ? onMove : () => {} });
+
   return (
     <div
+      ref={ref}
       className={cx(
         "visible",
 
@@ -40,19 +47,17 @@ export function Paper({
 
         isEditing
           ? "shadow-[0_20px_50px_0px_#00000080]"
-          : isDragging
+          : isPointerDown
           ? "shadow-[0_10px_20px_0px_#00000080]"
           : "shadow-[0_5px_10px_0px_#00000080]",
         "transition-all",
 
         "overflow-hidden",
-
-        "pointer-events-auto",
       )}
       style={{ transform: `rotate(${rotate}deg)` }}
       onPointerDown={onPointerDown}
       onDoubleClick={onDoubleClick}
-      onContextMenu={onDoubleClick}
+      onContextMenu={onContextMenu}
     >
       {children}
     </div>

@@ -1,7 +1,6 @@
-import cx from "classnames";
-import { PointerEvent, useState } from "react";
-import { Note } from "./components";
-import { useHandleNotes, useHandlePointer, useInScreenNotes } from "./hooks";
+import { useState } from "react";
+import { Backdrop, Container, Note } from "./components";
+import { useHandleNotes } from "./hooks";
 
 export type NoteData = {
   key: string;
@@ -19,68 +18,35 @@ export function Board({
   notes: NoteData[];
   onNotesChange: (notes: NoteData[]) => void;
 }) {
-  const { boardRef, inScreenNotes, boardSize } = useInScreenNotes(notes);
-
+  const [boardSize, setBoardSize] = useState({ width: 9999, height: 9999 });
   const [editingNote, setEditingNote] = useState<string>();
 
-  const {
-    pointerDownNote,
-    handleNotePointerDown,
-    handleNoteDoubleClick,
-    handlePointerDown,
-    handlePointerMove,
-    handlePointerUp,
-  } = useHandlePointer({ notes, onNotesChange, editingNote, setEditingNote });
-
-  const { handleTextChange, handleColorChange, handleDelete, addNote, moveViewPortToNote } =
-    useHandleNotes({ notes, onNotesChange, setEditingNote });
-
-  function handleBoardPointerDown(e: PointerEvent) {
-    if (e.button === 0) handlePointerDown();
-  }
+  const { moveAllNotes, panToNote, bringNoteToFront, addNote, editNote, deleteNote } =
+    useHandleNotes({
+      notes,
+      boardSize,
+      onNotesChange,
+      setEditingNote,
+    });
 
   return (
-    <div
-      ref={boardRef}
-      className={cx(
-        "size-full",
+    <Container onResize={setBoardSize}>
+      <Backdrop onDrag={(dx, dy) => moveAllNotes(dx, dy)} onAddNote={addNote} />
 
-        "bg-[#202020]",
-        "overflow-hidden",
-
-        "relative",
-
-        "touch-none",
-      )}
-      onPointerMove={handlePointerMove}
-      onPointerUp={handlePointerUp}
-      onPointerLeave={handlePointerUp}
-    >
-      <div
-        className={cx("absolute", "size-full")}
-        onPointerDown={handleBoardPointerDown}
-        onDoubleClick={(e) => addNote(e.clientX, e.clientY)}
-        onContextMenu={(e) => addNote(e.clientX, e.clientY)}
-      />
-
-      {inScreenNotes.map(({ key, text, color, rotate, x, y, isInScreen }) => (
+      {notes.map(({ key, ...rest }) => (
         <Note
           key={key}
-          {...{ text, color, x, y, rotate }}
-          isDragging={pointerDownNote === key}
+          noteData={{ key, ...rest }}
           isEditing={editingNote === key}
-          onPointerDown={
-            isInScreen
-              ? (e) => handleNotePointerDown(e.button, key)
-              : () => moveViewPortToNote(key, notes, boardSize, onNotesChange)
-          }
-          onDoubleClick={isInScreen ? () => handleNoteDoubleClick(key) : () => {}}
-          onBackdropClick={() => setEditingNote(undefined)}
-          onTextChange={(text) => handleTextChange(key, text)}
-          onColorChange={(color) => handleColorChange(key, color)}
-          onDelete={() => handleDelete(key)}
+          boardSize={boardSize}
+          onPanTo={() => panToNote(key)}
+          onBringToFront={() => bringNoteToFront(key)}
+          onStartEditing={() => setEditingNote(key)}
+          onStopEditing={() => setEditingNote(undefined)}
+          onChange={(noteData) => editNote(key, noteData)}
+          onDelete={() => deleteNote(key)}
         />
       ))}
-    </div>
+    </Container>
   );
 }

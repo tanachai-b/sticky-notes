@@ -1,77 +1,102 @@
-import { useGetNewNote } from ".";
 import { NoteData } from "../Board";
+import { useNewColor } from "./useNewColor";
 
 export function useHandleNotes({
   notes,
+  boardSize,
   onNotesChange,
   setEditingNote,
 }: {
   notes: NoteData[];
+  boardSize: { width: number; height: number };
   onNotesChange: (notes: NoteData[]) => void;
   setEditingNote: (key?: string) => void;
 }) {
-  function handleTextChange(key: string, text: string): void {
-    const updatedNotes = notes.map((note) => (note.key === key ? { ...note, text } : note));
+  const { getNewColor } = useNewColor();
+
+  function moveAllNotes(offsetX: number, offsetY: number) {
+    const updatedNotes = notes.map(({ x, y, ...rest }) => ({
+      ...rest,
+      x: x + offsetX,
+      y: y + offsetY,
+    }));
     onNotesChange(updatedNotes);
   }
 
-  function handleColorChange(key: string, color: number): void {
-    const updatedNotes = notes.map((note) => (note.key === key ? { ...note, color } : note));
-    onNotesChange(updatedNotes);
-    setEditingNote(undefined);
+  function panToNote(key: string) {
+    let currentNotes = notes;
+
+    const interval = setInterval(() => {
+      const target = currentNotes.find((note) => note.key === key) as NoteData;
+
+      const x = target.x;
+      const y = target.y;
+
+      const cx = boardSize.width / 2 - 250 / 2;
+      const cy = boardSize.height / 2 - 250 / 2;
+
+      const dx = cx - x;
+      const dy = cy - y;
+
+      const vx = Math.floor(dx / 2);
+      const vy = Math.floor(dy / 2);
+
+      if (vx === 0 && vy === 0) {
+        clearInterval(interval);
+        return;
+      }
+
+      const updatedNotes = currentNotes.map(({ x, y, ...rest }) => ({
+        ...rest,
+        x: x + vx,
+        y: y + vy,
+      }));
+
+      onNotesChange(updatedNotes);
+
+      currentNotes = updatedNotes;
+    }, 1000 / 60);
   }
 
-  function handleDelete(key: string) {
+  function bringNoteToFront(key: string) {
+    const updatedNotes = [
+      ...notes.filter((note) => note.key !== key),
+      notes.find((note) => note.key === key) as NoteData,
+    ];
+    onNotesChange(updatedNotes);
+  }
+
+  function addNote(x: number, y: number) {
+    const newNote: NoteData = {
+      key: Math.floor(Math.random() * 1000000).toString(36),
+      text: "",
+      color: getNewColor(),
+      x: x - 250 / 2,
+      y: y - 250 / 2,
+      rotate: Math.floor((10 * Math.random() - 10 / 2) * 10) / 10,
+    };
+
+    onNotesChange([...notes, newNote]);
+    setEditingNote(newNote.key);
+  }
+
+  function editNote(key: string, noteData: NoteData) {
+    const updatedNotes = notes.map((note) => (note.key === key ? noteData : note));
+    onNotesChange(updatedNotes);
+  }
+
+  function deleteNote(key: string) {
     const updatedNotes = notes.filter((note) => note.key !== key);
     onNotesChange(updatedNotes);
     setEditingNote(undefined);
   }
 
-  const { getNewNote } = useGetNewNote();
-  function addNote(x: number, y: number) {
-    const newNote = getNewNote(x, y);
-    onNotesChange([...notes, newNote]);
-    setEditingNote(newNote.key);
-  }
-
-  function moveViewPortToNote(
-    key: string,
-    notes: NoteData[],
-    boardSize: { w: number; h: number },
-    onNotesChange: ((notes: NoteData[]) => void) | undefined,
-  ) {
-    let currentNotes = notes;
-
-    const interval = setInterval(() => {
-      const targetNote = currentNotes.find((note) => note.key === key) as NoteData;
-
-      const targetX = targetNote.x;
-      const targetY = targetNote.y;
-
-      const offsetX = (-targetX + boardSize.w / 2 - 250 / 2) / 2;
-      const offsetY = (-targetY + boardSize.h / 2 - 250 / 2) / 2;
-
-      if (Math.abs(offsetX) < 1 && Math.abs(offsetY) < 1) {
-        clearInterval(interval);
-      }
-
-      const newNotes = currentNotes.map(({ x, y, ...rest }) => ({
-        x: x + Math.floor(offsetX),
-        y: y + Math.floor(offsetY),
-        ...rest,
-      }));
-
-      currentNotes = newNotes;
-
-      onNotesChange?.(newNotes);
-    }, 1000 / 60);
-  }
-
   return {
-    handleTextChange,
-    handleColorChange,
-    handleDelete,
+    moveAllNotes,
+    panToNote,
+    bringNoteToFront,
     addNote,
-    moveViewPortToNote,
+    editNote,
+    deleteNote,
   };
 }

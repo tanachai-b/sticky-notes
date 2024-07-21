@@ -1,64 +1,85 @@
 import cx from "classnames";
-import { PointerEvent, useState } from "react";
+import { useState } from "react";
+import { NoteData } from "../../Board";
 import { Backdrop, Editor, Paper, Shadings, Text } from "./components";
 
 export function Note({
-  text,
-  color = 0,
-  x = 0,
-  y = 0,
-  rotate = 0,
-  isDragging,
+  noteData,
   isEditing,
-  onPointerDown,
-  onDoubleClick,
-  onBackdropClick,
-  onTextChange,
-  onColorChange,
+  boardSize,
+  onPanTo,
+  onBringToFront,
+  onStartEditing,
+  onStopEditing,
+  onChange,
   onDelete,
 }: {
-  text: string;
-  color: number;
-  x: number;
-  y: number;
-  rotate: number;
-  isDragging: boolean;
+  noteData: NoteData;
   isEditing: boolean;
-  onPointerDown: (e: PointerEvent) => void;
-  onDoubleClick: () => void;
-  onBackdropClick: () => void;
-  onTextChange: (text: string) => void;
-  onColorChange: (color: number) => void;
+  boardSize: { width: number; height: number };
+  onPanTo: () => void;
+  onBringToFront: () => void;
+  onStartEditing: () => void;
+  onStopEditing: () => void;
+  onChange: (noteData: NoteData) => void;
   onDelete: () => void;
 }) {
   const [previewColor, setPreviewColor] = useState<number>();
 
+  const { inScreenX, inScreenY, isInScreen } = inScreen();
+
   return (
     <>
-      <Backdrop isEditing={isEditing} onPointerDown={onBackdropClick} />
+      <Backdrop isEditing={isEditing} onPointerDown={onStopEditing} />
 
-      <div className={cx("absolute", "flex", "flex-row", "invisible")} style={{ left: x, top: y }}>
+      <div
+        className={cx("absolute", "flex", "flex-row", "invisible")}
+        style={{ left: inScreenX, top: inScreenY }}
+      >
         <Paper
-          color={previewColor ?? color}
-          rotate={rotate}
-          isDragging={isDragging}
+          color={previewColor ?? noteData.color}
+          rotate={noteData.rotate}
           isEditing={isEditing}
-          onPointerDown={onPointerDown}
-          onDoubleClick={onDoubleClick}
+          onMove={(dx, dy) => onChange({ ...noteData, x: noteData.x + dx, y: noteData.y + dy })}
+          onPointerDown={isInScreen ? onBringToFront : onPanTo}
+          onDoubleClick={onStartEditing}
+          onContextMenu={onStartEditing}
         >
           <Shadings />
 
-          <Text text={text} isEditing={isEditing} onChange={onTextChange} />
+          <Text
+            text={noteData.text}
+            isEditing={isEditing}
+            onChange={(text) => onChange({ ...noteData, text })}
+          />
         </Paper>
 
         <Editor
           visible={isEditing}
-          selectedColor={color}
-          onPreviewColor={(color) => setPreviewColor(color)}
-          onSelectColor={(color) => onColorChange(color)}
+          selectedColor={noteData.color}
+          onPreviewColor={setPreviewColor}
+          onSelectColor={(color) => {
+            onChange({ ...noteData, color });
+            onStopEditing();
+          }}
           onDelete={onDelete}
         />
       </div>
     </>
   );
+
+  function inScreen() {
+    const peek = 20;
+
+    const minX = -250 + peek;
+    const minY = -250 + peek;
+    const maxX = boardSize.width - peek;
+    const maxY = boardSize.height - peek;
+
+    const inScreenX = Math.min(Math.max(noteData.x, minX), maxX);
+    const inScreenY = Math.min(Math.max(noteData.y, minY), maxY);
+    const isInScreen = noteData.x === inScreenX && noteData.y === inScreenY;
+
+    return { inScreenX, inScreenY, isInScreen };
+  }
 }

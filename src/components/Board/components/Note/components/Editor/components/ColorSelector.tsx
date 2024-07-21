@@ -11,14 +11,14 @@ export function ColorSelector({
   onSelectColor: (colorIndex: number) => void;
 }) {
   const colors = [
-    "bg-yellow-light",
-    "bg-orange-light",
-    "bg-red-light",
-    "bg-purple-light",
-    "bg-blue-light",
-    "bg-green-bluish-light",
-    "bg-green-yellowish-light",
-    "bg-white",
+    "bg-[#ffe080]",
+    "bg-[#ffb080]",
+    "bg-[#ff80c0]",
+    "bg-[#c080ff]",
+    "bg-[#80c0ff]",
+    "bg-[#80ffc0]",
+    "bg-[#c0ff80]",
+    "bg-[#ffffff]",
   ];
 
   return (
@@ -52,7 +52,7 @@ function Color({
       className={cx(
         "group",
 
-        "p-x2",
+        "p-[2px]",
 
         "cursor-pointer",
       )}
@@ -61,15 +61,15 @@ function Color({
     >
       <div
         className={cx(
-          "size-x30",
+          "size-[30px]",
           "rounded-full",
 
           "border",
-          "border-black-light",
+          "border-[#202020]",
 
-          "bg-white",
+          "bg-[#ffffff]",
 
-          "p-x2",
+          "p-[2px]",
 
           "group-hover:scale-150",
           "transition-all",
@@ -80,8 +80,10 @@ function Color({
             className={cx(
               { invisible: !isSelected },
 
-              "text-black-light",
+              "text-[#202020]",
               "text-[25px]",
+
+              "grid",
             )}
           >
             <Icon icon="check" />

@@ -13,7 +13,7 @@ export function ToolButton({
 }) {
   return (
     <ButtonContainer onClick={onClick}>
-      <div className={cx("text-[30px]")}>
+      <div className={cx("text-[30px]", "grid")}>
         <Icon icon={icon} />
       </div>
 
@@ -32,9 +32,9 @@ function ButtonContainer({ onClick, children }: { onClick: () => void; children:
         "flex-row",
         "items-center",
 
-        "p-x15",
+        "p-[15px]",
 
-        "text-white-dark",
+        "text-[#e0e0e0]",
         "text-opacity-25",
         "hover:text-opacity-90",
 
@@ -57,17 +57,17 @@ function ButtonLabel({ children }: { children: ReactNode }) {
         "absolute",
         "left-[70px]",
 
-        "rounded-x7",
-        "px-x5",
-        "py-x2",
+        "rounded-[7px]",
+        "px-[5px]",
+        "py-[2px]",
 
-        "text-x15",
+        "text-[15px]",
         "whitespace-pre",
 
-        "bg-black-light",
+        "bg-[#202020]",
         "bg-opacity-75",
 
-        "text-white-dark",
+        "text-[#e0e0e0]",
         "opacity-0",
         "group-hover:opacity-100",
 

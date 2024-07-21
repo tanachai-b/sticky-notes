@@ -15,10 +15,10 @@ export function Backdrop({
 
         "transition-all",
 
-        "bg-black-light",
+        "bg-[#202020]",
         isEditing ? "bg-opacity-25" : "bg-opacity-0",
 
-        { "backdrop-blur-x2": isEditing },
+        { "backdrop-blur-[2px]": isEditing },
         { "pointer-events-none": !isEditing },
       )}
       onPointerDown={onPointerDown}

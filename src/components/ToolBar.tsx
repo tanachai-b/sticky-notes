@@ -11,7 +11,7 @@ export function ToolBar({ children }: { children: ReactNode }) {
         "flex",
         "items-start",
 
-        "p-x30",
+        "p-[30px]",
 
         "pointer-events-none",
       )}
@@ -22,16 +22,16 @@ export function ToolBar({ children }: { children: ReactNode }) {
 
           "rounded-full",
 
-          "bg-black-light",
+          "bg-[#202020]",
           "bg-opacity-75",
 
           "border",
-          "border-white-dark",
+          "border-[#e0e0e0]",
           "border-opacity-25",
 
-          "backdrop-blur-x2",
+          "backdrop-blur-[2px]",
 
-          "py-x10",
+          "py-[10px]",
         )}
       >
         {children}

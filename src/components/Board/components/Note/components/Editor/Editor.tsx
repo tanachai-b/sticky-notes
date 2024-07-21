@@ -19,8 +19,8 @@ export function Editor({
     <div
       className={cx(
         "relative",
-        "-top-x10",
-        "ml-x20",
+        "-top-[10px]",
+        "ml-[20px]",
         "flex",
         "flex-col",
         visible ? "opacity-100" : "opacity-0",
@@ -34,7 +34,7 @@ export function Editor({
         onSelectColor={onSelectColor}
       />
 
-      <div className={cx("h-x10")} />
+      <div className={cx("h-[10px]")} />
 
       <DeleteButton onClick={onDelete} />
     </div>
@@ -51,27 +51,26 @@ function DeleteButton({ onClick: onDelete }: { onClick: () => void }) {
         "flex-row",
         "items-center",
 
-        "p-x2",
+        "p-[2px]",
 
         "relative",
       )}
     >
       <div
         className={cx(
-          "size-x30",
+          "size-[30px]",
           "rounded-full",
 
-          "border-x2",
-          "border-white",
+          "border-[2px]",
+          "border-[#ffffff]",
 
-          "bg-black-light",
+          "bg-[#202020]",
           "bg-opacity-50",
 
-          "flex",
-          "items-center",
-          "justify-center",
+          "grid",
+          "place-items-center",
 
-          "text-white",
+          "text-[#ffffff]",
           "text-[25px]",
 
           "cursor-pointer",
@@ -88,16 +87,16 @@ function DeleteButton({ onClick: onDelete }: { onClick: () => void }) {
           "absolute",
           "left-[40px]",
 
-          "rounded-x7",
-          "px-x5",
-          "py-x2",
+          "rounded-[7px]",
+          "px-[5px]",
+          "py-[2px]",
 
-          "text-x15",
+          "text-[15px]",
           "font-light",
           "whitespace-pre",
-          "text-white",
+          "text-[#ffffff]",
 
-          "bg-black-light",
+          "bg-[#202020]",
           "bg-opacity-50",
         )}
       >

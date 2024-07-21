@@ -25,7 +25,7 @@ function SaveStatusBackdrop({ children }: { children: ReactNode }) {
         "flex-col",
         "items-center",
 
-        "pt-x30",
+        "pt-[30px]",
 
         "pointer-events-none",
       )}
@@ -45,12 +45,12 @@ function SaveStatusContainer({ children }: { children: ReactNode }) {
 
         "rounded-full",
 
-        "bg-black-light",
+        "bg-[#202020]",
         "bg-opacity-75",
-        "backdrop-blur-x2",
+        "backdrop-blur-[2px]",
 
         "border",
-        "border-white-dark",
+        "border-[#e0e0e0]",
         "border-opacity-25",
 
         "flex",
@@ -67,10 +67,10 @@ function SaveStatusContainer({ children }: { children: ReactNode }) {
           className={cx(
             "flex",
             "flex-row",
-            "gap-x5",
+            "gap-[5px]",
 
-            "px-x10",
-            "py-x5",
+            "px-[10px]",
+            "py-[5px]",
           )}
         >
           {children}
@@ -82,10 +82,10 @@ function SaveStatusContainer({ children }: { children: ReactNode }) {
 
 function FileName({ children }: { children: ReactNode }) {
   return (
-    <div className={cx("text-white-dark", "text-opacity-50", "whitespace-pre")}>{children}</div>
+    <div className={cx("text-[#e0e0e0]", "text-opacity-50", "whitespace-pre")}>{children}</div>
   );
 }
 
 function SavingStatus({ children }: { children: ReactNode }) {
-  return <div className={cx("text-white-dark", "italic")}>{children}</div>;
+  return <div className={cx("text-[#e0e0e0]", "italic")}>{children}</div>;
 }

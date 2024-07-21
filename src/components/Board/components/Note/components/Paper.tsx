@@ -24,19 +24,23 @@ export function Paper({
         "w-[250px]",
         "h-[250px]",
 
-        "rounded-x5",
+        "rounded-[5px]",
         [
-          "bg-yellow-light",
-          "bg-orange-light",
-          "bg-red-light",
-          "bg-purple-light",
-          "bg-blue-light",
-          "bg-green-bluish-light",
-          "bg-green-yellowish-light",
-          "bg-white",
+          "bg-[#ffe080]",
+          "bg-[#ffb080]",
+          "bg-[#ff80c0]",
+          "bg-[#c080ff]",
+          "bg-[#80c0ff]",
+          "bg-[#80ffc0]",
+          "bg-[#c0ff80]",
+          "bg-[#ffffff]",
         ][color],
 
-        isEditing ? "shadow-x50" : isDragging ? "shadow-x20" : "shadow-x10",
+        isEditing
+          ? "shadow-[0_20px_50px_0px_#00000080]"
+          : isDragging
+          ? "shadow-[0_10px_20px_0px_#00000080]"
+          : "shadow-[0_5px_10px_0px_#00000080]",
         "transition-all",
 
         "overflow-hidden",

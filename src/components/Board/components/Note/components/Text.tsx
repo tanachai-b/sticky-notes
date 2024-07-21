@@ -39,10 +39,10 @@ export function Text({
           "w-full",
           "min-h-[5rem]",
 
-          "text-x30",
+          "text-[30px]",
           "font-handwriting",
           "font-light",
-          "text-black-light",
+          "text-[#202020]",
 
           "text-center",
           "whitespace-pre-wrap",
@@ -52,7 +52,7 @@ export function Text({
       >
         <div
           className={cx(
-            "p-x10",
+            "p-[10px]",
 
             "break-words",
 
@@ -75,7 +75,7 @@ export function Text({
             "outline-none",
             "bg-transparent",
 
-            "p-x10",
+            "p-[10px]",
             "text-center",
 
             "overflow-hidden",

@@ -56,7 +56,7 @@ function Container({ children }: { children: ReactNode }) {
         "flex",
         "flex-col",
 
-        "text-x13",
+        "text-[13px]",
         "select-none",
 
         "relative",

@@ -45,7 +45,7 @@ export function Board({
       className={cx(
         "h-full",
 
-        "bg-black-light",
+        "bg-[#202020]",
         "overflow-hidden",
 
         "relative",

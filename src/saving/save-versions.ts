@@ -1,4 +1,4 @@
-export type Save_v0_1_1 = {
+export type Save_v0_1_0 = {
   key: string;
   text: string;
   color: number;

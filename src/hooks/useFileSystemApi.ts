@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useInterval } from "src/common-hooks";
+import { useEffect, useState } from "react";
+import { useTrigger } from "src/common-hooks";
 import { NoteData } from "src/components";
 import { generateSave, updateSave } from "src/saving";
 
@@ -15,11 +15,19 @@ export function useFileSystemApi({
   };
 
   const [fileHandle, setFileHandle] = useState<FileSystemFileHandle>();
+  const fileName = fileHandle?.name;
 
   const saveInterval = 500;
   const [lastChangeTime, setLastChangeTime] = useState<number>(Date.now());
   const [isSaved, setIsSaved] = useState<boolean>(true);
   const [isSaving, setIsSaving] = useState<boolean>(false);
+
+  const triggerAutoSave = useTrigger(autoSave);
+
+  useEffect(() => {
+    const interval = setInterval(triggerAutoSave, saveInterval);
+    return () => clearInterval(interval);
+  }, []);
 
   function confirmUnsavedChanges() {
     return confirm("There's some unsaved changes!");
@@ -61,8 +69,10 @@ export function useFileSystemApi({
       await fileHandle.createWritable();
       setFileHandle(fileHandle);
 
+      const save = JSON.stringify(generateSave(notes), undefined, 2);
+
       const writable = await fileHandle.createWritable();
-      await writable.write(JSON.stringify(generateSave(notes), undefined, 2));
+      await writable.write(save);
       await writable.close();
     } catch (error) {
       console.error(error);
@@ -74,8 +84,6 @@ export function useFileSystemApi({
     setLastChangeTime(Date.now());
   }
 
-  useInterval(autoSave, saveInterval);
-
   async function autoSave() {
     if (!fileHandle) return;
 
@@ -85,8 +93,10 @@ export function useFileSystemApi({
     try {
       setIsSaving(true);
 
+      const save = JSON.stringify(generateSave(notes), undefined, 2);
+
       const writable = await fileHandle.createWritable();
-      await writable.write(JSON.stringify(generateSave(notes), undefined, 2));
+      await writable.write(save);
       await writable.close();
 
       setIsSaving(false);
@@ -98,7 +108,7 @@ export function useFileSystemApi({
   }
 
   return {
-    fileHandle,
+    fileName,
     isSaved,
     onNew,
     onOpen,

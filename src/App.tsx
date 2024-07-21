@@ -7,7 +7,7 @@ import { sampleNotes } from "./sampleData";
 export default function App() {
   const [notes, setNotes] = useState<NoteData[]>([]);
 
-  const { fileHandle, isSaved, onNew, onOpen, onSaveAs, onNotesChange } = useFileSystemApi({
+  const { fileName, isSaved, onNew, onOpen, onSaveAs, onNotesChange } = useFileSystemApi({
     notes,
     setNotes,
   });
@@ -36,7 +36,7 @@ export default function App() {
         <ToolButton icon="save_as" label="Save As" onClick={onSaveAs} />
       </ToolBar>
 
-      <FileSaveStatus fileName={fileHandle?.name} isSaving={!isSaved} />
+      <FileSaveStatus fileName={fileName} isSaving={!isSaved} />
     </Container>
   );
 }

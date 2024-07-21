@@ -3,12 +3,9 @@ import { Save_v0_2_0 } from "./save-versions";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function updateSave(input: any): Save_v0_2_0 {
-  const version = getVersion(input) ?? "0.1.1";
+  const version = getVersion(input);
 
-  const startIndex = Math.max(
-    allVersions.findIndex((v) => v === version),
-    0,
-  );
+  const startIndex = Math.max(allVersions.indexOf(version), 0);
   const updaters = allUpdaters.slice(startIndex);
 
   let output = input;
@@ -18,11 +15,8 @@ export function updateSave(input: any): Save_v0_2_0 {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function getVersion(input: any) {
-  if (input.appName !== "sticky-notes") return "0.1.1";
+function getVersion(input: any): string {
+  if (input.appName === "sticky-notes" && input.appVersion != null) return input.appVersion;
 
-  const version = input.appVersion;
-  if (version == null) throw new Error("Invalid save file!");
-
-  return version;
+  return "0.1.0";
 }

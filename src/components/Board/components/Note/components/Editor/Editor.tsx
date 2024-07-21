@@ -1,6 +1,6 @@
 import cx from "classnames";
 import { Icon } from "src/common-components";
-import { ColorSelector } from "./components";
+import { ColorSelector } from "./ColorSelector";
 
 export function Editor({
   visible,

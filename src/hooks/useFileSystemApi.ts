@@ -1,7 +1,7 @@
 import { useState } from "react";
+import { useInterval } from "src/common-hooks";
 import { NoteData } from "src/components";
 import { generateSave, updateSave } from "src/saving";
-import { useInterval } from "./useInterval";
 
 export function useFileSystemApi({
   notes,

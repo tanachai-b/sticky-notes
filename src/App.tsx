@@ -52,6 +52,7 @@ function Container({ children }: { children: ReactNode }) {
     <div
       className={cx(
         "size-full",
+        "bg-[#202020]",
 
         "flex",
         "flex-col",
@@ -59,6 +60,8 @@ function Container({ children }: { children: ReactNode }) {
         "text-[13px]",
         "select-none",
         "touch-none",
+
+        "overflow-clip",
 
         "relative",
       )}

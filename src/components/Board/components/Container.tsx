@@ -13,17 +13,7 @@ export function Container({
   useResizeObserver({ ref, onResize });
 
   return (
-    <div
-      ref={ref}
-      className={cx(
-        "size-full",
-
-        "bg-[#202020]",
-        "overflow-hidden",
-
-        "relative",
-      )}
-    >
+    <div ref={ref} className={cx("size-full", "relative")}>
       {children}
     </div>
   );

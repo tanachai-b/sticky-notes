@@ -1,14 +1,12 @@
-import { ReactNode, useEffect, useRef } from "react";
+import { RefObject, useEffect } from "react";
 
-export function ObserveResize({
+export function useResizeObserver({
+  ref,
   onResize,
-  children,
 }: {
+  ref: RefObject<HTMLDivElement>;
   onResize: (boundingClientRect: DOMRect) => void;
-  children: ReactNode;
 }) {
-  const ref = useRef<HTMLDivElement>(null);
-
   useEffect(() => {
     if (!ref.current) return;
 
@@ -20,6 +18,4 @@ export function ObserveResize({
     resizeObserver.observe(ref.current);
     return () => resizeObserver.disconnect();
   }, [onResize]);
-
-  return <div ref={ref}>{children}</div>;
 }

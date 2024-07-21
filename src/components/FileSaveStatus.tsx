@@ -1,6 +1,6 @@
 import cx from "classnames";
-import { ReactNode, useState } from "react";
-import { ObserveResize } from "src/common-components";
+import { ReactNode, useRef, useState } from "react";
+import { useResizeObserver } from "src/common-hooks";
 
 export function FileSaveStatus({ fileName, isSaving }: { fileName?: string; isSaving: boolean }) {
   return (
@@ -36,7 +36,11 @@ function SaveStatusBackdrop({ children }: { children: ReactNode }) {
 }
 
 function SaveStatusContainer({ children }: { children: ReactNode }) {
+  const ref = useRef<HTMLDivElement>(null);
+
   const [width, setWidth] = useState<number>(0);
+
+  useResizeObserver({ ref, onResize: ({ width }) => setWidth(width) });
 
   return (
     <div
@@ -59,23 +63,24 @@ function SaveStatusContainer({ children }: { children: ReactNode }) {
         "transition-all",
 
         "overflow-hidden",
-      )}
-      style={{ width: `${width + 2}px` }}
-    >
-      <ObserveResize onResize={({ width }) => setWidth(width)}>
-        <div
-          className={cx(
-            "flex",
-            "flex-row",
-            "gap-[5px]",
 
-            "px-[10px]",
-            "py-[5px]",
-          )}
-        >
-          {children}
-        </div>
-      </ObserveResize>
+        "box-content",
+      )}
+      style={{ width: `${width}px` }}
+    >
+      <div
+        ref={ref}
+        className={cx(
+          "flex",
+          "flex-row",
+          "gap-[5px]",
+
+          "px-[10px]",
+          "py-[5px]",
+        )}
+      >
+        {children}
+      </div>
     </div>
   );
 }

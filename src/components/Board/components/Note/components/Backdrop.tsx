@@ -13,13 +13,12 @@ export function Backdrop({
         "absolute",
         "size-full",
 
-        "transition-all",
-
         "bg-[#202020]",
-        isEditing ? "bg-opacity-25" : "bg-opacity-0",
 
+        isEditing ? "bg-opacity-25" : "bg-opacity-0",
         { "backdrop-blur-[2px]": isEditing },
-        { "pointer-events-none": !isEditing },
+        { invisible: !isEditing },
+        "transition-all",
       )}
       onPointerDown={onPointerDown}
     />

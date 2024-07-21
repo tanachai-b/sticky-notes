@@ -21,6 +21,8 @@ export function Paper({
   return (
     <div
       className={cx(
+        "visible",
+
         "w-[250px]",
         "h-[250px]",
 

@@ -43,7 +43,7 @@ export function Board({
     <div
       ref={boardRef}
       className={cx(
-        "h-full",
+        "size-full",
 
         "bg-[#202020]",
         "overflow-hidden",

@@ -27,7 +27,7 @@ function SaveStatusBackdrop({ children }: { children: ReactNode }) {
 
         "pt-[30px]",
 
-        "pointer-events-none",
+        "invisible",
       )}
     >
       {children}
@@ -41,7 +41,7 @@ function SaveStatusContainer({ children }: { children: ReactNode }) {
   return (
     <div
       className={cx(
-        "pointer-events-auto",
+        "visible",
 
         "rounded-full",
 

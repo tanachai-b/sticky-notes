@@ -13,12 +13,12 @@ export function ToolBar({ children }: { children: ReactNode }) {
 
         "p-[30px]",
 
-        "pointer-events-none",
+        "invisible",
       )}
     >
       <div
         className={cx(
-          "pointer-events-auto",
+          "visible",
 
           "rounded-full",
 

@@ -51,13 +51,14 @@ function Container({ children }: { children: ReactNode }) {
   return (
     <div
       className={cx(
-        "h-full",
+        "size-full",
 
         "flex",
         "flex-col",
 
         "text-[13px]",
         "select-none",
+        "touch-none",
 
         "relative",
       )}

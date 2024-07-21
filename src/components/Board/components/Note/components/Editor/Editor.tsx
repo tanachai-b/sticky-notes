@@ -18,14 +18,18 @@ export function Editor({
   return (
     <div
       className={cx(
+        { visible: visible },
+        { "pointer-events-none": !visible },
+
         "relative",
         "-top-[10px]",
         "ml-[20px]",
+
         "flex",
         "flex-col",
+
         visible ? "opacity-100" : "opacity-0",
         "transition-all",
-        { "pointer-events-auto": visible },
       )}
     >
       <ColorSelector

@@ -37,10 +37,7 @@ export function Note({
     <>
       <Backdrop isEditing={isEditing} onPointerDown={onBackdropClick} />
 
-      <div
-        className={cx("absolute", "flex", "flex-row", "pointer-events-none")}
-        style={{ left: x, top: y }}
-      >
+      <div className={cx("absolute", "flex", "flex-row", "invisible")} style={{ left: x, top: y }}>
         <Paper
           color={previewColor ?? color}
           rotate={rotate}

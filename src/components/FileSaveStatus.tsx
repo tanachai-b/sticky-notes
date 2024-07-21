@@ -8,7 +8,7 @@ export function FileSaveStatus({ fileName, isSaving }: { fileName?: string; isSa
       <SaveStatusContainer>
         <FileName>{fileName ?? "Unsaved"}</FileName>
 
-        {fileName && <SavingStatus>{isSaving ? "saving..." : "saved"}</SavingStatus>}
+        {fileName != null && <SavingStatus>{isSaving ? "saving..." : "saved"}</SavingStatus>}
       </SaveStatusContainer>
     </SaveStatusBackdrop>
   );

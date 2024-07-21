@@ -1,6 +1,5 @@
 import cx from "classnames";
 import { PointerEvent, useState } from "react";
-
 import { Note } from "./components";
 import { useHandleNotes, useHandlePointer, useInScreenNotes } from "./hooks";
 
@@ -33,13 +32,8 @@ export function Board({
     handlePointerUp,
   } = useHandlePointer({ notes, onNotesChange, editingNote, setEditingNote });
 
-  const {
-    handleTextChange,
-    handleColorChange,
-    handleDelete,
-    addNote,
-    moveViewPortToNote,
-  } = useHandleNotes({ notes, onNotesChange, setEditingNote });
+  const { handleTextChange, handleColorChange, handleDelete, addNote, moveViewPortToNote } =
+    useHandleNotes({ notes, onNotesChange, setEditingNote });
 
   function handleBoardPointerDown(e: PointerEvent) {
     if (e.button === 0) handlePointerDown();
@@ -80,9 +74,7 @@ export function Board({
               ? (e) => handleNotePointerDown(e.button, key)
               : () => moveViewPortToNote(key, notes, boardSize, onNotesChange)
           }
-          onDoubleClick={
-            isInScreen ? () => handleNoteDoubleClick(key) : () => {}
-          }
+          onDoubleClick={isInScreen ? () => handleNoteDoubleClick(key) : () => {}}
           onBackdropClick={() => setEditingNote(undefined)}
           onTextChange={(text) => handleTextChange(key, text)}
           onColorChange={(color) => handleColorChange(key, color)}

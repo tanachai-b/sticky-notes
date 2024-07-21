@@ -1,6 +1,5 @@
 import cx from "classnames";
 import { PointerEvent, useState } from "react";
-
 import { Backdrop, Editor, Paper, Shadings, Text } from "./components";
 
 export function Note({

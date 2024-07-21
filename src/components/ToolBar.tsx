@@ -1,6 +1,5 @@
 import cx from "classnames";
 import { ReactNode } from "react";
-
 import { Icon } from "src/common-components";
 
 export function ToolBar({ children }: { children?: ReactNode } = {}) {

@@ -1,5 +1,4 @@
 import { useState } from "react";
-
 import { NoteData } from "../components";
 import { useInterval } from "./useInterval";
 
@@ -37,7 +36,7 @@ export function useFileSystemApi({
 
     try {
       const [fileHandle] = await window.showOpenFilePicker(filePickerOptions);
-      await fileHandle?.createWritable();
+      await fileHandle.createWritable();
       setFileHandle(fileHandle);
 
       const file = await fileHandle.getFile();
@@ -53,10 +52,10 @@ export function useFileSystemApi({
 
     try {
       const fileHandle = await window.showSaveFilePicker(filePickerOptions);
-      await fileHandle?.createWritable();
+      await fileHandle.createWritable();
       setFileHandle(fileHandle);
 
-      const writable = await fileHandle?.createWritable();
+      const writable = await fileHandle.createWritable();
       await writable.write(JSON.stringify(notes, undefined, 4));
       await writable.close();
     } catch (e) {

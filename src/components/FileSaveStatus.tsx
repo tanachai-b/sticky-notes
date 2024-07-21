@@ -1,6 +1,5 @@
 import cx from "classnames";
 import { ReactNode, useState } from "react";
-
 import { ObserveResize } from "src/common-components";
 
 export function FileSaveStatus({
@@ -15,9 +14,7 @@ export function FileSaveStatus({
       <SaveStatusContainer>
         <FileName>{fileName ?? "Unsaved"}</FileName>
 
-        {fileName && (
-          <SavingStatus>{isSaving ? "saving..." : "saved"}</SavingStatus>
-        )}
+        {fileName && <SavingStatus>{isSaving ? "saving..." : "saved"}</SavingStatus>}
       </SaveStatusContainer>
     </SaveStatusBackdrop>
   );
@@ -91,9 +88,7 @@ function SaveStatusContainer({ children }: { children?: ReactNode } = {}) {
 
 function FileName({ children }: { children?: ReactNode } = {}) {
   return (
-    <div className={cx("text-white-dark", "text-opacity-50", "whitespace-pre")}>
-      {children}
-    </div>
+    <div className={cx("text-white-dark", "text-opacity-50", "whitespace-pre")}>{children}</div>
   );
 }
 

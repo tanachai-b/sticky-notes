@@ -17,10 +17,7 @@ export function Text({
 
     setTimeout(() => {
       ref.current?.focus();
-      ref.current?.setSelectionRange(
-        ref.current.value.length,
-        ref.current.value.length,
-      );
+      ref.current?.setSelectionRange(ref.current.value.length, ref.current.value.length);
     }, 0);
   }, [isEditing]);
 
@@ -85,7 +82,7 @@ export function Text({
           )}
           hidden={!isEditing}
           value={text}
-          onChange={(e) => onChange?.(e.target.value ?? "")}
+          onChange={(e) => onChange?.(e.target.value)}
         />
       </div>
     </div>

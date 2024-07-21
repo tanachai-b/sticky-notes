@@ -1,5 +1,4 @@
 import { RefObject, useEffect, useMemo, useRef, useState } from "react";
-
 import { NoteData } from "../Board";
 
 export function useInScreenNotes(notes: NoteData[]) {
@@ -12,10 +11,7 @@ export function useInScreenNotes(notes: NoteData[]) {
     [boardRef.current],
   );
 
-  const inScreenNotes = useMemo(
-    () => forceNotesInScreen(notes, boardSize),
-    [boardSize, notes],
-  );
+  const inScreenNotes = useMemo(() => forceNotesInScreen(notes, boardSize), [boardSize, notes]);
 
   return { boardRef, inScreenNotes, boardSize };
 }
@@ -31,10 +27,7 @@ function observeBoardSize(
   }).observe(boardRef.current);
 }
 
-function forceNotesInScreen(
-  notes: NoteData[],
-  boardSize: { w: number; h: number },
-) {
+function forceNotesInScreen(notes: NoteData[], boardSize: { w: number; h: number }) {
   const peek = 20;
   const minX = -250 + peek;
   const minY = -250 + peek;

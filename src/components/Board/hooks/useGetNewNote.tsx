@@ -10,9 +10,7 @@ export function useGetNewNote() {
       newColor = Math.floor(8 * Math.random());
     }
 
-    const lastSixColors = [...lastColors, newColor].slice(
-      Math.max(lastColors.length - 6 + 1, 0),
-    );
+    const lastSixColors = [...lastColors, newColor].slice(Math.max(lastColors.length - 6 + 1, 0));
     setLastColors(lastSixColors);
 
     return {

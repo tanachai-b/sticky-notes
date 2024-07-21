@@ -1,5 +1,4 @@
 import { PointerEvent, useState } from "react";
-
 import { NoteData } from "../Board";
 
 export function useHandlePointer({

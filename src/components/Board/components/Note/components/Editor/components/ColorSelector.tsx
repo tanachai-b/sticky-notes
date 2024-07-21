@@ -1,5 +1,4 @@
 import cx from "classnames";
-
 import { Icon } from "src/common-components";
 
 export function ColorSelector({
@@ -23,10 +22,7 @@ export function ColorSelector({
   ];
 
   return (
-    <div
-      className={cx("flex", "flex-col")}
-      onPointerLeave={() => onPreviewColor?.()}
-    >
+    <div className={cx("flex", "flex-col")} onPointerLeave={() => onPreviewColor?.()}>
       {colors.map((color, index) => (
         <Color
           key={index}

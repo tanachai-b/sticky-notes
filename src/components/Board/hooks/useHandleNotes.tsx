@@ -11,16 +11,12 @@ export function useHandleNotes({
   setEditingNote: (key?: string) => void;
 }) {
   function handleTextChange(key: string, text: string): void {
-    const updatedNotes = notes.map((note) =>
-      note.key === key ? { ...note, text } : note,
-    );
+    const updatedNotes = notes.map((note) => (note.key === key ? { ...note, text } : note));
     onNotesChange?.(updatedNotes);
   }
 
   function handleColorChange(key: string, color: number): void {
-    const updatedNotes = notes.map((note) =>
-      note.key === key ? { ...note, color } : note,
-    );
+    const updatedNotes = notes.map((note) => (note.key === key ? { ...note, color } : note));
     onNotesChange?.(updatedNotes);
     setEditingNote(undefined);
   }
@@ -47,9 +43,7 @@ export function useHandleNotes({
     let currentNotes = notes;
 
     const interval = setInterval(() => {
-      const targetNote = currentNotes.find(
-        (note) => note.key === key,
-      ) as NoteData;
+      const targetNote = currentNotes.find((note) => note.key === key) as NoteData;
 
       const targetX = targetNote.x;
       const targetY = targetNote.y;

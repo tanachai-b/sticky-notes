@@ -1,21 +1,16 @@
 import cx from "classnames";
 import { ReactNode, useEffect, useState } from "react";
-
-import {
-  Board,
-  FileSaveStatus,
-  NoteData,
-  ToolBar,
-  ToolButton,
-} from "./components";
+import { Board, FileSaveStatus, NoteData, ToolBar, ToolButton } from "./components";
 import { useFileSystemApi } from "./hooks";
 import { sampleNotes } from "./sampleData";
 
 export default function App() {
   const [notes, setNotes] = useState<NoteData[]>([]);
 
-  const { fileHandle, isSaved, onNew, onOpen, onSaveAs, onNotesChange } =
-    useFileSystemApi({ notes, setNotes });
+  const { fileHandle, isSaved, onNew, onOpen, onSaveAs, onNotesChange } = useFileSystemApi({
+    notes,
+    setNotes,
+  });
 
   useEffect(() => {
     if (notes.length === 0) setNotes(sampleNotes);

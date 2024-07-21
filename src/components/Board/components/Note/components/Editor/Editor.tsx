@@ -1,5 +1,4 @@
 import cx from "classnames";
-
 import { Icon } from "src/common-components";
 import { ColorSelector } from "./components";
 

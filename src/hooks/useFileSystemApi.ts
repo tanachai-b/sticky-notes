@@ -48,9 +48,8 @@ export function useFileSystemApi({
 
       setFileHandle(fileHandle);
       setNotes(notes);
-    } catch (e) {
-      setNotes([]);
-      console.error(e);
+    } catch (error) {
+      console.error(error);
     }
   }
 
@@ -65,8 +64,8 @@ export function useFileSystemApi({
       const writable = await fileHandle.createWritable();
       await writable.write(JSON.stringify(generateSave(notes), undefined, 2));
       await writable.close();
-    } catch (e) {
-      console.error(e);
+    } catch (error) {
+      console.error(error);
     }
   }
 
@@ -92,9 +91,9 @@ export function useFileSystemApi({
 
       setIsSaving(false);
       setIsSaved(true);
-    } catch (e) {
+    } catch (error) {
       setIsSaving(false);
-      console.error(e);
+      console.error(error);
     }
   }
 

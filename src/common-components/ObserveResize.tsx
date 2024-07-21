@@ -4,7 +4,7 @@ export function ObserveResize({
   onResize,
   children,
 }: {
-  onResize?: (boundingClientRect: DOMRect) => void;
+  onResize: (boundingClientRect: DOMRect) => void;
   children: ReactNode;
 }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -14,7 +14,7 @@ export function ObserveResize({
 
     const resizeObserver = new ResizeObserver(() => {
       if (!ref.current) return;
-      onResize?.(ref.current.getBoundingClientRect());
+      onResize(ref.current.getBoundingClientRect());
     });
 
     resizeObserver.observe(ref.current);

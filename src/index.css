@@ -11,10 +11,52 @@ html {
   height: 100%;
 }
 
-html > body {
+body {
   height: 100%;
 }
 
-html > body > #root {
+#root {
   height: 100%;
+}
+
+@layer utilities {
+  @media (pointer: fine) {
+    /* width */
+    ::-webkit-scrollbar {
+      width: 10px;
+      height: 10px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+      background: #ffffff00;
+      border-radius: 999px;
+    }
+
+    ::-webkit-scrollbar-corner {
+      background: #ffffff00;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+      background: #ffffff20;
+      border-radius: 999px;
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+      background: #ffffff30;
+    }
+
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .hide-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Hide scrollbar for IE, Edge and Firefox */
+    .hide-scrollbar {
+      -ms-overflow-style: none; /* IE and Edge */
+      scrollbar-width: none; /* Firefox */
+    }
+  }
 }

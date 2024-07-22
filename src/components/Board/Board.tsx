@@ -1,5 +1,7 @@
+import cx from "classnames";
 import { useState } from "react";
-import { Backdrop, Container, Note } from "./components";
+import { Resizable } from "src/common-components";
+import { Backdrop, Note } from "./components";
 import { useHandleNotes } from "./hooks";
 
 export type NoteData = {
@@ -31,7 +33,7 @@ export function Board({
     });
 
   return (
-    <Container onResize={setBoardSize}>
+    <Resizable className={cx("size-full", "relative")} onResize={setBoardSize}>
       <Backdrop onDrag={(dx, dy) => moveAllNotes(dx, dy)} onAddNote={addNote} />
 
       {notes
@@ -50,6 +52,6 @@ export function Board({
             onDelete={() => deleteNote(key)}
           />
         ))}
-    </Container>
+    </Resizable>
   );
 }

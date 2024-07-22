@@ -1,6 +1,6 @@
 import cx from "classnames";
-import { PointerEvent, ReactNode, useRef } from "react";
-import { useDraggable } from "src/common-hooks";
+import { PointerEvent, ReactNode, useState } from "react";
+import { Draggable } from "src/common-components";
 
 export function Paper({
   color,
@@ -21,45 +21,49 @@ export function Paper({
   onContextMenu: () => void;
   children: ReactNode;
 }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const { isPointerDown } = useDraggable({ ref, onDrag: !isEditing ? onMove : () => {} });
+  const [isPointerDown, setIsPointerDown] = useState(false);
 
   return (
-    <div
-      ref={ref}
-      className={cx(
-        "visible",
-
-        "w-[250px]",
-        "h-[250px]",
-
-        "rounded-[5px]",
-        [
-          "bg-[#ffe080]",
-          "bg-[#ffb080]",
-          "bg-[#ff80c0]",
-          "bg-[#c080ff]",
-          "bg-[#80c0ff]",
-          "bg-[#80ffc0]",
-          "bg-[#c0ff80]",
-          "bg-[#ffffff]",
-        ][color],
-
-        isEditing
-          ? "shadow-[0_20px_50px_0px_#00000080]"
-          : isPointerDown
-          ? "shadow-[0_10px_20px_0px_#00000080]"
-          : "shadow-[0_5px_10px_0px_#00000080]",
-        "transition-all",
-
-        "overflow-hidden",
-      )}
-      style={{ transform: `rotate(${rotate}deg)` }}
-      onPointerDown={onPointerDown}
-      onDoubleClick={onDoubleClick}
-      onContextMenu={onContextMenu}
+    <Draggable
+      onDrag={!isEditing ? onMove : () => {}}
+      onPointerDown={() => setIsPointerDown(true)}
+      onPointerUp={() => setIsPointerDown(false)}
     >
-      {children}
-    </div>
+      <div
+        className={cx(
+          "visible",
+
+          "w-[250px]",
+          "h-[250px]",
+
+          "rounded-[5px]",
+          [
+            "bg-[#ffe080]",
+            "bg-[#ffb080]",
+            "bg-[#ff80c0]",
+            "bg-[#c080ff]",
+            "bg-[#80c0ff]",
+            "bg-[#80ffc0]",
+            "bg-[#c0ff80]",
+            "bg-[#ffffff]",
+          ][color],
+
+          isEditing
+            ? "shadow-[0_20px_50px_0px_#00000080]"
+            : isPointerDown
+            ? "shadow-[0_10px_20px_0px_#00000080]"
+            : "shadow-[0_5px_10px_0px_#00000080]",
+          "transition-all",
+
+          "overflow-hidden",
+        )}
+        style={{ transform: `rotate(${rotate}deg)` }}
+        onPointerDown={onPointerDown}
+        onDoubleClick={onDoubleClick}
+        onContextMenu={onContextMenu}
+      >
+        {children}
+      </div>
+    </Draggable>
   );
 }

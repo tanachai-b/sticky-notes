@@ -1,6 +1,5 @@
 import cx from "classnames";
-import { useRef } from "react";
-import { useDraggable } from "src/common-hooks";
+import { Draggable } from "src/common-components";
 
 export function Backdrop({
   onDrag,
@@ -9,15 +8,13 @@ export function Backdrop({
   onDrag: (dx: number, dy: number) => void;
   onAddNote: (x: number, y: number) => void;
 }) {
-  const ref = useRef<HTMLDivElement>(null);
-  useDraggable({ ref, onDrag });
-
   return (
-    <div
-      ref={ref}
-      className={cx("absolute", "size-full")}
-      onDoubleClick={(e) => onAddNote(e.clientX, e.clientY)}
-      onContextMenu={(e) => onAddNote(e.clientX, e.clientY)}
-    />
+    <Draggable className={cx("absolute", "size-full")} onDrag={onDrag}>
+      <div
+        className={cx("size-full")}
+        onDoubleClick={(e) => onAddNote(e.clientX, e.clientY)}
+        onContextMenu={(e) => onAddNote(e.clientX, e.clientY)}
+      />
+    </Draggable>
   );
 }

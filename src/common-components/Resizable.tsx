@@ -1,12 +1,16 @@
-import { RefObject, useEffect } from "react";
+import { ReactNode, useEffect, useRef } from "react";
 
-export function useResizeObserver({
-  ref,
+export function Resizable({
+  className,
   onResize,
+  children,
 }: {
-  ref: RefObject<HTMLDivElement>;
+  className: string;
   onResize: (boundingClientRect: DOMRect) => void;
+  children: ReactNode;
 }) {
+  const ref = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     if (!ref.current) return;
 
@@ -17,5 +21,11 @@ export function useResizeObserver({
 
     resizeObserver.observe(ref.current);
     return () => resizeObserver.disconnect();
-  }, [onResize]);
+  }, [ref.current, onResize]);
+
+  return (
+    <div ref={ref} className={className}>
+      {children}
+    </div>
+  );
 }

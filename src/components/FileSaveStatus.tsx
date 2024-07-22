@@ -1,6 +1,6 @@
 import cx from "classnames";
-import { ReactNode, useRef, useState } from "react";
-import { useResizeObserver } from "src/common-hooks";
+import { ReactNode, useState } from "react";
+import { Resizable } from "src/common-components";
 
 export function FileSaveStatus({ fileName, isSaving }: { fileName?: string; isSaving: boolean }) {
   return (
@@ -36,11 +36,7 @@ function SaveStatusBackdrop({ children }: { children: ReactNode }) {
 }
 
 function SaveStatusContainer({ children }: { children: ReactNode }) {
-  const ref = useRef<HTMLDivElement>(null);
-
   const [width, setWidth] = useState<number>(0);
-
-  useResizeObserver({ ref, onResize: ({ width }) => setWidth(width) });
 
   return (
     <div
@@ -68,8 +64,7 @@ function SaveStatusContainer({ children }: { children: ReactNode }) {
       )}
       style={{ width: `${width}px` }}
     >
-      <div
-        ref={ref}
+      <Resizable
         className={cx(
           "flex",
           "flex-row",
@@ -78,9 +73,10 @@ function SaveStatusContainer({ children }: { children: ReactNode }) {
           "px-[10px]",
           "py-[5px]",
         )}
+        onResize={({ width }) => setWidth(width)}
       >
         {children}
-      </div>
+      </Resizable>
     </div>
   );
 }

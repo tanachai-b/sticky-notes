@@ -1,7 +1,7 @@
 import cx from "classnames";
 import { useState } from "react";
 import { NoteColor, NoteData } from "src/configs";
-import { Backdrop, Editor, Paper, Shadings, Text } from "./components";
+import { Backdrop, ColorSelector, DeleteButton, Editor, Paper, Shadings, Text } from "./components";
 
 export function Note({
   data,
@@ -59,13 +59,17 @@ export function Note({
 
         <Editor
           visible={isEditing}
-          selectedColor={data.color}
-          onPreviewColor={setPreviewColor}
-          onSelectColor={(color) => {
-            onChange({ ...data, color });
-            onStopEditing();
-          }}
-          onDelete={onDelete}
+          colorSelector={
+            <ColorSelector
+              selectedColor={data.color}
+              onPreviewColor={setPreviewColor}
+              onSelectColor={(color) => {
+                onChange({ ...data, color });
+                onStopEditing();
+              }}
+            />
+          }
+          deleteButton={<DeleteButton onClick={onDelete} />}
         />
       </div>
     </>

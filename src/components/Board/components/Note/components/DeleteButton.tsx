@@ -1,52 +1,7 @@
 import cx from "classnames";
 import { Icon } from "src/common-components";
-import { NoteColor } from "src/configs";
-import { ColorSelector } from "./ColorSelector";
 
-export function Editor({
-  visible,
-  selectedColor,
-  onPreviewColor,
-  onSelectColor,
-  onDelete,
-}: {
-  visible: boolean;
-  selectedColor: NoteColor;
-  onPreviewColor: (colorIndex?: NoteColor) => void;
-  onSelectColor: (colorIndex: NoteColor) => void;
-  onDelete: () => void;
-}) {
-  return (
-    <div
-      className={cx(
-        { visible: visible },
-        { "pointer-events-none": !visible },
-
-        "relative",
-        "-top-[10px]",
-        "ml-[20px]",
-
-        "flex",
-        "flex-col",
-
-        visible ? "opacity-100" : "opacity-0",
-        "transition-all",
-      )}
-    >
-      <ColorSelector
-        selectedColor={selectedColor}
-        onPreviewColor={onPreviewColor}
-        onSelectColor={onSelectColor}
-      />
-
-      <div className={cx("h-[10px]")} />
-
-      <DeleteButton onClick={onDelete} />
-    </div>
-  );
-}
-
-function DeleteButton({ onClick: onDelete }: { onClick: () => void }) {
+export function DeleteButton({ onClick: onDelete }: { onClick: () => void }) {
   return (
     <div
       className={cx(

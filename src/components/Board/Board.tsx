@@ -1,18 +1,9 @@
 import cx from "classnames";
 import { useState } from "react";
 import { Resizable } from "src/common-components";
+import { NoteData } from "src/configs";
 import { Backdrop, Note } from "./components";
 import { useHandleNotes } from "./hooks";
-
-export type NoteData = {
-  key: string;
-  text: string;
-  color: number;
-  x: number;
-  y: number;
-  rotate: number;
-  zIndex: number;
-};
 
 export function Board({
   notes = [],
@@ -41,7 +32,7 @@ export function Board({
         .map(({ key, ...rest }) => (
           <Note
             key={key}
-            noteData={{ key, ...rest }}
+            data={{ key, ...rest }}
             isEditing={editingNote === key}
             boardSize={boardSize}
             onPanTo={() => panToNote(key)}

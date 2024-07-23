@@ -1,8 +1,9 @@
 import cx from "classnames";
 import { ReactNode, useEffect, useState } from "react";
-import { Board, FileSaveStatus, NoteData, ToolBar, ToolButton } from "./components";
+import { Board, FileSaveStatus, ToolBar, ToolButton } from "./components";
+import { NoteData } from "./configs";
 import { useFileSystemApi } from "./hooks";
-import { sampleNotes } from "./sampleData";
+import { sampleNotes } from "./sampleNotes";
 
 export default function App() {
   const [notes, setNotes] = useState<NoteData[]>([]);

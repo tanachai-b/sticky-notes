@@ -1,18 +1,18 @@
 import { useState } from "react";
+import { NoteColor, noteColors } from "src/configs";
 
 export function useNewColor() {
-  const [latestColors, setLatestColors] = useState<number[]>([]);
+  const [latestColors, setLatestColors] = useState<NoteColor[]>([]);
 
   function getNewColor() {
     let newColor;
 
     while (newColor == null || latestColors.includes(newColor)) {
-      newColor = Math.floor(8 * Math.random());
+      const index = Math.floor(noteColors.length * Math.random());
+      newColor = noteColors[index];
     }
 
-    const latestSixColors = [...latestColors, newColor].slice(
-      Math.max(latestColors.length - 6 + 1, 0),
-    );
+    const latestSixColors = [...latestColors, newColor].slice(-6);
     setLatestColors(latestSixColors);
 
     return newColor;

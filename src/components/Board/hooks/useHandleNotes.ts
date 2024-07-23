@@ -1,4 +1,4 @@
-import { NoteData } from "../Board";
+import { NoteData } from "src/configs";
 import { useNewColor } from "./useNewColor";
 
 export function useHandleNotes({

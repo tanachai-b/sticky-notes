@@ -1,35 +1,25 @@
 import cx from "classnames";
 import { Icon } from "src/common-components";
+import { NoteColor, noteColors } from "src/configs";
 
 export function ColorSelector({
   selectedColor,
   onPreviewColor,
   onSelectColor,
 }: {
-  selectedColor: number;
-  onPreviewColor: (colorIndex?: number) => void;
-  onSelectColor: (colorIndex: number) => void;
+  selectedColor: NoteColor;
+  onPreviewColor: (colorIndex?: NoteColor) => void;
+  onSelectColor: (colorIndex: NoteColor) => void;
 }) {
-  const colors = [
-    "bg-[#ffe080]",
-    "bg-[#ffb080]",
-    "bg-[#ff80c0]",
-    "bg-[#c080ff]",
-    "bg-[#80c0ff]",
-    "bg-[#80ffc0]",
-    "bg-[#c0ff80]",
-    "bg-[#ffffff]",
-  ];
-
   return (
     <div className={cx("flex", "flex-col")} onPointerLeave={() => onPreviewColor()}>
-      {colors.map((color, index) => (
+      {noteColors.map((color, index) => (
         <Color
           key={index}
           color={color}
-          isSelected={selectedColor === index}
-          onPointerOver={() => onPreviewColor(index)}
-          onClick={() => onSelectColor(index)}
+          isSelected={color === selectedColor}
+          onPointerOver={() => onPreviewColor(color)}
+          onClick={() => onSelectColor(color)}
         />
       ))}
     </div>
@@ -75,7 +65,7 @@ function Color({
           "transition-all",
         )}
       >
-        <div className={cx("size-full", "rounded-full", color)}>
+        <div className={cx("size-full", "rounded-full")} style={{ backgroundColor: color }}>
           <div
             className={cx(
               { invisible: !isSelected },

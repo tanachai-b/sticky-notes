@@ -1,8 +1,18 @@
-import { allUpdaters, allVersions } from "./save-updaters";
-import { Save_v0_3_0 } from "./save-versions";
+import { updateTo_v0_2_0, updateTo_v0_3_0, updateTo_v0_4_0 } from "./save-updaters";
+import { Save_v0_4_0 } from "./save-versions";
+
+const saveUpdaters = {
+  "0.1.0": updateTo_v0_2_0,
+  "0.2.0": updateTo_v0_3_0,
+  "0.3.0": updateTo_v0_4_0,
+  "0.4.0": undefined,
+};
+
+const allVersions = Object.keys(saveUpdaters);
+const allUpdaters = Object.values(saveUpdaters);
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function updateSave(input: any): Save_v0_3_0 {
+export function updateSave(input: any): Save_v0_4_0 {
   const version = getVersion(input);
 
   const startIndex = Math.max(allVersions.indexOf(version), 0);

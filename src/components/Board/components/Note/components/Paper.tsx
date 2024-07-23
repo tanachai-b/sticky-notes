@@ -1,6 +1,7 @@
 import cx from "classnames";
 import { PointerEvent, ReactNode, useState } from "react";
 import { Draggable } from "src/common-components";
+import { NoteColor } from "src/configs";
 
 export function Paper({
   color,
@@ -12,7 +13,7 @@ export function Paper({
   onContextMenu,
   children,
 }: {
-  color: number;
+  color: NoteColor;
   rotate: number;
   isEditing: boolean;
   onMove: (dx: number, dy: number) => void;
@@ -37,16 +38,6 @@ export function Paper({
           "h-[250px]",
 
           "rounded-[5px]",
-          [
-            "bg-[#ffe080]",
-            "bg-[#ffb080]",
-            "bg-[#ff80c0]",
-            "bg-[#c080ff]",
-            "bg-[#80c0ff]",
-            "bg-[#80ffc0]",
-            "bg-[#c0ff80]",
-            "bg-[#ffffff]",
-          ][color],
 
           isEditing
             ? "shadow-[0_20px_50px_0px_#00000080]"
@@ -57,7 +48,7 @@ export function Paper({
 
           "overflow-hidden",
         )}
-        style={{ transform: `rotate(${rotate}deg)` }}
+        style={{ backgroundColor: color, transform: `rotate(${rotate}deg)` }}
         onPointerDown={onPointerDown}
         onDoubleClick={onDoubleClick}
         onContextMenu={onContextMenu}

@@ -1,10 +1,10 @@
 import cx from "classnames";
 import { useState } from "react";
-import { NoteData } from "../../Board";
+import { NoteColor, NoteData } from "src/configs";
 import { Backdrop, Editor, Paper, Shadings, Text } from "./components";
 
 export function Note({
-  noteData,
+  data,
   isEditing,
   boardSize,
   onPanTo,
@@ -14,7 +14,7 @@ export function Note({
   onChange,
   onDelete,
 }: {
-  noteData: NoteData;
+  data: NoteData;
   isEditing: boolean;
   boardSize: { width: number; height: number };
   onPanTo: () => void;
@@ -24,7 +24,7 @@ export function Note({
   onChange: (noteData: NoteData) => void;
   onDelete: () => void;
 }) {
-  const [previewColor, setPreviewColor] = useState<number>();
+  const [previewColor, setPreviewColor] = useState<NoteColor>();
 
   const { inScreenX, inScreenY, isInScreen } = inScreen();
 
@@ -40,10 +40,10 @@ export function Note({
         }}
       >
         <Paper
-          color={previewColor ?? noteData.color}
-          rotate={noteData.rotate}
+          color={previewColor ?? data.color}
+          rotate={data.rotate}
           isEditing={isEditing}
-          onMove={(dx, dy) => onChange({ ...noteData, x: noteData.x + dx, y: noteData.y + dy })}
+          onMove={(dx, dy) => onChange({ ...data, x: data.x + dx, y: data.y + dy })}
           onPointerDown={isInScreen ? onBringToFront : onPanTo}
           onDoubleClick={onStartEditing}
           onContextMenu={onStartEditing}
@@ -51,18 +51,18 @@ export function Note({
           <Shadings />
 
           <Text
-            text={noteData.text}
+            text={data.text}
             isEditing={isEditing}
-            onChange={(text) => onChange({ ...noteData, text })}
+            onChange={(text) => onChange({ ...data, text })}
           />
         </Paper>
 
         <Editor
           visible={isEditing}
-          selectedColor={noteData.color}
+          selectedColor={data.color}
           onPreviewColor={setPreviewColor}
           onSelectColor={(color) => {
-            onChange({ ...noteData, color });
+            onChange({ ...data, color });
             onStopEditing();
           }}
           onDelete={onDelete}
@@ -79,9 +79,9 @@ export function Note({
     const maxX = (boardSize.width + 250) / 2 - peek;
     const maxY = (boardSize.height + 250) / 2 - peek;
 
-    const inScreenX = Math.min(Math.max(noteData.x, minX), maxX);
-    const inScreenY = Math.min(Math.max(noteData.y, minY), maxY);
-    const isInScreen = noteData.x === inScreenX && noteData.y === inScreenY;
+    const inScreenX = Math.min(Math.max(data.x, minX), maxX);
+    const inScreenY = Math.min(Math.max(data.y, minY), maxY);
+    const isInScreen = data.x === inScreenX && data.y === inScreenY;
 
     return { inScreenX, inScreenY, isInScreen };
   }

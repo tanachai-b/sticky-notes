@@ -1,5 +1,6 @@
 import cx from "classnames";
 import { Icon } from "src/common-components";
+import { NoteColor } from "src/configs";
 import { ColorSelector } from "./ColorSelector";
 
 export function Editor({
@@ -10,9 +11,9 @@ export function Editor({
   onDelete,
 }: {
   visible: boolean;
-  selectedColor: number;
-  onPreviewColor: (colorIndex?: number) => void;
-  onSelectColor: (colorIndex: number) => void;
+  selectedColor: NoteColor;
+  onPreviewColor: (colorIndex?: NoteColor) => void;
+  onSelectColor: (colorIndex: NoteColor) => void;
   onDelete: () => void;
 }) {
   return (

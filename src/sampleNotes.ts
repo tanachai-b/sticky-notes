@@ -1,10 +1,10 @@
-import { NoteData } from "./components";
+import { NoteData } from "./configs";
 
 export const sampleNotes: NoteData[] = [
   {
     key: "k06p",
     text: "Buy\neggs, pork, pancake mix",
-    color: 0,
+    color: "#ffe080",
     x: -54,
     y: -214,
     rotate: -1.4,
@@ -13,7 +13,7 @@ export const sampleNotes: NoteData[] = [
   {
     key: "jo9f",
     text: "call Fred\n123-456-7809",
-    color: 4,
+    color: "#80c0ff",
     x: 17,
     y: 224,
     rotate: -0.3,
@@ -22,7 +22,7 @@ export const sampleNotes: NoteData[] = [
   {
     key: "b4pl",
     text: "Dentist\n2024-01-20\n11:00",
-    color: 6,
+    color: "#c0ff80",
     x: 52,
     y: 8,
     rotate: 1.7,

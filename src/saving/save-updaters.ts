@@ -1,15 +1,7 @@
-import { Save_v0_1_0, Save_v0_2_0, Save_v0_3_0 } from "./save-versions";
+import { noteColors } from "src/configs";
+import { Save_v0_1_0, Save_v0_2_0, Save_v0_3_0, Save_v0_4_0 } from "./save-versions";
 
-const saveUpdaters = {
-  "0.1.0": updateTo_v0_2_0,
-  "0.2.0": updateTo_v0_3_0,
-  "0.3.0": undefined,
-};
-
-export const allVersions = Object.keys(saveUpdaters);
-export const allUpdaters = Object.values(saveUpdaters);
-
-function updateTo_v0_2_0(oldSave: Save_v0_1_0): Save_v0_2_0 {
+export function updateTo_v0_2_0(oldSave: Save_v0_1_0): Save_v0_2_0 {
   return {
     appName: "sticky-notes",
     appVersion: "0.2.0",
@@ -17,10 +9,18 @@ function updateTo_v0_2_0(oldSave: Save_v0_1_0): Save_v0_2_0 {
   };
 }
 
-function updateTo_v0_3_0(oldSave: Save_v0_2_0): Save_v0_3_0 {
+export function updateTo_v0_3_0(oldSave: Save_v0_2_0): Save_v0_3_0 {
   return {
     app: "sticky-notes",
     saveApi: "0.3.0",
     notes: oldSave.notes.map((note, index) => ({ ...note, zIndex: index })),
+  };
+}
+
+export function updateTo_v0_4_0(oldSave: Save_v0_3_0): Save_v0_4_0 {
+  return {
+    app: "sticky-notes",
+    saveApi: "0.4.0",
+    notes: oldSave.notes.map((note) => ({ ...note, color: noteColors[note.color] })),
   };
 }

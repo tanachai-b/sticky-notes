@@ -7,9 +7,8 @@ export function DeleteButton({ onClick: onDelete }: { onClick: () => void }) {
       className={cx(
         "group",
 
-        "flex",
-        "flex-row",
-        "items-center",
+        "grid",
+        "place-items-center",
 
         "p-[2px]",
 
@@ -31,7 +30,7 @@ export function DeleteButton({ onClick: onDelete }: { onClick: () => void }) {
           "place-items-center",
 
           "text-[#ffffff]",
-          "text-[25px]",
+          "text-[20px]",
 
           "cursor-pointer",
           "group-hover:scale-150",
@@ -39,17 +38,17 @@ export function DeleteButton({ onClick: onDelete }: { onClick: () => void }) {
         )}
         onClick={onDelete}
       >
-        <Icon icon="close" />
+        <Icon icon="delete" />
       </div>
 
       <div
         className={cx(
           "absolute",
-          "left-[40px]",
+          "top-[45px]",
 
           "rounded-[7px]",
           "px-[5px]",
-          "py-[2px]",
+          "py-[0px]",
 
           "text-[15px]",
           "font-light",
@@ -58,6 +57,12 @@ export function DeleteButton({ onClick: onDelete }: { onClick: () => void }) {
 
           "bg-[#202020]",
           "bg-opacity-50",
+
+          "opacity-0",
+          "group-hover:opacity-100",
+          "transition-all",
+
+          "pointer-events-none",
         )}
       >
         Delete

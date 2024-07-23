@@ -33,15 +33,15 @@ export function Note({
       <Backdrop isEditing={isEditing} onPointerDown={onStopEditing} />
 
       <div
-        className={cx("absolute", "flex", "flex-row", "invisible")}
+        className={cx("absolute", "grid")}
         style={{
           left: inScreenX + (boardSize.width - 250) / 2,
           top: inScreenY + (boardSize.height - 250) / 2,
+          transform: `rotate(${data.rotate}deg)`,
         }}
       >
         <Paper
           color={previewColor ?? data.color}
-          rotate={data.rotate}
           isEditing={isEditing}
             onMove={({ dx, dy }) => onChange({ ...data, x: data.x + dx, y: data.y + dy })}
           onPointerDown={isInScreen ? onBringToFront : onPanTo}

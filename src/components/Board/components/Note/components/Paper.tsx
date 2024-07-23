@@ -5,7 +5,6 @@ import { NoteColor } from "src/configs";
 
 export function Paper({
   color,
-  rotate,
   isEditing,
   onMove,
   onPointerDown,
@@ -14,7 +13,6 @@ export function Paper({
   children,
 }: {
   color: NoteColor;
-  rotate: number;
   isEditing: boolean;
   onMove: ({ dx, dy }: { dx: number; dy: number }) => void;
   onPointerDown: (e: PointerEvent) => void;
@@ -32,8 +30,6 @@ export function Paper({
     >
       <div
         className={cx(
-          "visible",
-
           "w-[250px]",
           "h-[250px]",
 
@@ -48,7 +44,7 @@ export function Paper({
 
           "overflow-hidden",
         )}
-        style={{ backgroundColor: color, transform: `rotate(${rotate}deg)` }}
+        style={{ backgroundColor: color }}
         onPointerDown={onPointerDown}
         onDoubleClick={onDoubleClick}
         onContextMenu={onContextMenu}

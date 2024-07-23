@@ -13,24 +13,41 @@ export function Editor({
   return (
     <div
       className={cx(
-        { visible: visible },
-        { "pointer-events-none": !visible },
-
-        "relative",
-        "-top-[10px]",
-        "ml-[20px]",
-
-        "flex",
-        "flex-col",
-        "gap-[10px]",
+        "invisible",
 
         visible ? "opacity-100" : "opacity-0",
         "transition-all",
+
+        "absolute",
+        "grid",
+        "size-full",
       )}
     >
-      {colorSelector}
+      <div
+        className={cx(
+          visible ? "visible" : "",
 
-      {deleteButton}
+          "absolute",
+          "place-self-center",
+
+          "left-[calc(100%_+_10px)]",
+        )}
+      >
+        {colorSelector}
+      </div>
+
+      <div
+        className={cx(
+          visible ? "visible" : "",
+
+          "absolute",
+          "place-self-center",
+
+          "top-[calc(100%_+_10px)]",
+        )}
+      >
+        {deleteButton}
+      </div>
     </div>
   );
 }

@@ -5,10 +5,12 @@ export function Editor({
   visible,
   colorSelector,
   deleteButton,
+  rotateButton,
 }: {
   visible: boolean;
   colorSelector: ReactNode;
   deleteButton: ReactNode;
+  rotateButton: ReactNode;
 }) {
   return (
     <div
@@ -47,6 +49,19 @@ export function Editor({
         )}
       >
         {deleteButton}
+      </div>
+
+      <div
+        className={cx(
+          visible ? "visible" : "",
+
+          "absolute",
+          "place-self-center",
+
+          "bottom-[calc(100%_+_10px)]",
+        )}
+      >
+        {rotateButton}
       </div>
     </div>
   );

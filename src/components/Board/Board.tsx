@@ -25,7 +25,7 @@ export function Board({
 
   return (
     <Resizable className={cx("size-full", "relative")} onResize={setBoardSize}>
-      <Backdrop onDrag={(dx, dy) => moveAllNotes(dx, dy)} onAddNote={addNote} />
+      <Backdrop onDrag={({ dx, dy }) => moveAllNotes(dx, dy)} onAddNote={addNote} />
 
       {notes
         .sort((a, b) => a.zIndex - b.zIndex)

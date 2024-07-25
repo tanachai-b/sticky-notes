@@ -5,7 +5,7 @@ export function Backdrop({
   onDrag,
   onAddNote,
 }: {
-  onDrag: (dx: number, dy: number) => void;
+  onDrag: ({ dx, dy }: { dx: number; dy: number }) => void;
   onAddNote: (x: number, y: number) => void;
 }) {
   return (

@@ -43,7 +43,7 @@ export function Note({
           color={previewColor ?? data.color}
           rotate={data.rotate}
           isEditing={isEditing}
-          onMove={(dx, dy) => onChange({ ...data, x: data.x + dx, y: data.y + dy })}
+            onMove={({ dx, dy }) => onChange({ ...data, x: data.x + dx, y: data.y + dy })}
           onPointerDown={isInScreen ? onBringToFront : onPanTo}
           onDoubleClick={onStartEditing}
           onContextMenu={onStartEditing}

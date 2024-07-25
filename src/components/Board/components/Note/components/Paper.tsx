@@ -16,7 +16,7 @@ export function Paper({
   color: NoteColor;
   rotate: number;
   isEditing: boolean;
-  onMove: (dx: number, dy: number) => void;
+  onMove: ({ dx, dy }: { dx: number; dy: number }) => void;
   onPointerDown: (e: PointerEvent) => void;
   onDoubleClick: () => void;
   onContextMenu: () => void;

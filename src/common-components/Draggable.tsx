@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useEffect, useRef, useState } from "react";
 
 export function Draggable({
   className,
@@ -8,11 +8,27 @@ export function Draggable({
   children,
 }: {
   className?: string;
-  onDrag: (dx: number, dy: number) => void;
+  onDrag: ({
+    x,
+    y,
+    dx,
+    dy,
+    cx,
+    cy,
+  }: {
+    x: number;
+    y: number;
+    dx: number;
+    dy: number;
+    cx: number;
+    cy: number;
+  }) => void;
   onPointerDown?: () => void;
   onPointerUp?: () => void;
   children: ReactNode;
 }) {
+  const ref = useRef<HTMLDivElement>(null);
+
   const [isPointerDown, setIsPointerDown] = useState(false);
   const [lastPosition, setLastPosition] = useState({ x: 0, y: 0 });
 
@@ -28,15 +44,23 @@ export function Draggable({
     }
   }, [isPointerDown, handlePointerMove, handlePointerUp]);
 
-  function handlePointerDown(e: React.PointerEvent) {
+  function handlePointerDown({ clientX, clientY }: React.PointerEvent) {
     setIsPointerDown(true);
-    setLastPosition({ x: e.clientX, y: e.clientY });
+    setLastPosition({ x: clientX, y: clientY });
     onPointerDown?.();
   }
 
-  function handlePointerMove(e: PointerEvent) {
-    onDrag(e.clientX - lastPosition.x, e.clientY - lastPosition.y);
-    setLastPosition({ x: e.clientX, y: e.clientY });
+  function handlePointerMove({ clientX, clientY }: PointerEvent) {
+    const { x: rx = 0, y: ry = 0 } = ref.current?.getBoundingClientRect() ?? {};
+    onDrag({
+      x: clientX - rx,
+      y: clientY - ry,
+      dx: clientX - lastPosition.x,
+      dy: clientY - lastPosition.y,
+      cx: clientX,
+      cy: clientY,
+    });
+    setLastPosition({ x: clientX, y: clientY });
   }
 
   function handlePointerUp() {
@@ -45,7 +69,7 @@ export function Draggable({
   }
 
   return (
-    <div className={className} onPointerDown={handlePointerDown}>
+    <div ref={ref} className={className} onPointerDown={handlePointerDown}>
       {children}
     </div>
   );

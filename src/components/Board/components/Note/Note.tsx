@@ -1,5 +1,5 @@
 import cx from "classnames";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { NoteColor, NoteData } from "src/configs";
 import {
   Backdrop,
@@ -34,9 +34,11 @@ export function Note({
 }) {
   const noteRef = useRef<HTMLDivElement>(null);
 
+  const { inScreenX, inScreenY, isInScreen } = inScreenXY();
+
   const [previewColor, setPreviewColor] = useState<NoteColor>();
 
-  const { inScreenX, inScreenY, isInScreen } = inScreen();
+  const { textRef, focusText } = useNoteText({ isEditing });
 
   return (
     <>
@@ -62,6 +64,7 @@ export function Note({
             <Shadings />
 
             <Text
+              ref={textRef}
               text={data.text}
               isEditing={isEditing}
               onChange={(text) => onChange({ ...data, text })}
@@ -71,7 +74,7 @@ export function Note({
           <RotateButton
             isVisible={isEditing}
             onDrag={onDragRotateButton}
-            onPointerUp={onStopEditing}
+            onPointerUp={data.text.length > 0 ? onStopEditing : focusText}
           />
 
           <DeleteButton isVisible={isEditing} onClick={onDelete} />
@@ -82,7 +85,7 @@ export function Note({
             onPreviewColor={setPreviewColor}
             onSelectColor={(color) => {
               onChange({ ...data, color });
-              onStopEditing();
+              data.text.length > 0 ? onStopEditing() : focusText();
             }}
           />
         </div>
@@ -90,7 +93,7 @@ export function Note({
     </>
   );
 
-  function inScreen() {
+  function inScreenXY() {
     const peek = 20;
 
     const minX = -(boardSize.width + 250) / 2 + peek;
@@ -117,4 +120,21 @@ export function Note({
 
     onChange({ ...data, rotate: roundedAngle });
   }
+}
+
+function useNoteText({ isEditing }: { isEditing: boolean }) {
+  const textRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    if (isEditing) focusText();
+  }, [isEditing]);
+
+  function focusText() {
+    if (!textRef.current) return;
+
+    textRef.current.focus();
+    textRef.current.setSelectionRange(textRef.current.value.length, textRef.current.value.length);
+  }
+
+  return { textRef, focusText };
 }

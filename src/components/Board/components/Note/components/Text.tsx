@@ -1,26 +1,21 @@
 import cx from "classnames";
-import { useEffect, useRef } from "react";
+import { ForwardedRef, forwardRef } from "react";
 
-export function Text({
-  text,
-  isEditing,
-  onChange,
-}: {
-  text: string;
-  isEditing: boolean;
-  onChange: (text: string) => void;
-}) {
-  const ref = useRef<HTMLTextAreaElement>(null);
+export const RefText = forwardRef(Text);
+export { RefText as Text };
 
-  useEffect(() => {
-    if (!isEditing) return;
-
-    setTimeout(() => {
-      ref.current?.focus();
-      ref.current?.setSelectionRange(ref.current.value.length, ref.current.value.length);
-    }, 0);
-  }, [isEditing]);
-
+function Text(
+  {
+    text,
+    isEditing,
+    onChange,
+  }: {
+    text: string;
+    isEditing: boolean;
+    onChange: (text: string) => void;
+  },
+  ref: ForwardedRef<HTMLTextAreaElement>,
+) {
   return (
     <div
       className={cx(

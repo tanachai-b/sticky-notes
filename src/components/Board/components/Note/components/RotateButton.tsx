@@ -1,19 +1,21 @@
 import cx from "classnames";
-import { Icon } from "src/common-components";
+import { Draggable, Icon } from "src/common-components";
 
-export function DeleteButton({
+export function RotateButton({
   isVisible,
-  onClick: onDelete,
+  onDrag,
+  onPointerUp,
 }: {
   isVisible: boolean;
-  onClick: () => void;
+  onDrag: ({ cx, cy }: { cx: number; cy: number }) => void;
+  onPointerUp: () => void;
 }) {
   return (
-    <div
+    <Draggable
       className={cx(
         "absolute",
         "place-self-center",
-        "top-[calc(100%_+_10px)]",
+        "bottom-[calc(100%_+_10px)]",
 
         !isVisible ? ["invisible", "pointer-events-none", "opacity-0"] : "",
         "transition-all",
@@ -23,6 +25,8 @@ export function DeleteButton({
 
         "group",
       )}
+      onDrag={onDrag}
+      onPointerUp={onPointerUp}
     >
       <div
         className={cx(
@@ -41,20 +45,19 @@ export function DeleteButton({
           "text-[20px]",
           "text-[#ffffff]",
 
-          "cursor-pointer",
-          "group-hover:scale-150",
+          "cursor-grab",
+          "hover:scale-150",
           "transition-all",
         )}
-        onClick={onDelete}
       >
-        <Icon icon="delete" />
+        <Icon icon="refresh" />
       </div>
 
       <div
         className={cx(
           "absolute",
-          "top-0",
-          "group-hover:top-[calc(100%_+_10px)]",
+          "bottom-0",
+          "group-hover:bottom-[calc(100%_+_10px)]",
 
           "rounded-[5px]",
           "bg-[#101010c0]",
@@ -71,8 +74,8 @@ export function DeleteButton({
           "pointer-events-none",
         )}
       >
-        Delete
+        Rotate
       </div>
-    </div>
+    </Draggable>
   );
 }

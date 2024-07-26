@@ -31,7 +31,7 @@ export function Text({
         "items-center",
         "justify-center",
 
-        "overflow-hidden",
+        "overflow-clip",
       )}
     >
       <div
@@ -41,8 +41,7 @@ export function Text({
 
           "text-[30px]",
           "font-handwriting",
-          "font-light",
-          "text-[#202020]",
+          "text-[#000000e0]",
 
           "text-center",
           "whitespace-pre-wrap",
@@ -78,7 +77,7 @@ export function Text({
             "p-[10px]",
             "text-center",
 
-            "overflow-hidden",
+            "overflow-clip",
           )}
           hidden={!isEditing}
           value={text}

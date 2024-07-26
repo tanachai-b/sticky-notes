@@ -36,13 +36,15 @@ export function Paper({
           "rounded-[5px]",
 
           isEditing
-            ? "shadow-[0_20px_50px_0px_#00000080]"
+            ? "shadow-[0_50px_100px_0px_#000000c0]"
             : isPointerDown
-            ? "shadow-[0_10px_20px_0px_#00000080]"
-            : "shadow-[0_5px_10px_0px_#00000080]",
+            ? "shadow-[0_20px_50px_0px_#000000c0]"
+            : "shadow-[0_10px_20px_0px_#000000c0]",
           "transition-all",
 
-          "overflow-hidden",
+          "overflow-clip",
+
+          "relative",
         )}
         style={{ backgroundColor: color }}
         onPointerDown={onPointerDown}

@@ -30,11 +30,11 @@ export default function App() {
       />
 
       <ToolBar>
-        <ToolButton icon="note_add" label="New" onClick={onNew} />
+        <ToolButton icon="note_add" tooltip="New" onClick={onNew} />
 
-        <ToolButton icon="folder_open" label="Open" onClick={onOpen} />
+        <ToolButton icon="folder_open" tooltip="Open" onClick={onOpen} />
 
-        <ToolButton icon="save_as" label="Save As" onClick={onSaveAs} />
+        <ToolButton icon="save_as" tooltip="Save As" onClick={onSaveAs} />
       </ToolBar>
 
       <FileSaveStatus fileName={fileName} isSaving={!isSaved} />
@@ -53,12 +53,10 @@ function Container({ children }: { children: ReactNode }) {
     <div
       className={cx(
         "size-full",
-        "bg-[#202020]",
+        "bg-[#101010]",
 
-        "flex",
-        "flex-col",
+        "grid",
 
-        "text-[13px]",
         "select-none",
         "touch-none",
 

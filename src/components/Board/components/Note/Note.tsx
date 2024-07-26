@@ -1,8 +1,15 @@
 import cx from "classnames";
 import { useRef, useState } from "react";
-import { Draggable, Icon } from "src/common-components";
 import { NoteColor, NoteData } from "src/configs";
-import { Backdrop, ColorSelector, DeleteButton, Editor, Paper, Shadings, Text } from "./components";
+import {
+  Backdrop,
+  ColorSelector,
+  DeleteButton,
+  Paper,
+  RotateButton,
+  Shadings,
+  Text,
+} from "./components";
 
 export function Note({
   data,
@@ -25,7 +32,7 @@ export function Note({
   onChange: (noteData: NoteData) => void;
   onDelete: () => void;
 }) {
-  const ref = useRef<HTMLDivElement>(null);
+  const noteRef = useRef<HTMLDivElement>(null);
 
   const [previewColor, setPreviewColor] = useState<NoteColor>();
 
@@ -36,14 +43,14 @@ export function Note({
       <Backdrop isEditing={isEditing} onPointerDown={onStopEditing} />
 
       <div
-        ref={ref}
+        ref={noteRef}
         className={cx("absolute")}
         style={{
           left: inScreenX + (boardSize.width - 250) / 2,
           top: inScreenY + (boardSize.height - 250) / 2,
         }}
       >
-        <div className={cx("absolute", "grid")} style={{ transform: `rotate(${data.rotate}deg)` }}>
+        <div className={cx("relative", "grid")} style={{ transform: `rotate(${data.rotate}deg)` }}>
           <Paper
             color={previewColor ?? data.color}
             isEditing={isEditing}
@@ -61,20 +68,22 @@ export function Note({
             />
           </Paper>
 
-          <Editor
-            visible={isEditing}
-            colorSelector={
-              <ColorSelector
-                selectedColor={data.color}
-                onPreviewColor={setPreviewColor}
-                onSelectColor={(color) => {
-                  onChange({ ...data, color });
-                  onStopEditing();
-                }}
-              />
-            }
-            deleteButton={<DeleteButton onClick={onDelete} />}
-            rotateButton={<RotateButton onDrag={onDragRotateButton} onPointerUp={onStopEditing} />}
+          <RotateButton
+            isVisible={isEditing}
+            onDrag={onDragRotateButton}
+            onPointerUp={onStopEditing}
+          />
+
+          <DeleteButton isVisible={isEditing} onClick={onDelete} />
+
+          <ColorSelector
+            isVisible={isEditing}
+            selectedColor={data.color}
+            onPreviewColor={setPreviewColor}
+            onSelectColor={(color) => {
+              onChange({ ...data, color });
+              onStopEditing();
+            }}
           />
         </div>
       </div>
@@ -97,7 +106,7 @@ export function Note({
   }
 
   function onDragRotateButton({ cx, cy }: { cx: number; cy: number }) {
-    const { x: rx = 0, y: ry = 0 } = ref.current?.getBoundingClientRect() ?? {};
+    const { x: rx = 0, y: ry = 0 } = noteRef.current?.getBoundingClientRect() ?? {};
 
     const x = cx - (rx + 250 / 2);
     const y = cy - (ry + 250 / 2);
@@ -108,41 +117,4 @@ export function Note({
 
     onChange({ ...data, rotate: roundedAngle });
   }
-}
-
-function RotateButton({
-  onDrag,
-  onPointerUp,
-}: {
-  onDrag: ({ cx, cy }: { cx: number; cy: number }) => void;
-  onPointerUp: () => void;
-}) {
-  return (
-    <Draggable onDrag={onDrag} onPointerUp={onPointerUp}>
-      <div
-        className={cx(
-          "size-[30px]",
-          "rounded-full",
-
-          "border-[2px]",
-          "border-[#ffffff]",
-
-          "bg-[#202020]",
-          "bg-opacity-50",
-
-          "grid",
-          "place-items-center",
-
-          "text-[#ffffff]",
-          "text-[20px]",
-
-          "cursor-grab",
-          "hover:scale-150",
-          "transition-all",
-        )}
-      >
-        <Icon icon="refresh" />
-      </div>
-    </Draggable>
-  );
 }

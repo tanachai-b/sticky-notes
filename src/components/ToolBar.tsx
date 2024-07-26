@@ -6,36 +6,19 @@ export function ToolBar({ children }: { children: ReactNode }) {
     <div
       className={cx(
         "absolute",
-        "size-full",
+        "m-[30px]",
+
+        "rounded-[10px]",
+        "bg-[#101010c0]",
+        "backdrop-blur-[10px]",
+        "shadow-[0_10px_20px_0px_#000000c0]",
 
         "flex",
-        "items-start",
-
-        "p-[30px]",
-
-        "invisible",
+        "flex-col",
+        "py-[10px]",
       )}
     >
-      <div
-        className={cx(
-          "visible",
-
-          "rounded-full",
-
-          "bg-[#202020]",
-          "bg-opacity-75",
-
-          "border",
-          "border-[#e0e0e0]",
-          "border-opacity-25",
-
-          "backdrop-blur-[2px]",
-
-          "py-[10px]",
-        )}
-      >
-        {children}
-      </div>
+      {children}
     </div>
   );
 }

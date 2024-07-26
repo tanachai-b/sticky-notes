@@ -4,44 +4,42 @@ import { Icon } from "src/common-components";
 
 export function ToolButton({
   icon,
-  label,
+  tooltip,
   onClick,
 }: {
   icon: string;
-  label: string;
+  tooltip: string;
   onClick: () => void;
 }) {
   return (
-    <ButtonContainer onClick={onClick}>
+    <Container onClick={onClick}>
       <div className={cx("text-[30px]", "grid")}>
         <Icon icon={icon} />
       </div>
 
-      <ButtonLabel>{label}</ButtonLabel>
-    </ButtonContainer>
+      <Tooltip>{tooltip}</Tooltip>
+    </Container>
   );
 }
 
-function ButtonContainer({ onClick, children }: { onClick: () => void; children: ReactNode }) {
+function Container({ onClick, children }: { onClick: () => void; children: ReactNode }) {
   return (
     <div
       className={cx(
-        "group",
-
-        "flex",
-        "flex-row",
-        "items-center",
-
         "p-[15px]",
 
-        "text-[#e0e0e0]",
-        "text-opacity-25",
-        "hover:text-opacity-90",
+        "text-[#ffffff40]",
+        "hover:text-[#ffffffc0]",
 
         "cursor-pointer",
         "transition-all",
 
+        "grid",
+        "place-items-center",
+
         "relative",
+
+        "group",
       )}
       onClick={onClick}
     >
@@ -50,27 +48,25 @@ function ButtonContainer({ onClick, children }: { onClick: () => void; children:
   );
 }
 
-function ButtonLabel({ children }: { children: ReactNode }) {
+function Tooltip({ children }: { children: ReactNode }) {
   return (
     <div
       className={cx(
         "absolute",
-        "left-[70px]",
+        "left-0",
+        "group-hover:left-[calc(100%_+_5px)]",
 
-        "rounded-[7px]",
+        "rounded-[5px]",
+        "bg-[#101010c0]",
+
         "px-[5px]",
-        "py-[2px]",
 
-        "text-[15px]",
+        "text-[13px]",
+        "text-[#ffffffc0]",
         "whitespace-pre",
 
-        "bg-[#202020]",
-        "bg-opacity-75",
-
-        "text-[#e0e0e0]",
         "opacity-0",
         "group-hover:opacity-100",
-
         "transition-all",
 
         "pointer-events-none",

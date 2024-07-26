@@ -4,74 +4,50 @@ import { Resizable } from "src/common-components";
 
 export function FileSaveStatus({ fileName, isSaving }: { fileName?: string; isSaving: boolean }) {
   return (
-    <SaveStatusBackdrop>
-      <SaveStatusContainer>
-        <FileName>{fileName ?? "Unsaved"}</FileName>
+    <Container>
+      <FileName>{fileName ?? "Unsaved"}</FileName>
 
-        {fileName != null && <SavingStatus>{isSaving ? "saving..." : "saved"}</SavingStatus>}
-      </SaveStatusContainer>
-    </SaveStatusBackdrop>
+      {fileName != null && <SaveStatus>{isSaving ? "saving..." : "saved"}</SaveStatus>}
+    </Container>
   );
 }
 
-function SaveStatusBackdrop({ children }: { children: ReactNode }) {
-  return (
-    <div
-      className={cx(
-        "absolute",
-        "size-full",
-
-        "flex",
-        "flex-col",
-        "items-center",
-
-        "pt-[30px]",
-
-        "invisible",
-      )}
-    >
-      {children}
-    </div>
-  );
-}
-
-function SaveStatusContainer({ children }: { children: ReactNode }) {
+function Container({ children }: { children: ReactNode }) {
   const [width, setWidth] = useState<number>(0);
 
   return (
     <div
       className={cx(
-        "visible",
+        "absolute",
 
-        "rounded-full",
+        "self-start",
+        "justify-self-center",
+        "m-[30px]",
 
-        "bg-[#202020]",
-        "bg-opacity-75",
-        "backdrop-blur-[2px]",
+        "rounded-[10px]",
+        "bg-[#101010c0]",
+        "backdrop-blur-[10px]",
+        "shadow-[0_10px_20px_0px_#000000c0]",
 
-        "border",
-        "border-[#e0e0e0]",
-        "border-opacity-25",
-
-        "flex",
-        "flex-row",
+        "grid",
+        "overflow-clip",
 
         "transition-all",
-
-        "overflow-hidden",
-
-        "box-content",
       )}
       style={{ width: `${width}px` }}
     >
       <Resizable
         className={cx(
+          "size-fit",
+
           "flex",
           "flex-row",
           "gap-[5px]",
 
           "px-[10px]",
           "py-[5px]",
+
+          "text-[13px]",
         )}
         onResize={({ width }) => setWidth(width)}
       >
@@ -82,11 +58,9 @@ function SaveStatusContainer({ children }: { children: ReactNode }) {
 }
 
 function FileName({ children }: { children: ReactNode }) {
-  return (
-    <div className={cx("text-[#e0e0e0]", "text-opacity-50", "whitespace-pre")}>{children}</div>
-  );
+  return <div className={cx("text-[#ffffff60]", "whitespace-pre")}>{children}</div>;
 }
 
-function SavingStatus({ children }: { children: ReactNode }) {
-  return <div className={cx("text-[#e0e0e0]", "italic")}>{children}</div>;
+function SaveStatus({ children }: { children: ReactNode }) {
+  return <div className={cx("text-[#ffffffc0]", "italic")}>{children}</div>;
 }

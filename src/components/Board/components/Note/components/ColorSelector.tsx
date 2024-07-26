@@ -3,16 +3,31 @@ import { Icon } from "src/common-components";
 import { NoteColor, noteColors } from "src/configs";
 
 export function ColorSelector({
+  isVisible,
   selectedColor,
   onPreviewColor,
   onSelectColor,
 }: {
+  isVisible: boolean;
   selectedColor: NoteColor;
   onPreviewColor: (colorIndex?: NoteColor) => void;
   onSelectColor: (colorIndex: NoteColor) => void;
 }) {
   return (
-    <div className={cx("flex", "flex-col")} onPointerLeave={() => onPreviewColor()}>
+    <div
+      className={cx(
+        "absolute",
+        "place-self-center",
+        "left-[calc(100%_+_10px)]",
+
+        !isVisible ? ["invisible", "pointer-events-none", "opacity-0"] : "",
+        "transition-all",
+
+        "flex",
+        "flex-col",
+      )}
+      onPointerLeave={() => onPreviewColor()}
+    >
       {noteColors.map((color, index) => (
         <Color
           key={index}
@@ -52,12 +67,13 @@ function Color({
       <div
         className={cx(
           "size-[30px]",
+
           "rounded-full",
+          "bg-[#ffffff]",
+          "shadow-[0_10px_20px_0px_#00000080]",
 
           "border",
-          "border-[#202020]",
-
-          "bg-[#ffffff]",
+          "border-[#000000]",
 
           "p-[2px]",
 
@@ -70,10 +86,10 @@ function Color({
             className={cx(
               { invisible: !isSelected },
 
+              "grid",
+
               "text-[#202020]",
               "text-[25px]",
-
-              "grid",
             )}
           >
             <Icon icon="check" />

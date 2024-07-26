@@ -19,6 +19,8 @@ export default function App() {
 
   usePreventCloseUnsaved(!isSaved);
 
+  const isAllowFileActions = fileName == null || isSaved;
+
   return (
     <Container>
       <Board
@@ -30,11 +32,21 @@ export default function App() {
       />
 
       <ToolBar>
-        <ToolButton icon="note_add" tooltip="New" onClick={onNew} />
+        <ToolButton icon="note_add" tooltip="New" isEnabled={isAllowFileActions} onClick={onNew} />
 
-        <ToolButton icon="folder_open" tooltip="Open" onClick={onOpen} />
+        <ToolButton
+          icon="folder_open"
+          tooltip="Open"
+          isEnabled={isAllowFileActions}
+          onClick={onOpen}
+        />
 
-        <ToolButton icon="save_as" tooltip="Save As" onClick={onSaveAs} />
+        <ToolButton
+          icon="save_as"
+          tooltip="Save As"
+          isEnabled={isAllowFileActions}
+          onClick={onSaveAs}
+        />
       </ToolBar>
 
       <FileSaveStatus fileName={fileName} isSaving={!isSaved} />

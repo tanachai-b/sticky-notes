@@ -5,15 +5,17 @@ import { Icon } from "src/common-components";
 export function ToolButton({
   icon,
   tooltip,
+  isEnabled,
   onClick,
 }: {
   icon: string;
   tooltip: string;
+  isEnabled: boolean;
   onClick: () => void;
 }) {
   return (
-    <Container onClick={onClick}>
-      <div className={cx("text-[30px]", "grid")}>
+    <Container isEnabled={isEnabled} onClick={isEnabled ? onClick : () => {}}>
+      <div className={cx("grid")}>
         <Icon icon={icon} />
       </div>
 
@@ -22,20 +24,29 @@ export function ToolButton({
   );
 }
 
-function Container({ onClick, children }: { onClick: () => void; children: ReactNode }) {
+function Container({
+  isEnabled,
+  children,
+  onClick,
+}: {
+  isEnabled: boolean;
+  children: ReactNode;
+  onClick: () => void;
+}) {
   return (
     <div
       className={cx(
         "p-[15px]",
 
-        "text-[#ffffff40]",
-        "hover:text-[#ffffffc0]",
-
-        "cursor-pointer",
-        "transition-all",
+        isEnabled ? "cursor-pointer" : "cursor-wait",
 
         "grid",
         "place-items-center",
+
+        "text-[30px]",
+        isEnabled ? "text-[#ffffff40]" : "text-[#ffffff20]",
+        isEnabled ? "hover:text-[#ffffffc0]" : "",
+        "transition-all",
 
         "relative",
 

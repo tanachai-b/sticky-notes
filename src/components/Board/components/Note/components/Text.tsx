@@ -1,9 +1,8 @@
 import cx from "classnames";
 import { ForwardedRef, forwardRef } from "react";
 
-export const RefText = forwardRef(Text);
 export { RefText as Text };
-
+const RefText = forwardRef(Text);
 function Text(
   {
     text,

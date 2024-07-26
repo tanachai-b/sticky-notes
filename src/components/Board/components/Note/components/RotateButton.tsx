@@ -46,7 +46,7 @@ export function RotateButton({
           "text-[#ffffff]",
 
           "cursor-grab",
-          "hover:scale-150",
+          "group-hover:scale-150",
           "transition-all",
         )}
       >

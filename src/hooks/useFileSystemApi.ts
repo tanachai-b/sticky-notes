@@ -62,7 +62,7 @@ export function useFileSystemApi({
   }
 
   async function onSaveAs() {
-    if (!isSaved && !confirmUnsavedChanges()) return;
+    if (fileHandle && !isSaved && !confirmUnsavedChanges()) return;
 
     try {
       const fileHandle = await window.showSaveFilePicker(filePickerOptions);

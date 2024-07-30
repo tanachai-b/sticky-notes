@@ -24,7 +24,7 @@ export function DeleteButton({
         "group",
       )}
     >
-      <div
+      <button
         className={cx(
           "size-[30px]",
 
@@ -41,14 +41,13 @@ export function DeleteButton({
           "text-[20px]",
           "text-[#ffffff]",
 
-          "cursor-pointer",
           "group-hover:scale-150",
           "transition-all",
         )}
         onClick={onDelete}
       >
         <Icon icon="delete" />
-      </div>
+      </button>
 
       <div
         className={cx(

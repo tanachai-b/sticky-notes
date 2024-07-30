@@ -77,8 +77,6 @@ export function Note({
             onPointerUp={data.text.length > 0 ? onStopEditing : focusText}
           />
 
-          <DeleteButton isVisible={isEditing} onClick={onDelete} />
-
           <ColorSelector
             isVisible={isEditing}
             selectedColor={data.color}
@@ -88,6 +86,8 @@ export function Note({
               data.text.length > 0 ? onStopEditing() : focusText();
             }}
           />
+
+          <DeleteButton isVisible={isEditing} onClick={onDelete} />
         </div>
       </div>
     </>

@@ -53,13 +53,11 @@ function Color({
   onClick: () => void;
 }) {
   return (
-    <div
+    <button
       className={cx(
         "group",
 
         "p-[2px]",
-
-        "cursor-pointer",
       )}
       onPointerOver={onPointerOver}
       onClick={onClick}
@@ -88,7 +86,7 @@ function Color({
 
               "grid",
 
-              "text-[#202020]",
+              "text-[#000000]",
               "text-[25px]",
             )}
           >
@@ -96,6 +94,6 @@ function Color({
           </div>
         </div>
       </div>
-    </div>
+    </button>
   );
 }

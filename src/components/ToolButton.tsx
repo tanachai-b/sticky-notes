@@ -32,11 +32,11 @@ function Container({
   onClick: () => void;
 }) {
   return (
-    <div
+    <button
       className={cx(
         "p-[15px]",
 
-        isEnabled ? "cursor-pointer" : "cursor-wait",
+        !isEnabled ? "cursor-wait" : "",
 
         "grid",
         "place-items-center",
@@ -53,7 +53,7 @@ function Container({
       onClick={onClick}
     >
       {children}
-    </div>
+    </button>
   );
 }
 

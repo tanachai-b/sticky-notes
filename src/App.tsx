@@ -32,7 +32,7 @@ export default function App() {
       />
 
       <ToolBar>
-        <ToolButton icon="note_add" tooltip="New" isEnabled={isAllowFileActions} onClick={onNew} />
+        <ToolButton icon="draft" tooltip="New" isEnabled={isAllowFileActions} onClick={onNew} />
 
         <ToolButton
           icon="folder_open"
@@ -42,7 +42,7 @@ export default function App() {
         />
 
         <ToolButton
-          icon="save_as"
+          icon="save"
           tooltip="Save As"
           isEnabled={isAllowFileActions}
           onClick={onSaveAs}

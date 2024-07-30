@@ -15,9 +15,7 @@ export function ToolButton({
 }) {
   return (
     <Container isEnabled={isEnabled} onClick={isEnabled ? onClick : () => {}}>
-      <div className={cx("grid")}>
-        <Icon icon={icon} />
-      </div>
+      <Icon icon={icon} />
 
       <Tooltip>{tooltip}</Tooltip>
     </Container>
@@ -43,7 +41,7 @@ function Container({
         "grid",
         "place-items-center",
 
-        "text-[30px]",
+        "text-[25px]",
         isEnabled ? "text-[#ffffff40]" : "text-[#ffffff20]",
         isEnabled ? "hover:text-[#ffffffc0]" : "",
         "transition-all",

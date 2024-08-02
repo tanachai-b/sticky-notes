@@ -6,9 +6,11 @@ import { generateSave, updateSave } from "src/saving";
 export function useFileSystemApi({
   notes,
   setNotes,
+  clearToasts,
 }: {
   notes: NoteData[];
   setNotes: (notes: NoteData[]) => void;
+  clearToasts: () => void;
 }) {
   const filePickerOptions: OpenFilePickerOptions = {
     types: [{ description: "JSON", accept: { "application/json": [".json"] } }],
@@ -40,6 +42,7 @@ export function useFileSystemApi({
 
     setFileHandle(undefined);
     setNotes([]);
+    clearToasts();
   }
 
   async function onOpen() {
@@ -58,6 +61,7 @@ export function useFileSystemApi({
 
       setFileHandle(fileHandle);
       setNotes(notes);
+      clearToasts();
     } catch (error) {
       console.error(error);
     }

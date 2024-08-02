@@ -2,15 +2,18 @@ import cx from "classnames";
 import { useState } from "react";
 import { Resizable } from "src/common-components";
 import { NoteData } from "src/configs";
+import { ToastData } from "../Toasts";
 import { Backdrop, Note } from "./components";
 import { useHandleNotes } from "./hooks";
 
 export function Board({
   notes = [],
   onNotesChange,
+  addToast,
 }: {
   notes: NoteData[];
   onNotesChange: (notes: NoteData[]) => void;
+  addToast: (props: ToastData) => void;
 }) {
   const [boardSize, setBoardSize] = useState({ width: 9999, height: 9999 });
   const [editingNote, setEditingNote] = useState<string>();
@@ -20,6 +23,7 @@ export function Board({
       notes,
       boardSize,
       onNotesChange,
+      addToast,
       setEditingNote,
     });
 

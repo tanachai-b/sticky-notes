@@ -1,3 +1,5 @@
+import { useTrigger } from "src/common-hooks";
+import { ToastData } from "src/components";
 import { NoteData } from "src/configs";
 import { useNewColor } from "./useNewColor";
 
@@ -5,14 +7,20 @@ export function useHandleNotes({
   notes,
   boardSize,
   onNotesChange,
+  addToast,
   setEditingNote,
 }: {
   notes: NoteData[];
   boardSize: { width: number; height: number };
   onNotesChange: (notes: NoteData[]) => void;
+  addToast: (toast: ToastData) => void;
   setEditingNote: (key?: string) => void;
 }) {
   const { getNewColor } = useNewColor();
+
+  const reviveNote = useTrigger<NoteData>((note) => {
+    if (note != null) onNotesChange([...notes, note]);
+  });
 
   function moveAllNotes(offsetX: number, offsetY: number) {
     const updatedNotes = notes.map(({ x, y, ...rest }) => ({
@@ -94,6 +102,15 @@ export function useHandleNotes({
     const updatedNotes = notes.filter((note) => note.key !== key);
     onNotesChange(updatedNotes);
     setEditingNote(undefined);
+
+    const deletedNote = notes.find((note) => note.key === key);
+
+    if (deletedNote == null || deletedNote.text.length === 0) return;
+
+    const noteText =
+      deletedNote.text.length > 30 ? `${deletedNote.text.substring(0, 30)}...` : deletedNote.text;
+
+    addToast({ content: `“${noteText}” is deleted`, onUndo: () => reviveNote(deletedNote) });
   }
 
   return {

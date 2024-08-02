@@ -1,17 +1,28 @@
 import cx from "classnames";
 import { ReactNode, useEffect, useState } from "react";
-import { Board, Copyright, FileSaveStatus, ToolBar, ToolButton } from "./components";
+import {
+  Board,
+  Copyright,
+  FileSaveStatus,
+  Toasts,
+  ToolBar,
+  ToolButton,
+  useToast,
+} from "./components";
 import { NoteData } from "./configs";
 import { useFileSystemApi } from "./hooks";
 import { sampleNotes } from "./sampleNotes";
 
 export default function App() {
+  const { toasts, addToast, clearToasts } = useToast();
+
   const [notes, setNotes] = useState<NoteData[]>([]);
 
   const { fileName, isSaved, isAllowFileActions, onNew, onOpen, onSaveAs, onNotesChange } =
     useFileSystemApi({
       notes,
       setNotes,
+      clearToasts,
     });
 
   useEffect(() => {
@@ -28,6 +39,7 @@ export default function App() {
           setNotes(notes);
           onNotesChange();
         }}
+        addToast={addToast}
       />
 
       <ToolBar>
@@ -51,6 +63,8 @@ export default function App() {
       <FileSaveStatus fileName={fileName} isSaving={!isSaved} />
 
       <Copyright />
+
+      <Toasts toasts={toasts} />
     </Container>
   );
 }

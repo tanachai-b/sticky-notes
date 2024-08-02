@@ -8,18 +8,17 @@ import { sampleNotes } from "./sampleNotes";
 export default function App() {
   const [notes, setNotes] = useState<NoteData[]>([]);
 
-  const { fileName, isSaved, onNew, onOpen, onSaveAs, onNotesChange } = useFileSystemApi({
-    notes,
-    setNotes,
-  });
+  const { fileName, isSaved, isAllowFileActions, onNew, onOpen, onSaveAs, onNotesChange } =
+    useFileSystemApi({
+      notes,
+      setNotes,
+    });
 
   useEffect(() => {
     if (notes.length === 0) setNotes(sampleNotes);
   }, []);
 
   usePreventCloseUnsaved(!isSaved);
-
-  const isAllowFileActions = fileName == null || isSaved;
 
   return (
     <Container>

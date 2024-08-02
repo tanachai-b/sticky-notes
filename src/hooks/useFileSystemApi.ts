@@ -22,6 +22,8 @@ export function useFileSystemApi({
   const [isSaved, setIsSaved] = useState<boolean>(true);
   const [isSaving, setIsSaving] = useState<boolean>(false);
 
+  const isAllowFileActions = fileName == null || isSaved;
+
   const triggerAutoSave = useTrigger(autoSave);
 
   useEffect(() => {
@@ -110,6 +112,7 @@ export function useFileSystemApi({
   return {
     fileName,
     isSaved,
+    isAllowFileActions,
     onNew,
     onOpen,
     onSaveAs,

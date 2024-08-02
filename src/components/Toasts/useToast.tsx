@@ -4,30 +4,30 @@ import { Toast } from "./Toasts";
 export type ToastData = { content: ReactNode; onUndo: () => void };
 
 export function useToast() {
-  const [toastData, setToastData] = useState<ToastData[]>([]);
+  const [toastData, setToastData] = useState<({ key: string } & ToastData)[]>([]);
 
   const toasts = useMemo(
     () =>
-      toastData.map(({ content, onUndo }, index) => (
+      toastData.map(({ key, content, onUndo }) => (
         <Toast
-          key={index}
+          key={key}
           content={content}
-          onClose={() => removeToast(index)}
-          onUndo={() => {
-            onUndo();
-            removeToast(index);
-          }}
+          onClose={{ onAnimateDone: () => removeToast(key) }}
+          onUndo={{ onClick: onUndo, onAnimateDone: () => removeToast(key) }}
         />
       )),
     [toastData],
   );
 
-  function removeToast(index: number): void {
-    setToastData(toastData.filter((_, i) => i !== index));
+  function removeToast(key: string): void {
+    setToastData(toastData.filter((toast) => toast.key !== key));
   }
 
   function addToast({ content, onUndo }: ToastData) {
-    setToastData([...toastData, { content, onUndo }]);
+    setToastData([
+      ...toastData,
+      { key: Math.floor(Math.random() * 36 ** 4).toString(36), content, onUndo },
+    ]);
   }
 
   function clearToasts(): void {

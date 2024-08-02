@@ -1,5 +1,5 @@
 import cx from "classnames";
-import { ReactNode } from "react";
+import { ReactNode, useEffect, useRef, useState } from "react";
 import { Icon } from "src/common-components";
 
 export function Toasts({ toasts }: { toasts: ReactNode[] }) {
@@ -18,7 +18,6 @@ export function Toasts({ toasts }: { toasts: ReactNode[] }) {
         "items-stretch",
 
         "p-[15px]",
-        "gap-[15px]",
 
         "invisible",
       )}
@@ -34,53 +33,79 @@ export function Toast({
   onUndo,
 }: {
   content: ReactNode;
-  onClose: () => void;
-  onUndo: () => void;
+  onClose: { onClick?: () => void; onAnimateDone?: () => void };
+  onUndo: { onClick?: () => void; onAnimateDone?: () => void };
 }) {
+  const ref = useRef<HTMLDivElement>(null);
+
+  const [isVisible, setIsVisible] = useState(false);
+  useEffect(() => setIsVisible(true), []);
+
   return (
     <div
-      className={cx(
-        "visible",
-
-        "rounded-[10px]",
-        "bg-[#181818e0]",
-        "backdrop-blur-[10px]",
-        "shadow-[0_10px_20px_0_#000000c0]",
-
-        "p-[10px]",
-        "gap-[10px]",
-
-        "flex",
-        "flex-row",
-        "items-center",
-
-        "text-[14px]",
-      )}
+      className={cx("transition-all")}
+      style={{
+        marginBottom: isVisible ? "15px" : 0,
+        height: isVisible ? ref.current?.clientHeight : 0,
+      }}
     >
-      <button
+      <div
+        ref={ref}
         className={cx(
-          "text-[20px]",
-          "text-[#ffffff40]",
-          "hover:text-[#ffffffc0]",
+          "rounded-[10px]",
+          "bg-[#181818e0]",
+          "backdrop-blur-[10px]",
+          "shadow-[0_10px_20px_0_#000000c0]",
+
+          "p-[10px]",
+          "gap-[10px]",
+
+          "flex",
+          "flex-row",
+          "items-center",
+
+          "text-[14px]",
+
+          "relative",
+          isVisible
+            ? ["top-0", "opacity-100", "visible"]
+            : ["top-[100px]", "opacity-0", "invisible"],
           "transition-all",
-
-          "grid",
         )}
-        onClick={onClose}
       >
-        <Icon icon="close" />
-      </button>
+        <button
+          className={cx(
+            "text-[20px]",
+            "text-[#ffffff40]",
+            "hover:text-[#ffffffc0]",
+            "transition-all",
 
-      <div className={cx("grow", "text-[#ffffff80]", "overflow-hidden", "text-ellipsis")}>
-        {content}
+            "grid",
+          )}
+          onClick={() => {
+            setIsVisible(false);
+            onClose.onClick?.();
+            setTimeout(onClose.onAnimateDone ?? (() => {}), 150);
+          }}
+        >
+          <Icon icon="close" />
+        </button>
+
+        <div className={cx("grow", "text-[#ffffff80]", "overflow-hidden", "text-ellipsis")}>
+          {content}
+        </div>
+
+        <button
+          className={cx("text-[#ffffff40]", "hover:text-[#ffffffc0]", "transition-all")}
+          onClick={() => {
+            setIsVisible(false);
+            onUndo.onClick?.();
+            setTimeout(onUndo.onAnimateDone ?? (() => {}), 150);
+          }}
+        >
+          Undo
+        </button>
       </div>
-
-      <button
-        className={cx("text-[#ffffff40]", "hover:text-[#ffffffc0]", "transition-all")}
-        onClick={onUndo}
-      >
-        Undo
-      </button>
     </div>
   );
 }

@@ -80,7 +80,7 @@ export function useHandleNotes({
     const frontZ = notes.reduce((frontZ, note) => Math.max(note.zIndex, frontZ), -9999);
 
     const newNote: NoteData = {
-      key: Math.floor(Math.random() * 1000000).toString(36),
+      key: Math.floor(Math.random() * 36 ** 4).toString(36),
       text: "",
       color: getNewColor(),
       x: x - boardSize.width / 2,

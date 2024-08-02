@@ -25,7 +25,7 @@ function Container({ children }: { children: ReactNode }) {
         "m-[30px]",
 
         "rounded-[10px]",
-        "bg-[#101010c0]",
+        "bg-[#181818c0]",
         "backdrop-blur-[10px]",
         "shadow-[0_10px_20px_0px_#000000c0]",
 

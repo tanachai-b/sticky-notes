@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 
-export function useTrigger(callback: () => void) {
-  const [triggered, setTriggered] = useState<object>();
+export function useTrigger<T>(callback: (prop?: T) => void) {
+  const [triggered, setTriggered] = useState<{ prop?: T }>({});
 
   useEffect(() => {
-    callback();
+    callback(triggered.prop);
   }, [triggered]);
 
-  return () => setTriggered({});
+  return (prop: T) => setTriggered({ prop });
 }

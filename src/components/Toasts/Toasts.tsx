@@ -33,8 +33,8 @@ export function Toast({
   onUndo,
 }: {
   content: ReactNode;
-  onClose: { onClick?: () => void; onAnimateDone?: () => void };
-  onUndo: { onClick?: () => void; onAnimateDone?: () => void };
+  onClose: () => void;
+  onUndo: () => void;
 }) {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -84,8 +84,7 @@ export function Toast({
           )}
           onClick={() => {
             setIsVisible(false);
-            onClose.onClick?.();
-            setTimeout(onClose.onAnimateDone ?? (() => {}), 150);
+            setTimeout(onClose, 150);
           }}
         >
           <Icon icon="close" />
@@ -99,8 +98,7 @@ export function Toast({
           className={cx("text-[#ffffff40]", "hover:text-[#ffffffc0]", "transition-all")}
           onClick={() => {
             setIsVisible(false);
-            onUndo.onClick?.();
-            setTimeout(onUndo.onAnimateDone ?? (() => {}), 150);
+            setTimeout(onUndo, 150);
           }}
         >
           Undo

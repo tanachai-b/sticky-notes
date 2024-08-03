@@ -12,8 +12,11 @@ export function useToast() {
         <Toast
           key={key}
           content={content}
-          onClose={{ onAnimateDone: () => removeToast(key) }}
-          onUndo={{ onClick: onUndo, onAnimateDone: () => removeToast(key) }}
+          onClose={() => removeToast(key)}
+          onUndo={() => {
+            removeToast(key);
+            onUndo();
+          }}
         />
       )),
     [toastData],

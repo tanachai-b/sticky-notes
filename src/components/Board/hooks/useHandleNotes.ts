@@ -23,11 +23,13 @@ export function useHandleNotes({
   });
 
   function moveAllNotes(offsetX: number, offsetY: number) {
-    const updatedNotes = notes.map(({ x, y, ...rest }) => ({
-      ...rest,
-      x: x + offsetX,
-      y: y + offsetY,
-    }));
+    const updatedNotes = notes.map(
+      ({ x, y, ...rest }): NoteData => ({
+        ...rest,
+        x: x + offsetX,
+        y: y + offsetY,
+      }),
+    );
     onNotesChange(updatedNotes);
   }
 
@@ -51,11 +53,13 @@ export function useHandleNotes({
         return;
       }
 
-      const updatedNotes = currentNotes.map(({ x, y, ...rest }) => ({
-        ...rest,
-        x: x + vx,
-        y: y + vy,
-      }));
+      const updatedNotes = currentNotes.map(
+        ({ x, y, ...rest }): NoteData => ({
+          ...rest,
+          x: x + vx,
+          y: y + vy,
+        }),
+      );
 
       onNotesChange(updatedNotes);
 
@@ -65,19 +69,20 @@ export function useHandleNotes({
 
   function bringNoteToFront(key: string) {
     const frontZ = notes.reduce(
-      (frontZ, note) => (note.key === key ? frontZ : Math.max(note.zIndex, frontZ)),
+      (frontZ, note) => (note.key === key ? frontZ : Math.max(note.z, frontZ)),
       -9999,
     );
 
-    const updatedNotes = notes.map((note) =>
-      note.key === key ? { ...note, zIndex: 0 } : { ...note, zIndex: note.zIndex - frontZ - 1 },
+    const updatedNotes = notes.map(
+      (note): NoteData =>
+        note.key === key ? { ...note, z: 0 } : { ...note, z: note.z - frontZ - 1 },
     );
 
     onNotesChange(updatedNotes);
   }
 
   function addNote(x: number, y: number) {
-    const frontZ = notes.reduce((frontZ, note) => Math.max(note.zIndex, frontZ), -9999);
+    const frontZ = notes.reduce((frontZ, note) => Math.max(note.z, frontZ), -9999);
 
     const newNote: NoteData = {
       key: Math.floor(Math.random() * 36 ** 4).toString(36),
@@ -85,8 +90,8 @@ export function useHandleNotes({
       color: getNewColor(),
       x: x - boardSize.width / 2,
       y: y - boardSize.height / 2,
-      rotate: Math.floor((10 * Math.random() - 10 / 2) * 10) / 10,
-      zIndex: frontZ + 1,
+      angle: Math.floor((10 * Math.random() - 10 / 2) * 10) / 10,
+      z: frontZ + 1,
     };
 
     onNotesChange([...notes, newNote]);

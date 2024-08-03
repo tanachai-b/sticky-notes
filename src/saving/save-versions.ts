@@ -49,3 +49,16 @@ export type Save_v0_4_0 = {
     zIndex: number;
   }[];
 };
+
+export type Save_v0_8_0 = {
+  app: "sticky-notes";
+  saveApi: "0.8.0";
+  notes: {
+    text: string;
+    color: NoteColor;
+    x: number;
+    y: number;
+    z: number;
+    angle: number;
+  }[];
+};

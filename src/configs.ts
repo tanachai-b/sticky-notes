@@ -4,8 +4,8 @@ export type NoteData = {
   color: NoteColor;
   x: number;
   y: number;
-  rotate: number;
-  zIndex: number;
+  z: number;
+  angle: number;
 };
 
 export type NoteColor = (typeof noteColors)[number];

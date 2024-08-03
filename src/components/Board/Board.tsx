@@ -32,7 +32,7 @@ export function Board({
       <Backdrop onDrag={({ dx, dy }) => moveAllNotes(dx, dy)} onAddNote={addNote} />
 
       {notes
-        .sort((a, b) => a.zIndex - b.zIndex)
+        .sort((a, b) => a.z - b.z)
         .map(({ key, ...rest }) => (
           <Note
             key={key}

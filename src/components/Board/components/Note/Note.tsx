@@ -55,7 +55,7 @@ export function Note({
           top: inScreenY + (boardSize.height - 250) / 2,
         }}
       >
-        <div className={cx("relative", "grid")} style={{ transform: `rotate(${data.rotate}deg)` }}>
+        <div className={cx("relative", "grid")} style={{ transform: `rotate(${data.angle}deg)` }}>
           <Paper
             isVisible={isVisible}
             isEditing={isEditing}
@@ -128,7 +128,7 @@ export function Note({
     const clampedAngle = Math.min(Math.max(newAngle, -60), 60);
     const roundedAngle = Math.round(clampedAngle * 10) / 10;
 
-    onChange({ ...data, rotate: roundedAngle });
+    onChange({ ...data, angle: roundedAngle });
   }
 }
 

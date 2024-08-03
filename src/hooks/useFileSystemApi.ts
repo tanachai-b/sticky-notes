@@ -58,9 +58,13 @@ export function useFileSystemApi({
       const save = JSON.parse(text);
       const updatedSave = updateSave(save);
       const notes = updatedSave.notes;
+      const notesWithKeys = notes.map((note) => {
+        const key = Math.floor(Math.random() * 36 ** 4).toString(36);
+        return { ...note, key };
+      });
 
       setFileHandle(fileHandle);
-      setNotes(notes);
+      setNotes(notesWithKeys);
       clearToasts();
     } catch (error) {
       console.error(error);

@@ -7,8 +7,8 @@ export const sampleNotes: NoteData[] = [
     color: "#ffe080",
     x: -54,
     y: -214,
-    rotate: -1.4,
-    zIndex: -2,
+    z: -2,
+    angle: -1.4,
   },
   {
     key: "jo9f",
@@ -16,8 +16,8 @@ export const sampleNotes: NoteData[] = [
     color: "#80c0ff",
     x: 17,
     y: 224,
-    rotate: -0.3,
-    zIndex: 0,
+    z: 0,
+    angle: -0.3,
   },
   {
     key: "b4pl",
@@ -25,7 +25,7 @@ export const sampleNotes: NoteData[] = [
     color: "#c0ff80",
     x: 52,
     y: 8,
-    rotate: 1.7,
-    zIndex: -1,
+    z: -1,
+    angle: 1.7,
   },
 ];

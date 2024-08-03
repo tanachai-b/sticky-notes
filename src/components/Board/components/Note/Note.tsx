@@ -40,9 +40,12 @@ export function Note({
 
   const { textRef, focusText } = useNoteText({ isEditing });
 
+  const [isVisible, setIsVisible] = useState(false);
+  useEffect(() => setIsVisible(true), []);
+
   return (
     <>
-      <Backdrop isEditing={isEditing} onPointerDown={onStopEditing} />
+      <Backdrop isEditing={isVisible && isEditing} onPointerDown={onStopEditing} />
 
       <div
         ref={noteRef}
@@ -54,8 +57,9 @@ export function Note({
       >
         <div className={cx("relative", "grid")} style={{ transform: `rotate(${data.rotate}deg)` }}>
           <Paper
-            color={previewColor ?? data.color}
+            isVisible={isVisible}
             isEditing={isEditing}
+            color={previewColor ?? data.color}
             onMove={({ dx, dy }) => onChange({ ...data, x: data.x + dx, y: data.y + dy })}
             onPointerDown={isInScreen ? onBringToFront : onPanTo}
             onDoubleClick={onStartEditing}
@@ -72,13 +76,13 @@ export function Note({
           </Paper>
 
           <RotateButton
-            isVisible={isEditing}
+            isVisible={isVisible && isEditing}
             onDrag={onDragRotateButton}
             onPointerUp={data.text.length > 0 ? onStopEditing : focusText}
           />
 
           <ColorSelector
-            isVisible={isEditing}
+            isVisible={isVisible && isEditing}
             selectedColor={data.color}
             onPreviewColor={setPreviewColor}
             onSelectColor={(color) => {
@@ -87,7 +91,13 @@ export function Note({
             }}
           />
 
-          <DeleteButton isVisible={isEditing} onClick={onDelete} />
+          <DeleteButton
+            isVisible={isVisible && isEditing}
+            onClick={() => {
+              setIsVisible(false);
+              setTimeout(onDelete, 150);
+            }}
+          />
         </div>
       </div>
     </>

@@ -9,7 +9,10 @@ export function Backdrop({
   onAddNote: (x: number, y: number) => void;
 }) {
   return (
-    <Draggable className={cx("absolute", "size-full")} onDrag={onDrag}>
+    <Draggable
+      className={cx("absolute", "size-full", "cursor-grab", "active:cursor-grabbing")}
+      onDrag={onDrag}
+    >
       <div
         className={cx("size-full")}
         onDoubleClick={(e) => onAddNote(e.clientX, e.clientY)}

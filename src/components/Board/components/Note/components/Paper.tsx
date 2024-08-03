@@ -45,6 +45,8 @@ export function Paper({
 
           "overflow-clip",
           "relative",
+
+          !isEditing ? ["cursor-grab", "active:cursor-grabbing"] : [],
         )}
         style={{ backgroundColor: color }}
         onPointerDown={(e) => {

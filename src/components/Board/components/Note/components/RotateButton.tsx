@@ -2,51 +2,37 @@ import cx from "classnames";
 import { Draggable, Icon } from "src/common-components";
 
 export function RotateButton({
-  isVisible,
+  onDragStart,
   onDrag,
   onDragStop,
 }: {
-  isVisible: boolean;
+  onDragStart: ({ mx, my }: { mx: number; my: number }) => void;
   onDrag: ({ mx, my }: { mx: number; my: number }) => void;
   onDragStop: ({ mx, my }: { mx: number; my: number }) => void;
 }) {
   return (
     <Draggable
       className={cx(
-        "absolute",
-        "place-self-center",
-        "bottom-[calc(100%_+_10px)]",
-
-        !isVisible ? ["invisible", "pointer-events-none", "opacity-0"] : "",
-        "transition-all",
-
         "grid",
         "place-items-center",
 
+        "cursor-grab",
+        "active:cursor-grabbing",
+
+        "relative",
         "group",
       )}
+      onDragStart={onDragStart}
       onDrag={onDrag}
       onDragStop={onDragStop}
     >
       <div
         className={cx(
-          "size-[30px]",
-
-          "rounded-full",
-          "bg-[#10101080]",
-          "shadow-[0_10px_20px_0px_#00000080]",
-
-          "border-[2px]",
-          "border-[#ffffff]",
-
           "grid",
-          "place-items-center",
 
-          "text-[20px]",
-          "text-[#ffffff]",
-
-          "cursor-grab",
-          "group-hover:scale-150",
+          "text-[25px]",
+          "text-[#ffffff40]",
+          "group-hover:text-[#ffffffc0]",
           "transition-all",
         )}
       >
@@ -56,8 +42,8 @@ export function RotateButton({
       <div
         className={cx(
           "absolute",
-          "bottom-0",
-          "group-hover:bottom-[calc(100%_+_10px)]",
+          "top-0",
+          "group-hover:top-[calc(100%_+_15px)]",
 
           "rounded-[5px]",
           "bg-[#101010c0]",

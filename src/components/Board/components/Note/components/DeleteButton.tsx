@@ -1,59 +1,36 @@
 import cx from "classnames";
 import { Icon } from "src/common-components";
 
-export function DeleteButton({
-  isVisible,
-  onClick: onDelete,
-}: {
-  isVisible: boolean;
-  onClick: () => void;
-}) {
+export function DeleteButton({ onClick: onDelete }: { onClick: () => void }) {
   return (
-    <div
+    <button
       className={cx(
-        "absolute",
-        "place-self-center",
-        "top-[calc(100%_+_10px)]",
-
-        !isVisible ? ["invisible", "pointer-events-none", "opacity-0"] : "",
-        "transition-all",
-
         "grid",
         "place-items-center",
 
+        "relative",
         "group",
       )}
+      onClick={onDelete}
     >
-      <button
+      <div
         className={cx(
-          "size-[30px]",
-
-          "rounded-full",
-          "bg-[#10101080]",
-          "shadow-[0_10px_20px_0px_#00000080]",
-
-          "border-[2px]",
-          "border-[#ffffff]",
-
           "grid",
-          "place-items-center",
 
-          "text-[20px]",
-          "text-[#ffffff]",
-
-          "group-hover:scale-150",
+          "text-[25px]",
+          "text-[#ffffff40]",
+          "group-hover:text-[#ffffffc0]",
           "transition-all",
         )}
-        onClick={onDelete}
       >
         <Icon icon="delete" />
-      </button>
+      </div>
 
       <div
         className={cx(
           "absolute",
           "top-0",
-          "group-hover:top-[calc(100%_+_10px)]",
+          "group-hover:top-[calc(100%_+_15px)]",
 
           "rounded-[5px]",
           "bg-[#101010c0]",
@@ -72,6 +49,6 @@ export function DeleteButton({
       >
         Delete
       </div>
-    </div>
+    </button>
   );
 }

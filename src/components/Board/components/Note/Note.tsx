@@ -6,11 +6,13 @@ import {
   Backdrop,
   ColorSelector,
   DeleteButton,
+  Editor,
   Paper,
   RotateButton,
   Shadings,
   Text,
 } from "./components";
+import { useRotateButton as useRotateNote } from "./useRotateButton";
 
 export function Note({
   data,
@@ -43,6 +45,12 @@ export function Note({
 
   const [isVisible, setIsVisible] = useState(false);
   useEffect(() => setIsVisible(true), []);
+
+  const { onDragStart, onDrag, onDragStop } = useRotateNote({
+    noteRef,
+    noteAngle: data.angle,
+    onRotate: (angle) => onChange({ ...data, angle }),
+  });
 
   return (
     <>
@@ -77,12 +85,6 @@ export function Note({
             />
           </Paper>
 
-          <RotateButton
-            isVisible={isVisible && isEditing}
-            onDrag={onDragRotateButton}
-            onDragStop={data.text.length > 0 ? onStopEditing : focusText}
-          />
-
           <ColorSelector
             isVisible={isVisible && isEditing}
             selectedColor={data.color}
@@ -93,13 +95,23 @@ export function Note({
             }}
           />
 
-          <DeleteButton
-            isVisible={isVisible && isEditing}
-            onClick={() => {
-              setIsVisible(false);
-              setTimeout(onDelete, 150);
-            }}
-          />
+          <Editor isVisible={isVisible && isEditing}>
+            <RotateButton
+              onDragStart={onDragStart}
+              onDrag={onDrag}
+              onDragStop={() => {
+                onDragStop();
+                data.text.length > 0 ? onStopEditing() : focusText();
+              }}
+            />
+
+            <DeleteButton
+              onClick={() => {
+                setIsVisible(false);
+                setTimeout(onDelete, 150);
+              }}
+            />
+          </Editor>
         </div>
       </div>
     </>
@@ -118,22 +130,6 @@ export function Note({
     const isInScreen = data.x === inScreenX && data.y === inScreenY;
 
     return { inScreenX, inScreenY, isInScreen };
-  }
-
-  function onDragRotateButton({ mx, my }: { mx: number; my: number }) {
-    const { x: noteX = 0, y: noteY = 0 } = noteRef.current?.getBoundingClientRect() ?? {};
-
-    const cx = noteX + 250 / 2;
-    const cy = noteY + 250 / 2;
-
-    const x = mx - cx;
-    const y = my - cy;
-
-    const newAngle = (Math.atan2(x, -y) / 2 / Math.PI) * 360;
-    const clampedAngle = Math.min(Math.max(newAngle, -60), 60);
-    const roundedAngle = Math.round(clampedAngle * 10) / 10;
-
-    onChange({ ...data, angle: roundedAngle });
   }
 }
 

@@ -4,11 +4,11 @@ import { Draggable, Icon } from "src/common-components";
 export function RotateButton({
   isVisible,
   onDrag,
-  onPointerUp,
+  onDragStop,
 }: {
   isVisible: boolean;
-  onDrag: ({ cx, cy }: { cx: number; cy: number }) => void;
-  onPointerUp: () => void;
+  onDrag: ({ mx, my }: { mx: number; my: number }) => void;
+  onDragStop: ({ mx, my }: { mx: number; my: number }) => void;
 }) {
   return (
     <Draggable
@@ -26,7 +26,7 @@ export function RotateButton({
         "group",
       )}
       onDrag={onDrag}
-      onPointerUp={onPointerUp}
+      onDragStop={onDragStop}
     >
       <div
         className={cx(

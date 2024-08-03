@@ -1,30 +1,25 @@
 import { ReactNode, useEffect, useRef, useState } from "react";
 
+type Coordinates = {
+  x: number;
+  y: number;
+  dx: number;
+  dy: number;
+  mx: number;
+  my: number;
+};
+
 export function Draggable({
   className,
+  onDragStart,
   onDrag,
-  onPointerDown,
-  onPointerUp,
+  onDragStop,
   children,
 }: {
   className?: string;
-  onDrag: ({
-    x,
-    y,
-    dx,
-    dy,
-    cx,
-    cy,
-  }: {
-    x: number;
-    y: number;
-    dx: number;
-    dy: number;
-    cx: number;
-    cy: number;
-  }) => void;
-  onPointerDown?: () => void;
-  onPointerUp?: () => void;
+  onDragStart?: ({ x, y, dx, dy, mx, my }: Coordinates) => void;
+  onDrag: ({ x, y, dx, dy, mx, my }: Coordinates) => void;
+  onDragStop?: ({ x, y, dx, dy, mx, my }: Coordinates) => void;
   children: ReactNode;
 }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -34,42 +29,58 @@ export function Draggable({
 
   useEffect(() => {
     if (isPointerDown) {
-      document.addEventListener("pointermove", handlePointerMove);
-      document.addEventListener("pointerup", handlePointerUp);
+      document.addEventListener("pointermove", onPointerMove);
+      document.addEventListener("pointerup", onPointerUp);
 
       return () => {
-        document.removeEventListener("pointermove", handlePointerMove);
-        document.removeEventListener("pointerup", handlePointerUp);
+        document.removeEventListener("pointermove", onPointerMove);
+        document.removeEventListener("pointerup", onPointerUp);
       };
     }
-  }, [isPointerDown, handlePointerMove, handlePointerUp]);
+  }, [isPointerDown, onPointerMove, onPointerUp]);
 
-  function handlePointerDown({ clientX, clientY }: React.PointerEvent) {
+  function onPointerDown({ clientX, clientY }: React.PointerEvent) {
     setIsPointerDown(true);
-    setLastPosition({ x: clientX, y: clientY });
-    onPointerDown?.();
-  }
 
-  function handlePointerMove({ clientX, clientY }: PointerEvent) {
-    const { x: rx = 0, y: ry = 0 } = ref.current?.getBoundingClientRect() ?? {};
-    onDrag({
-      x: clientX - rx,
-      y: clientY - ry,
-      dx: clientX - lastPosition.x,
-      dy: clientY - lastPosition.y,
-      cx: clientX,
-      cy: clientY,
-    });
+    const coordinates = getCoordinates(clientX, clientY, { x: clientX, y: clientY });
+    onDragStart?.(coordinates);
+
     setLastPosition({ x: clientX, y: clientY });
   }
 
-  function handlePointerUp() {
+  function onPointerMove({ clientX, clientY }: PointerEvent) {
+    const coordinates = getCoordinates(clientX, clientY);
+    onDrag(coordinates);
+
+    setLastPosition({ x: clientX, y: clientY });
+  }
+
+  function onPointerUp({ clientX, clientY }: PointerEvent) {
+    const coordinates = getCoordinates(clientX, clientY);
+    onDragStop?.(coordinates);
+
     setIsPointerDown(false);
-    onPointerUp?.();
+  }
+
+  function getCoordinates(
+    clientX: number,
+    clientY: number,
+    { x: lastX, y: lastY } = lastPosition,
+  ): Coordinates {
+    const { x: parentX = 0, y: parentY = 0 } = ref.current?.getBoundingClientRect() ?? {};
+
+    return {
+      x: clientX - parentX,
+      y: clientY - parentY,
+      dx: clientX - lastX,
+      dy: clientY - lastY,
+      mx: clientX,
+      my: clientY,
+    };
   }
 
   return (
-    <div ref={ref} className={className} onPointerDown={handlePointerDown}>
+    <div ref={ref} className={className} onPointerDown={onPointerDown}>
       {children}
     </div>
   );

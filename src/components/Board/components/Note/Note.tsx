@@ -78,7 +78,7 @@ export function Note({
           <RotateButton
             isVisible={isVisible && isEditing}
             onDrag={onDragRotateButton}
-            onPointerUp={data.text.length > 0 ? onStopEditing : focusText}
+            onDragStop={data.text.length > 0 ? onStopEditing : focusText}
           />
 
           <ColorSelector
@@ -118,11 +118,14 @@ export function Note({
     return { inScreenX, inScreenY, isInScreen };
   }
 
-  function onDragRotateButton({ cx, cy }: { cx: number; cy: number }) {
-    const { x: rx = 0, y: ry = 0 } = noteRef.current?.getBoundingClientRect() ?? {};
+  function onDragRotateButton({ mx, my }: { mx: number; my: number }) {
+    const { x: noteX = 0, y: noteY = 0 } = noteRef.current?.getBoundingClientRect() ?? {};
 
-    const x = cx - (rx + 250 / 2);
-    const y = cy - (ry + 250 / 2);
+    const cx = noteX + 250 / 2;
+    const cy = noteY + 250 / 2;
+
+    const x = mx - cx;
+    const y = my - cy;
 
     const newAngle = (Math.atan2(x, -y) / 2 / Math.PI) * 360;
     const clampedAngle = Math.min(Math.max(newAngle, -60), 60);

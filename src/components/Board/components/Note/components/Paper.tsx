@@ -25,11 +25,7 @@ export function Paper({
   const [isPointerDown, setIsPointerDown] = useState(false);
 
   return (
-    <Draggable
-      onDrag={!isEditing ? onMove : () => {}}
-      onPointerDown={() => setIsPointerDown(true)}
-      onPointerUp={() => setIsPointerDown(false)}
-    >
+    <Draggable onDrag={!isEditing ? onMove : () => {}}>
       <div
         className={cx(
           "w-[250px]",
@@ -51,7 +47,11 @@ export function Paper({
           "relative",
         )}
         style={{ backgroundColor: color }}
-        onPointerDown={onPointerDown}
+        onPointerDown={(e) => {
+          setIsPointerDown(true);
+          onPointerDown(e);
+        }}
+        onPointerUp={() => setIsPointerDown(false)}
         onDoubleClick={onDoubleClick}
         onContextMenu={onContextMenu}
       >

@@ -1,5 +1,5 @@
 import cx from "classnames";
-import { Icon } from "src/common-components";
+import { colorTone } from "src/common-functions";
 import { NoteColor, noteColors } from "src/configs";
 
 export function ColorSelector({
@@ -23,10 +23,17 @@ export function ColorSelector({
         !isVisible ? ["invisible", "pointer-events-none", "opacity-0"] : "",
         "transition-all",
 
+        "rounded-[10px]",
+        "bg-[#181818c0]",
+        "backdrop-blur-[10px]",
+        "shadow-[0_10px_20px_0_#000000c0]",
+
         "flex",
         "flex-col",
+
+        "p-[10px]",
+        "gap-[10px]",
       )}
-      onPointerLeave={() => onPreviewColor()}
     >
       {noteColors.map((color, index) => (
         <Color
@@ -34,6 +41,7 @@ export function ColorSelector({
           color={color}
           isSelected={color === selectedColor}
           onPointerOver={() => onPreviewColor(color)}
+          onPointerLeave={() => onPreviewColor()}
           onClick={() => onSelectColor(color)}
         />
       ))}
@@ -45,55 +53,42 @@ function Color({
   color,
   isSelected,
   onPointerOver,
+  onPointerLeave,
   onClick,
 }: {
   color: string;
   isSelected: boolean;
   onPointerOver: () => void;
+  onPointerLeave: () => void;
   onClick: () => void;
 }) {
   return (
     <button
       className={cx(
-        "group",
+        "size-[25px]",
+        "rounded-full",
 
-        "p-[2px]",
+        "grid",
+        "place-items-center",
+
+        "group",
       )}
+      style={{ backgroundColor: color }}
       onPointerOver={onPointerOver}
+      onPointerLeave={onPointerLeave}
       onClick={onClick}
     >
       <div
         className={cx(
-          "size-[30px]",
-
           "rounded-full",
-          "bg-[#ffffff]",
-          "shadow-[0_10px_20px_0px_#00000080]",
+          "size-[50%]",
+          colorTone(color) === "light" ? "bg-[#00000080]" : "bg-[#ffffff80]",
 
-          "border",
-          "border-[#000000]",
-
-          "p-[2px]",
-
-          "group-hover:scale-150",
+          isSelected ? "opacity-100" : "opacity-0",
+          "group-hover:opacity-100",
           "transition-all",
         )}
-      >
-        <div className={cx("size-full", "rounded-full")} style={{ backgroundColor: color }}>
-          <div
-            className={cx(
-              { invisible: !isSelected },
-
-              "grid",
-
-              "text-[#000000]",
-              "text-[25px]",
-            )}
-          >
-            <Icon icon="check" />
-          </div>
-        </div>
-      </div>
+      />
     </button>
   );
 }

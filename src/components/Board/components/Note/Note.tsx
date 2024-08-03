@@ -1,5 +1,6 @@
 import cx from "classnames";
 import { useEffect, useRef, useState } from "react";
+import { colorTone } from "src/common-functions";
 import { NoteColor, NoteData } from "src/configs";
 import {
   Backdrop,
@@ -70,6 +71,7 @@ export function Note({
             <Text
               ref={textRef}
               text={data.text}
+              theme={colorTone(previewColor ?? data.color)}
               isEditing={isEditing}
               onChange={(text) => onChange({ ...data, text })}
             />

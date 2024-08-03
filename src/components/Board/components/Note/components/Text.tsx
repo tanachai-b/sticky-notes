@@ -6,10 +6,12 @@ const RefText = forwardRef(Text);
 function Text(
   {
     text,
+    theme,
     isEditing,
     onChange,
   }: {
     text: string;
+    theme: "light" | "dark";
     isEditing: boolean;
     onChange: (text: string) => void;
   },
@@ -35,7 +37,9 @@ function Text(
 
           "text-[30px]",
           "font-handwriting",
-          "text-[#000000e0]",
+
+          theme === "light" ? "text-[#000000e0]" : "text-[#ffffffe0]",
+          "transition-all",
 
           "text-center",
           "whitespace-pre-wrap",

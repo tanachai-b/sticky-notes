@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useTrigger } from "src/common-hooks";
 import { NoteData } from "src/configs";
-import { generateSave, updateSave } from "src/saving";
+import { decodeSave, encodeSave } from "src/saving";
 
 export function useFileSystemApi({
   notes,
@@ -56,15 +56,10 @@ export function useFileSystemApi({
       const text = await file.text();
 
       const save = JSON.parse(text);
-      const updatedSave = updateSave(save);
-      const notes = updatedSave.notes;
-      const notesWithKeys = notes.map((note) => {
-        const key = Math.floor(Math.random() * 36 ** 4).toString(36);
-        return { ...note, key };
-      });
+      const notes = decodeSave(save);
 
       setFileHandle(fileHandle);
-      setNotes(notesWithKeys);
+      setNotes(notes);
       clearToasts();
     } catch (error) {
       console.error(error);
@@ -79,7 +74,7 @@ export function useFileSystemApi({
       await fileHandle.createWritable();
       setFileHandle(fileHandle);
 
-      const save = JSON.stringify(generateSave(notes), undefined, 2);
+      const save = JSON.stringify(encodeSave(notes), undefined, 2);
 
       const writable = await fileHandle.createWritable();
       await writable.write(save);
@@ -103,7 +98,7 @@ export function useFileSystemApi({
     try {
       setIsSaving(true);
 
-      const save = JSON.stringify(generateSave(notes), undefined, 2);
+      const save = JSON.stringify(encodeSave(notes), undefined, 2);
 
       const writable = await fileHandle.createWritable();
       await writable.write(save);

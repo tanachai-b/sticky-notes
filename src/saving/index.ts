@@ -1,2 +1,2 @@
-export * from "./generateSave";
-export * from "./updateSave";
+export * from "./decodeSave";
+export * from "./encodeSave";

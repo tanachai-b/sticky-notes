@@ -1,3 +1,4 @@
+import { NoteData } from "src/configs";
 import {
   updateTo_v0_2_0,
   updateTo_v0_3_0,
@@ -18,7 +19,20 @@ const allVersions = Object.keys(saveUpdaters);
 const allUpdaters = Object.values(saveUpdaters);
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function updateSave(input: any): Save_v0_8_0 {
+export function decodeSave(input: any): NoteData[] {
+  const updatedSave = updateSave(input);
+
+  const notes = updatedSave.notes;
+  const notesWithKeys = notes.map((note): NoteData => {
+    const key = Math.floor(Math.random() * 36 ** 4).toString(36);
+    return { ...note, key };
+  });
+
+  return notesWithKeys;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function updateSave(input: any): Save_v0_8_0 {
   const version = getVersion(input);
 
   const startIndex = Math.max(allVersions.indexOf(version), 0);

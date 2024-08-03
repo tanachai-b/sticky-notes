@@ -7,6 +7,6 @@ export function encodeSave(notes: NoteData[]): Save_v0_8_0 {
     saveApi: "0.8.0",
     notes: notes
       .sort((a, b) => a.text.localeCompare(b.text))
-      .map(({ key, ...rest }) => ({ ...rest })),
+      .map(({ text, color, x, y, z, angle }) => ({ text, color, x, y, z, angle })),
   };
 }

@@ -81,7 +81,7 @@ function Color({
       <div
         className={cx(
           "rounded-full",
-          "size-[50%]",
+          "size-[13px]",
           colorTone(color) === "light" ? "bg-[#00000080]" : "bg-[#ffffff80]",
 
           isSelected ? "opacity-100" : "opacity-0",

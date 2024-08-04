@@ -3,7 +3,6 @@ import { useEffect, useRef, useState } from "react";
 import { colorTone } from "src/common-functions";
 import { NoteColor, NoteData } from "src/configs";
 import {
-  Backdrop,
   ColorSelector,
   DeleteButton,
   Editor,
@@ -22,7 +21,6 @@ export function Note({
   onPanTo,
   onBringToFront,
   onStartEditing,
-  onStopEditing,
   onChange,
   onDelete,
 }: {
@@ -32,7 +30,6 @@ export function Note({
   onPanTo: () => void;
   onBringToFront: () => void;
   onStartEditing: () => void;
-  onStopEditing: () => void;
   onChange: (noteData: NoteData) => void;
   onDelete: () => void;
 }) {
@@ -54,66 +51,63 @@ export function Note({
   });
 
   return (
-    <>
-      <Backdrop isEditing={isVisible && isEditing} onPointerDown={onStopEditing} />
+    <div
+      ref={noteRef}
+      className={cx("absolute")}
+      style={{
+        left: inScreenX + (boardSize.width - 250) / 2,
+        top: inScreenY + (boardSize.height - 250) / 2,
+      }}
+    >
+      <div className={cx("relative", "grid")} style={{ transform: `rotate(${data.angle}deg)` }}>
+        <Paper
+          isVisible={isVisible}
+          isEditing={isEditing}
+          color={previewColor ?? data.color}
+          onPointerDown={isInScreen ? onBringToFront : () => {}}
+          onMove={({ dx, dy }) =>
+            isInScreen && onChange({ ...data, x: data.x + dx, y: data.y + dy })
+          }
+          onClick={isInScreen ? onStartEditing : onPanTo}
+        >
+          <Shadings />
 
-      <div
-        ref={noteRef}
-        className={cx("absolute")}
-        style={{
-          left: inScreenX + (boardSize.width - 250) / 2,
-          top: inScreenY + (boardSize.height - 250) / 2,
-        }}
-      >
-        <div className={cx("relative", "grid")} style={{ transform: `rotate(${data.angle}deg)` }}>
-          <Paper
-            isVisible={isVisible}
+          <Text
+            ref={textRef}
+            text={data.text}
+            theme={colorTone(previewColor ?? data.color)}
             isEditing={isEditing}
-            color={previewColor ?? data.color}
-            onMove={({ dx, dy }) => onChange({ ...data, x: data.x + dx, y: data.y + dy })}
-            onPointerDown={isInScreen ? onBringToFront : onPanTo}
-            onDoubleClick={onStartEditing}
-            onContextMenu={onStartEditing}
-          >
-            <Shadings />
+            onChange={(text) => onChange({ ...data, text })}
+          />
+        </Paper>
 
-            <Text
-              ref={textRef}
-              text={data.text}
-              theme={colorTone(previewColor ?? data.color)}
-              isEditing={isEditing}
-              onChange={(text) => onChange({ ...data, text })}
-            />
-          </Paper>
+        <ColorSelector
+          isVisible={isVisible && isEditing}
+          selectedColor={data.color}
+          onPreviewColor={setPreviewColor}
+          onSelectColor={(color) => {
+            onChange({ ...data, color });
+            focusText();
+          }}
+        />
 
-          <ColorSelector
-            isVisible={isVisible && isEditing}
-            selectedColor={data.color}
-            onPreviewColor={setPreviewColor}
-            onSelectColor={(color) => {
-              onChange({ ...data, color });
-              focusText();
-            }}
+        <Editor isVisible={isVisible && isEditing}>
+          <MoveButton
+            onDrag={({ dx, dy }) => onChange({ ...data, x: data.x + dx, y: data.y + dy })}
+            onDragStop={focusText}
           />
 
-          <Editor isVisible={isVisible && isEditing}>
-            <MoveButton
-              onDrag={({ dx, dy }) => onChange({ ...data, x: data.x + dx, y: data.y + dy })}
-              onDragStop={focusText}
-            />
+          <RotateButton onDragStart={onDragStart} onDrag={onDrag} onDragStop={focusText} />
 
-            <RotateButton onDragStart={onDragStart} onDrag={onDrag} onDragStop={focusText} />
-
-            <DeleteButton
-              onClick={() => {
-                setIsVisible(false);
-                setTimeout(onDelete, 150);
-              }}
-            />
-          </Editor>
-        </div>
+          <DeleteButton
+            onClick={() => {
+              setIsVisible(false);
+              setTimeout(onDelete, 150);
+            }}
+          />
+        </Editor>
       </div>
-    </>
+    </div>
   );
 
   function inScreenXY() {

@@ -1,26 +1,24 @@
 import cx from "classnames";
-import { PointerEvent, ReactNode, useEffect, useState } from "react";
-import { Draggable } from "src/common-components";
+import { ReactNode, useEffect, useState } from "react";
+import { Clickable, Draggable } from "src/common-components";
 import { NoteColor } from "src/configs";
 
 export function Paper({
   isVisible,
   isEditing,
   color,
-  onMove,
-  onPointerDown,
-  onDoubleClick,
-  onContextMenu,
   children,
+  onPointerDown,
+  onMove,
+  onClick,
 }: {
   isVisible: boolean;
   isEditing: boolean;
   color: NoteColor;
-  onMove: ({ dx, dy }: { dx: number; dy: number }) => void;
-  onPointerDown: (e: PointerEvent) => void;
-  onDoubleClick: () => void;
-  onContextMenu: () => void;
   children: ReactNode;
+  onPointerDown: () => void;
+  onMove: ({ dx, dy }: { dx: number; dy: number }) => void;
+  onClick: () => void;
 }) {
   const [isDragging, setIsDragging] = useState(false);
 
@@ -30,39 +28,41 @@ export function Paper({
 
   return (
     <Draggable
-      onDragStart={() => setIsDragging(true)}
+      onDragStart={() => {
+        onPointerDown();
+        setIsDragging(true);
+      }}
       onDrag={!isEditing ? onMove : () => {}}
       onDragStop={() => setIsDragging(false)}
     >
-      <div
-        className={cx(
-          "w-[250px]",
-          "h-[250px]",
+      <Clickable onClick={onClick}>
+        <div
+          className={cx(
+            "w-[250px]",
+            "h-[250px]",
 
-          "rounded-[5px]",
+            "rounded-[5px]",
 
-          isVisible ? ["scale-100", "opacity-100"] : ["scale-0", "opacity-0"],
+            isVisible ? ["scale-100", "opacity-100"] : ["scale-0", "opacity-0"],
 
-          isEditing
-            ? "shadow-[0_50px_100px_0px_#000000c0]"
-            : isDragging
-            ? "shadow-[0_20px_50px_0px_#000000c0]"
-            : "shadow-[0_10px_20px_0px_#000000c0]",
+            isEditing
+              ? "shadow-[0_50px_100px_0px_#000000c0]"
+              : isDragging
+              ? "shadow-[0_20px_50px_0px_#000000c0]"
+              : "shadow-[0_10px_20px_0px_#000000c0]",
 
-          "transition-all",
+            "transition-all",
 
-          "overflow-clip",
-          "relative",
+            "overflow-clip",
+            "relative",
 
-          !isEditing && !isDragging ? "cursor-grab" : "",
-        )}
-        style={{ backgroundColor: color }}
-        onPointerDown={onPointerDown}
-        onDoubleClick={onDoubleClick}
-        onContextMenu={onContextMenu}
-      >
-        {children}
-      </div>
+            !isEditing && !isDragging ? "cursor-grab" : "",
+          )}
+          style={{ backgroundColor: color }}
+        >
+          {children}
+        </div>
+      </Clickable>
     </Draggable>
   );
 }

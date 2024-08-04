@@ -1,4 +1,3 @@
-export * from "./Backdrop";
 export * from "./ColorSelector";
 export * from "./DeleteButton";
 export * from "./Editor";

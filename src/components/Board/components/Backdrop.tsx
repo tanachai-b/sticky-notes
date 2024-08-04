@@ -1,6 +1,6 @@
 import cx from "classnames";
 import { useEffect, useState } from "react";
-import { Draggable } from "src/common-components";
+import { Clickable, Draggable } from "src/common-components";
 
 export function Backdrop({
   onDrag,
@@ -22,11 +22,7 @@ export function Backdrop({
       onDrag={onDrag}
       onDragStop={() => setIsDragging(false)}
     >
-      <div
-        className={cx("size-full")}
-        onDoubleClick={(e) => onAddNote(e.clientX, e.clientY)}
-        onContextMenu={(e) => onAddNote(e.clientX, e.clientY)}
-      />
+      <Clickable className={cx("size-full")} onClick={(e) => onAddNote(e.clientX, e.clientY)} />
     </Draggable>
   );
 }

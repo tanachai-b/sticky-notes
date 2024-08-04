@@ -29,7 +29,13 @@ export function Board({
 
   return (
     <Resizable className={cx("size-full", "relative")} onResize={setBoardSize}>
-      <Backdrop onDrag={({ dx, dy }) => moveAllNotes(dx, dy)} onAddNote={addNote} />
+      <Backdrop
+        onDrag={({ dx, dy }) => {
+          setEditingNote(undefined);
+          moveAllNotes(dx, dy);
+        }}
+        onAddNote={(x, y) => (editingNote != null ? setEditingNote(undefined) : addNote(x, y))}
+      />
 
       {notes
         .sort((a, b) => a.z - b.z)
@@ -39,10 +45,15 @@ export function Board({
             data={{ key, ...rest }}
             isEditing={editingNote === key}
             boardSize={boardSize}
-            onPanTo={() => panToNote(key)}
-            onBringToFront={() => bringNoteToFront(key)}
+            onPanTo={() => {
+              setEditingNote(undefined);
+              panToNote(key);
+            }}
+            onBringToFront={() => {
+              if (key !== editingNote) setEditingNote(undefined);
+              bringNoteToFront(key);
+            }}
             onStartEditing={() => setEditingNote(key)}
-            onStopEditing={() => setEditingNote(undefined)}
             onChange={(noteData) => editNote(key, noteData)}
             onDelete={() => deleteNote(key)}
           />

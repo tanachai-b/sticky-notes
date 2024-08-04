@@ -26,8 +26,6 @@ export function useRotateButton({
     onRotate(roundedAngle);
 
     setLastAngle(newAngle);
-
-    document.body.style.cursor = "grabbing";
   }
 
   function getAngle({ mx, my }: { mx: number; my: number }) {
@@ -44,9 +42,5 @@ export function useRotateButton({
     return angle;
   }
 
-  function onDragStop() {
-    document.body.style.cursor = "auto";
-  }
-
-  return { onDragStart, onDrag, onDragStop };
+  return { onDragStart, onDrag };
 }

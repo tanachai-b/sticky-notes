@@ -12,7 +12,7 @@ import {
   Shadings,
   Text,
 } from "./components";
-import { useRotateButton as useRotateNote } from "./useRotateButton";
+import { useRotateButton } from "./useRotateButton";
 
 export function Note({
   data,
@@ -46,7 +46,7 @@ export function Note({
   const [isVisible, setIsVisible] = useState(false);
   useEffect(() => setIsVisible(true), []);
 
-  const { onDragStart, onDrag, onDragStop } = useRotateNote({
+  const { onDragStart, onDrag } = useRotateButton({
     noteRef,
     noteAngle: data.angle,
     onRotate: (angle) => onChange({ ...data, angle }),
@@ -97,10 +97,11 @@ export function Note({
 
           <Editor isVisible={isVisible && isEditing}>
             <RotateButton
-              onDragStart={onDragStart}
+              onDragStart={({ mx, my }) => {
+                onDragStart({ mx, my });
+              }}
               onDrag={onDrag}
               onDragStop={() => {
-                onDragStop();
                 data.text.length > 0 ? onStopEditing() : focusText();
               }}
             />

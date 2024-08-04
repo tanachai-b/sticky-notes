@@ -1,4 +1,5 @@
 import cx from "classnames";
+import { useEffect, useState } from "react";
 import { Draggable, Icon } from "src/common-components";
 
 export function RotateButton({
@@ -10,6 +11,12 @@ export function RotateButton({
   onDrag: ({ mx, my }: { mx: number; my: number }) => void;
   onDragStop: ({ mx, my }: { mx: number; my: number }) => void;
 }) {
+  const [isDragging, setIsDragging] = useState(false);
+
+  useEffect(() => {
+    document.body.style.cursor = isDragging ? "grabbing" : "auto";
+  }, [isDragging]);
+
   return (
     <Draggable
       className={cx(
@@ -22,9 +29,15 @@ export function RotateButton({
         "relative",
         "group",
       )}
-      onDragStart={onDragStart}
+      onDragStart={({ mx, my }) => {
+        onDragStart({ mx, my });
+        setIsDragging(true);
+      }}
       onDrag={onDrag}
-      onDragStop={onDragStop}
+      onDragStop={({ mx, my }) => {
+        onDragStop({ mx, my });
+        setIsDragging(false);
+      }}
     >
       <div
         className={cx(

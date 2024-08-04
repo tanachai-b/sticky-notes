@@ -1,5 +1,5 @@
 import cx from "classnames";
-import { PointerEvent, ReactNode, useState } from "react";
+import { PointerEvent, ReactNode, useEffect, useState } from "react";
 import { Draggable } from "src/common-components";
 import { NoteColor } from "src/configs";
 
@@ -22,10 +22,18 @@ export function Paper({
   onContextMenu: () => void;
   children: ReactNode;
 }) {
-  const [isPointerDown, setIsPointerDown] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
+
+  useEffect(() => {
+    document.body.style.cursor = !isEditing && isDragging ? "grabbing" : "auto";
+  }, [isDragging]);
 
   return (
-    <Draggable onDrag={!isEditing ? onMove : () => {}}>
+    <Draggable
+      onDragStart={() => setIsDragging(true)}
+      onDrag={!isEditing ? onMove : () => {}}
+      onDragStop={() => setIsDragging(false)}
+    >
       <div
         className={cx(
           "w-[250px]",
@@ -37,7 +45,7 @@ export function Paper({
 
           isEditing
             ? "shadow-[0_50px_100px_0px_#000000c0]"
-            : isPointerDown
+            : isDragging
             ? "shadow-[0_20px_50px_0px_#000000c0]"
             : "shadow-[0_10px_20px_0px_#000000c0]",
 
@@ -46,14 +54,10 @@ export function Paper({
           "overflow-clip",
           "relative",
 
-          !isEditing ? ["cursor-grab", "active:cursor-grabbing"] : [],
+          !isEditing && !isDragging ? "cursor-grab" : "",
         )}
         style={{ backgroundColor: color }}
-        onPointerDown={(e) => {
-          setIsPointerDown(true);
-          onPointerDown(e);
-        }}
-        onPointerUp={() => setIsPointerDown(false)}
+        onPointerDown={onPointerDown}
         onDoubleClick={onDoubleClick}
         onContextMenu={onContextMenu}
       >

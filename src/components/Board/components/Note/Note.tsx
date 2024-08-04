@@ -91,7 +91,7 @@ export function Note({
             onPreviewColor={setPreviewColor}
             onSelectColor={(color) => {
               onChange({ ...data, color });
-              data.text.length > 0 ? onStopEditing() : focusText();
+              focusText();
             }}
           />
 
@@ -101,9 +101,7 @@ export function Note({
                 onDragStart({ mx, my });
               }}
               onDrag={onDrag}
-              onDragStop={() => {
-                data.text.length > 0 ? onStopEditing() : focusText();
-              }}
+              onDragStop={focusText}
             />
 
             <DeleteButton

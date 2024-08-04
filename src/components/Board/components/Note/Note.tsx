@@ -7,6 +7,7 @@ import {
   ColorSelector,
   DeleteButton,
   Editor,
+  MoveButton,
   Paper,
   RotateButton,
   Shadings,
@@ -96,13 +97,12 @@ export function Note({
           />
 
           <Editor isVisible={isVisible && isEditing}>
-            <RotateButton
-              onDragStart={({ mx, my }) => {
-                onDragStart({ mx, my });
-              }}
-              onDrag={onDrag}
+            <MoveButton
+              onDrag={({ dx, dy }) => onChange({ ...data, x: data.x + dx, y: data.y + dy })}
               onDragStop={focusText}
             />
+
+            <RotateButton onDragStart={onDragStart} onDrag={onDrag} onDragStop={focusText} />
 
             <DeleteButton
               onClick={() => {

@@ -2,13 +2,11 @@ import cx from "classnames";
 import { useEffect, useState } from "react";
 import { Draggable, Icon } from "src/common-components";
 
-export function RotateButton({
-  onDragStart,
+export function MoveButton({
   onDrag,
   onDragStop,
 }: {
-  onDragStart: ({ mx, my }: { mx: number; my: number }) => void;
-  onDrag: ({ mx, my }: { mx: number; my: number }) => void;
+  onDrag: ({ dx, dy }: { dx: number; dy: number }) => void;
   onDragStop: () => void;
 }) {
   const [isDragging, setIsDragging] = useState(false);
@@ -29,10 +27,7 @@ export function RotateButton({
         "relative",
         "group",
       )}
-      onDragStart={({ mx, my }) => {
-        onDragStart({ mx, my });
-        setIsDragging(true);
-      }}
+      onDragStart={() => setIsDragging(true)}
       onDrag={onDrag}
       onDragStop={() => {
         onDragStop();
@@ -49,7 +44,7 @@ export function RotateButton({
           "transition-all",
         )}
       >
-        <Icon icon="refresh" />
+        <Icon icon="drag_pan" />
       </div>
 
       <div
@@ -73,7 +68,7 @@ export function RotateButton({
           "pointer-events-none",
         )}
       >
-        Rotate
+        Move
       </div>
     </Draggable>
   );

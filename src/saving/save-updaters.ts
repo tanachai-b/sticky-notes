@@ -1,5 +1,17 @@
-import { noteColors } from "src/configs";
-import { Save_v0_1_0, Save_v0_2_0, Save_v0_3_0, Save_v0_4_0, Save_v0_8_0 } from "./save-versions";
+import {
+  noteColor_v0_4_0,
+  NoteColor_v0_4_0,
+  NoteColor_v0_9_0,
+  noteColors_v0_9_0,
+} from "./save-colors";
+import {
+  Save_v0_1_0,
+  Save_v0_2_0,
+  Save_v0_3_0,
+  Save_v0_4_0,
+  Save_v0_8_0,
+  Save_v0_9_0,
+} from "./save-versions";
 
 export function updateTo_v0_2_0(oldSave: Save_v0_1_0): Save_v0_2_0 {
   return {
@@ -21,7 +33,7 @@ export function updateTo_v0_4_0(oldSave: Save_v0_3_0): Save_v0_4_0 {
   return {
     app: "sticky-notes",
     saveApi: "0.4.0",
-    notes: oldSave.notes.map((note) => ({ ...note, color: noteColors[note.color] })),
+    notes: oldSave.notes.map((note) => ({ ...note, color: noteColor_v0_4_0[note.color] })),
   };
 }
 
@@ -38,4 +50,24 @@ export function updateTo_v0_8_0(oldSave: Save_v0_4_0): Save_v0_8_0 {
       angle: rotate,
     })),
   };
+}
+
+export function updateTo_v0_9_0(oldSave: Save_v0_8_0): Save_v0_9_0 {
+  return {
+    app: "sticky-notes",
+    saveApi: "0.9.0",
+    notes: oldSave.notes.map(({ text, color, x, y, z, angle }) => ({
+      text,
+      color: convertColorTo_v0_9_0(color),
+      x,
+      y,
+      z,
+      angle,
+    })),
+  };
+}
+
+function convertColorTo_v0_9_0(color: NoteColor_v0_4_0): NoteColor_v0_9_0 {
+  const index = noteColor_v0_4_0.indexOf(color);
+  return noteColors_v0_9_0[index] ?? noteColors_v0_9_0[0];
 }

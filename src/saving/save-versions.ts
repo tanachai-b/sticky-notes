@@ -1,4 +1,4 @@
-import { NoteColor } from "src/configs";
+import { NoteColor_v0_4_0, NoteColor_v0_9_0 } from "./save-colors";
 
 export type Save_v0_1_0 = {
   key: string;
@@ -42,7 +42,7 @@ export type Save_v0_4_0 = {
   notes: {
     key: string;
     text: string;
-    color: NoteColor;
+    color: NoteColor_v0_4_0;
     x: number;
     y: number;
     rotate: number;
@@ -55,7 +55,20 @@ export type Save_v0_8_0 = {
   saveApi: "0.8.0";
   notes: {
     text: string;
-    color: NoteColor;
+    color: NoteColor_v0_4_0;
+    x: number;
+    y: number;
+    z: number;
+    angle: number;
+  }[];
+};
+
+export type Save_v0_9_0 = {
+  app: "sticky-notes";
+  saveApi: "0.9.0";
+  notes: {
+    text: string;
+    color: NoteColor_v0_9_0;
     x: number;
     y: number;
     z: number;

@@ -1,17 +1,21 @@
 import { useTrigger } from "src/common-hooks";
 import { ToastData } from "src/components";
-import { NoteData } from "src/configs";
+import { NoteData, Viewport } from "src/configs";
 import { useNewColor } from "./useNewColor";
 
 export function useHandleNotes({
+  viewport,
   notes,
   boardSize,
+  onViewportChange,
   onNotesChange,
   addToast,
   setEditingNote,
 }: {
+  viewport: Viewport;
   notes: NoteData[];
   boardSize: { width: number; height: number };
+  onViewportChange: (viewport: Viewport) => void;
   onNotesChange: (notes: NoteData[]) => void;
   addToast: (toast: ToastData) => void;
   setEditingNote: (key?: string) => void;
@@ -22,28 +26,15 @@ export function useHandleNotes({
     if (note != null) onNotesChange([...notes, note]);
   });
 
-  function moveAllNotes(offsetX: number, offsetY: number) {
-    const updatedNotes = notes.map(
-      ({ x, y, ...rest }): NoteData => ({
-        ...rest,
-        x: x + offsetX,
-        y: y + offsetY,
-      }),
-    );
-    onNotesChange(updatedNotes);
-  }
-
   function panToNote(key: string) {
-    let currentNotes = notes;
+    let currentViewport = viewport;
 
     const interval = setInterval(() => {
-      const target = currentNotes.find((note) => note.key === key) as NoteData;
+      const { x: tx = 0, y: ty = 0 } = notes.find((note) => note.key === key) ?? {};
+      const { x, y, zoom } = currentViewport;
 
-      const x = target.x;
-      const y = target.y;
-
-      const dx = 0 - x;
-      const dy = 0 - y;
+      const dx = tx - x;
+      const dy = ty - y;
 
       const vx = Math.floor(dx / 2);
       const vy = Math.floor(dy / 2);
@@ -53,17 +44,9 @@ export function useHandleNotes({
         return;
       }
 
-      const updatedNotes = currentNotes.map(
-        ({ x, y, ...rest }): NoteData => ({
-          ...rest,
-          x: x + vx,
-          y: y + vy,
-        }),
-      );
-
-      onNotesChange(updatedNotes);
-
-      currentNotes = updatedNotes;
+      const updatedViewport = { x: x + vx, y: y + vy, zoom };
+      onViewportChange(updatedViewport);
+      currentViewport = updatedViewport;
     }, 1000 / 60);
   }
 
@@ -93,8 +76,8 @@ export function useHandleNotes({
       key: Math.floor(Math.random() * 36 ** 4).toString(36),
       text: "",
       color: getNewColor(),
-      x: x - boardSize.width / 2,
-      y: y - boardSize.height / 2,
+      x: x + viewport.x - boardSize.width / 2,
+      y: y + viewport.y - boardSize.height / 2,
       z: frontZ + 1,
       angle: Math.floor((10 * Math.random() - 10 / 2) * 10) / 10,
     };
@@ -124,7 +107,6 @@ export function useHandleNotes({
   }
 
   return {
-    moveAllNotes,
     panToNote,
     bringNoteToFront,
     addNote,

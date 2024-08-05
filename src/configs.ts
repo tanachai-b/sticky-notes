@@ -1,3 +1,9 @@
+export type Viewport = {
+  x: number;
+  y: number;
+  zoom: number;
+};
+
 export type NoteData = {
   key: string;
   text: string;

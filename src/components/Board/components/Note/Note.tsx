@@ -1,7 +1,7 @@
 import cx from "classnames";
 import { useEffect, useRef, useState } from "react";
 import { colorTone } from "src/common-functions";
-import { NoteColor, NoteData } from "src/configs";
+import { NoteColor, NoteData, Viewport } from "src/configs";
 import {
   ColorSelector,
   DeleteButton,
@@ -15,6 +15,7 @@ import {
 import { useRotateButton } from "./useRotateButton";
 
 export function Note({
+  viewport,
   data,
   isEditing,
   boardSize,
@@ -24,6 +25,7 @@ export function Note({
   onChange,
   onDelete,
 }: {
+  viewport: Viewport;
   data: NoteData;
   isEditing: boolean;
   boardSize: { width: number; height: number };
@@ -118,9 +120,9 @@ export function Note({
     const maxX = (boardSize.width + 250) / 2 - peek;
     const maxY = (boardSize.height + 250) / 2 - peek;
 
-    const inScreenX = Math.min(Math.max(data.x, minX), maxX);
-    const inScreenY = Math.min(Math.max(data.y, minY), maxY);
-    const isInScreen = data.x === inScreenX && data.y === inScreenY;
+    const inScreenX = Math.min(Math.max(data.x - viewport.x, minX), maxX);
+    const inScreenY = Math.min(Math.max(data.y - viewport.y, minY), maxY);
+    const isInScreen = data.x - viewport.x === inScreenX && data.y - viewport.y === inScreenY;
 
     return { inScreenX, inScreenY, isInScreen };
   }

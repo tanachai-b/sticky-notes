@@ -1,4 +1,10 @@
-import { NoteData } from "./configs";
+import { NoteData, Viewport } from "./configs";
+
+export const sampleViewportData: Viewport = {
+  x: 0,
+  y: 0,
+  zoom: 0,
+};
 
 export const sampleNotes: NoteData[] = [
   {

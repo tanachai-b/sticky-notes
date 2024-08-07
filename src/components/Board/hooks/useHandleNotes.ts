@@ -68,21 +68,26 @@ export function useHandleNotes({
   }
 
   function bringNoteToFront(key: string) {
-    const frontZ = notes.reduce(
-      (frontZ, note) => (note.key === key ? frontZ : Math.max(note.z, frontZ)),
-      -9999,
+    const frontNote = notes.reduce<NoteData | undefined>(
+      (frontNote, note) => (frontNote == null || note.z > frontNote.z ? note : frontNote),
+      undefined,
     );
+    const { key: frontKey = key, z: frontZ = 0 } = frontNote ?? {};
+    if (key === frontKey) return;
 
     const updatedNotes = notes.map(
-      (note): NoteData =>
-        note.key === key ? { ...note, z: 0 } : { ...note, z: note.z - frontZ - 1 },
+      (note): NoteData => (note.key === key ? { ...note, z: frontZ + 1 } : note),
     );
 
     onNotesChange(updatedNotes);
   }
 
   function addNote(x: number, y: number) {
-    const frontZ = notes.reduce((frontZ, note) => Math.max(note.z, frontZ), -9999);
+    const frontNote = notes.reduce<NoteData | undefined>(
+      (frontNote, note) => (frontNote == null || note.z > frontNote.z ? note : frontNote),
+      undefined,
+    );
+    const { z: frontZ = 0 } = frontNote ?? {};
 
     const newNote: NoteData = {
       key: Math.floor(Math.random() * 36 ** 4).toString(36),
@@ -90,8 +95,8 @@ export function useHandleNotes({
       color: getNewColor(),
       x: x - boardSize.width / 2,
       y: y - boardSize.height / 2,
-      angle: Math.floor((10 * Math.random() - 10 / 2) * 10) / 10,
       z: frontZ + 1,
+      angle: Math.floor((10 * Math.random() - 10 / 2) * 10) / 10,
     };
 
     onNotesChange([...notes, newNote]);

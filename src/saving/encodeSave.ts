@@ -1,7 +1,7 @@
-import { NoteData } from "src/configs";
+import { NoteData, Viewport } from "src/configs";
 import { Save_v0_9_0 } from "./save-versions";
 
-export function encodeSave(notes: NoteData[]): Save_v0_9_0 {
+export function encodeSave(viewport: Viewport, notes: NoteData[]): Save_v0_9_0 {
   return {
     app: "sticky-notes",
     saveApi: "0.9.0",

@@ -21,7 +21,9 @@ export default function App() {
 
   const { fileName, isSaved, isAllowFileActions, onNew, onOpen, onSaveAs, onNotesChange } =
     useFileSystemApi({
+      viewport,
       notes,
+      setViewport,
       setNotes,
       clearToasts,
     });

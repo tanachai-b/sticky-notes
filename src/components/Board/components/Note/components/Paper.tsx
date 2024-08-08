@@ -45,11 +45,9 @@ export function Paper({
 
             isVisible ? ["scale-100", "opacity-100"] : ["scale-0", "opacity-0"],
 
-            isEditing
-              ? "shadow-[0_50px_100px_0px_#000000c0]"
-              : isDragging
-              ? "shadow-[0_20px_50px_0px_#000000c0]"
-              : "shadow-[0_10px_20px_0px_#000000c0]",
+            isEditing || isDragging
+              ? "shadow-[0_20px_50px_0_#000000c0]"
+              : "shadow-[0_10px_20px_0_#000000c0]",
 
             "transition-all",
 

@@ -80,7 +80,7 @@ function Container({ children }: { children: ReactNode }) {
     <div
       className={cx(
         "size-full",
-        "bg-[#101010]",
+        "bg-[#202020]",
 
         "grid",
 

@@ -18,6 +18,7 @@ export function Toasts({ toasts }: { toasts: ReactNode[] }) {
         "items-stretch",
 
         "p-[15px]",
+        "pb-[20px]",
 
         "invisible",
       )}
@@ -53,9 +54,9 @@ export function Toast({
         ref={ref}
         className={cx(
           "rounded-[10px]",
-          "bg-[#181818e0]",
+          "bg-[#101010c0]",
           "backdrop-blur-[10px]",
-          "shadow-[0_10px_20px_0_#000000c0]",
+          "shadow-[0_5px_10px_0_#202020c0]",
 
           "p-[10px]",
           "gap-[10px]",

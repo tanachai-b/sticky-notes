@@ -24,9 +24,9 @@ export function ColorSelector({
         "transition-all",
 
         "rounded-[10px]",
-        "bg-[#181818c0]",
+        "bg-[#101010c0]",
         "backdrop-blur-[10px]",
-        "shadow-[0_10px_20px_0_#000000c0]",
+        "shadow-[0_10px_20px_0_#202020c0]",
 
         "flex",
         "flex-col",

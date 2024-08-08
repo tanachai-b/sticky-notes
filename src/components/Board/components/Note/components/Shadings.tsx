@@ -6,15 +6,18 @@ export function Shadings() {
       <div
         className={cx("absolute", "size-full")}
         style={{
-          background: "linear-gradient(155deg, #00000020, #00000000 20%, #ffffff00 80%, #ffffff20)",
+          background: `linear-gradient(${
+            90 + 45
+          }deg, #00000020, #00000000 20%, #00000000 80%, #00000020)`,
         }}
       />
 
       <div
         className={cx("absolute", "size-full")}
         style={{
-          background:
-            "linear-gradient(-155deg, #00000020, #00000000 20%, #ffffff00 80%, #ffffff20)",
+          background: `linear-gradient(${
+            -90 - 45
+          }deg, #00000020, #00000000 20%, #00000000 80%, #00000020)`,
         }}
       />
     </div>

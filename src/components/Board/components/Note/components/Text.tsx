@@ -4,31 +4,42 @@ import { ChangeEventHandler, LegacyRef, ReactNode } from "react";
 export function Text({
   textAreaRef,
   text,
+  strikethrough,
   theme,
   isEditing,
   onChange,
 }: {
   textAreaRef: LegacyRef<HTMLTextAreaElement>;
   text: string;
+  strikethrough: boolean;
   theme: "light" | "dark";
   isEditing: boolean;
   onChange: (text: string) => void;
 }) {
   return (
-    <Container theme={theme}>
+    <Container strikethrough={strikethrough} theme={theme}>
       <StaticText text={text} isVisible={!isEditing} />
 
       <TextArea
         textAreaRef={textAreaRef}
         isVisible={isEditing}
         text={text}
+        strikethrough={strikethrough}
         onChange={(e) => onChange(e.target.value)}
       />
     </Container>
   );
 }
 
-function Container({ theme, children }: { theme: "light" | "dark"; children: ReactNode }) {
+function Container({
+  strikethrough,
+  theme,
+  children,
+}: {
+  strikethrough: boolean;
+  theme: "light" | "dark";
+  children: ReactNode;
+}) {
   return (
     <div
       className={cx(
@@ -47,6 +58,7 @@ function Container({ theme, children }: { theme: "light" | "dark"; children: Rea
 
           "text-[30px]",
           "font-handwriting",
+          strikethrough ? "line-through" : "",
 
           theme === "light" ? "text-[#000000e0]" : "text-[#ffffffe0]",
           "transition-all",
@@ -82,11 +94,13 @@ function StaticText({ text, isVisible }: { text: string; isVisible: boolean }) {
 function TextArea({
   textAreaRef,
   text,
+  strikethrough,
   isVisible,
   onChange,
 }: {
   textAreaRef: LegacyRef<HTMLTextAreaElement>;
   text: string;
+  strikethrough: boolean;
   isVisible: boolean;
   onChange: ChangeEventHandler<HTMLTextAreaElement>;
 }) {
@@ -106,6 +120,7 @@ function TextArea({
 
         "p-[10px]",
         "text-center",
+        strikethrough ? "line-through" : "",
       )}
       hidden={!isVisible}
       value={text}

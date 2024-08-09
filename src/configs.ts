@@ -6,12 +6,13 @@ export type Viewport = {
 
 export type NoteData = {
   key: string;
-  text: string;
-  color: NoteColor;
   x: number;
   y: number;
   z: number;
   angle: number;
+  color: NoteColor;
+  text: string;
+  strikethrough: boolean;
 };
 
 export type NoteColor = (typeof noteColors)[number];

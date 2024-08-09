@@ -5,4 +5,5 @@ export * from "./MoveButton";
 export * from "./Paper";
 export * from "./RotateButton";
 export * from "./Shadings";
+export * from "./StrikethroughButton";
 export * from "./Text";

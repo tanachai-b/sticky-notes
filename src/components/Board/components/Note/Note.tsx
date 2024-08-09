@@ -10,6 +10,7 @@ import {
   Paper,
   RotateButton,
   Shadings,
+  StrikethroughButton,
   Text,
 } from "./components";
 import { useRotateButton } from "./useRotateButton";
@@ -87,6 +88,7 @@ export function Note({
           <Text
             textAreaRef={textAreaRef}
             text={data.text}
+            strikethrough={data.strikethrough}
             theme={colorTone(previewColor ?? data.color)}
             isEditing={isEditing}
             onChange={(text) => onChange({ ...data, text })}
@@ -113,6 +115,11 @@ export function Note({
           />
 
           <RotateButton onDragStart={onDragStart} onDrag={onDrag} onDragStop={focusTextArea} />
+
+          <StrikethroughButton
+            active={data.strikethrough}
+            onClick={() => onChange({ ...data, strikethrough: !data.strikethrough })}
+          />
 
           <DeleteButton
             onClick={() => {

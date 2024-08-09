@@ -74,12 +74,13 @@ export function useHandleNotes({
 
     const newNote: NoteData = {
       key: Math.floor(Math.random() * 36 ** 4).toString(36),
-      text: "",
-      color: getNewColor(),
       x: viewport.x + x,
       y: viewport.y + y,
       z: frontZ + 1,
       angle: Math.floor((10 * Math.random() - 10 / 2) * 10) / 10,
+      color: getNewColor(),
+      text: "",
+      strikethrough: false,
     };
 
     onNotesChange([...notes, newNote]);

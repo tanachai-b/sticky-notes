@@ -1,7 +1,7 @@
 import cx from "classnames";
 import { Icon } from "src/common-components";
 
-export function DeleteButton({ onClick }: { onClick: () => void }) {
+export function StrikethroughButton({ active, onClick }: { active: boolean; onClick: () => void }) {
   return (
     <button
       className={cx(
@@ -18,12 +18,11 @@ export function DeleteButton({ onClick }: { onClick: () => void }) {
           "grid",
 
           "text-[25px]",
-          "text-[#ffffff40]",
-          "group-hover:text-[#ffffffc0]",
+          active ? "text-[#ffffffc0]" : "text-[#ffffff40]",
           "transition-all",
         )}
       >
-        <Icon icon="delete" />
+        <Icon icon="format_strikethrough" />
       </div>
 
       <div
@@ -47,7 +46,7 @@ export function DeleteButton({ onClick }: { onClick: () => void }) {
           "pointer-events-none",
         )}
       >
-        Delete
+        Strikethrough
       </div>
     </button>
   );

@@ -1,14 +1,18 @@
 import { useEffect, useState } from "react";
 import { useTrigger } from "src/common-hooks";
-import { NoteData } from "src/configs";
+import { NoteData, Viewport } from "src/configs";
 import { decodeSave, encodeSave } from "src/saving";
 
 export function useFileSystemApi({
+  viewport,
   notes,
+  setViewport,
   setNotes,
   clearToasts,
 }: {
+  viewport: Viewport;
   notes: NoteData[];
+  setViewport: (viewport: Viewport) => void;
   setNotes: (notes: NoteData[]) => void;
   clearToasts: () => void;
 }) {
@@ -41,6 +45,7 @@ export function useFileSystemApi({
     if (!isSaved && !confirmUnsavedChanges()) return;
 
     setFileHandle(undefined);
+    setViewport({ x: 0, y: 0, zoom: 0 });
     setNotes([]);
     clearToasts();
   }
@@ -56,9 +61,10 @@ export function useFileSystemApi({
       const text = await file.text();
 
       const save = JSON.parse(text);
-      const notes = decodeSave(save);
+      const { viewport, notes } = decodeSave(save);
 
       setFileHandle(fileHandle);
+      setViewport(viewport);
       setNotes(notes);
       clearToasts();
     } catch (error) {
@@ -74,7 +80,7 @@ export function useFileSystemApi({
       await fileHandle.createWritable();
       setFileHandle(fileHandle);
 
-      const save = JSON.stringify(encodeSave(notes), undefined, 2);
+      const save = JSON.stringify(encodeSave(viewport, notes), undefined, 2);
 
       const writable = await fileHandle.createWritable();
       await writable.write(save);
@@ -98,7 +104,7 @@ export function useFileSystemApi({
     try {
       setIsSaving(true);
 
-      const save = JSON.stringify(encodeSave(notes), undefined, 2);
+      const save = JSON.stringify(encodeSave(viewport, notes), undefined, 2);
 
       const writable = await fileHandle.createWritable();
       await writable.write(save);

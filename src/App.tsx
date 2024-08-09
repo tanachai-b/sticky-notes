@@ -9,18 +9,21 @@ import {
   ToolButton,
   useToast,
 } from "./components";
-import { NoteData } from "./configs";
+import { NoteData, Viewport } from "./configs";
 import { useFileSystemApi } from "./hooks";
 import { sampleNotes } from "./sampleNotes";
 
 export default function App() {
   const { toasts, addToast, clearToasts } = useToast();
 
+  const [viewport, setViewport] = useState<Viewport>({ x: 0, y: 0, zoom: 0 });
   const [notes, setNotes] = useState<NoteData[]>([]);
 
   const { fileName, isSaved, isAllowFileActions, onNew, onOpen, onSaveAs, onNotesChange } =
     useFileSystemApi({
+      viewport,
       notes,
+      setViewport,
       setNotes,
       clearToasts,
     });
@@ -34,7 +37,12 @@ export default function App() {
   return (
     <Container>
       <Board
+        viewport={viewport}
         notes={notes}
+        onViewportChange={(viewport) => {
+          setViewport(viewport);
+          onNotesChange();
+        }}
         onNotesChange={(notes) => {
           setNotes(notes);
           onNotesChange();

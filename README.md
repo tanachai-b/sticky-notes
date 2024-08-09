@@ -55,7 +55,7 @@ To deploy the app, follow these steps :
 2. Ensure clean code by running these commands:
 
    ```
-   knip
+   npx knip
    npm run lint
    ```
 
@@ -63,22 +63,22 @@ To deploy the app, follow these steps :
 
 #### npm-check-updates
 
-| Commands                 | Description                                   |
-| ------------------------ | --------------------------------------------- |
-| `ncu`                    | Check dependencies for latest versions        |
-| `ncu -t semver`          | Same as above but without breaking change     |
-| `ncu -t semver --update` | Same as above but also updates `package.json` |
+| Commands                     | Description                                   |
+| ---------------------------- | --------------------------------------------- |
+| `npx ncu`                    | Check dependencies for latest versions        |
+| `npx ncu -t semver`          | Same as above but without breaking change     |
+| `npx ncu -t semver --update` | Same as above but also updates `package.json` |
 
 ### Clean-up Dependencies
 
 #### knip
 
-| Commands | Description                            |
-| -------- | -------------------------------------- |
-| `knip`   | Find all unused exports / dependencies |
+| Commands   | Description                            |
+| ---------- | -------------------------------------- |
+| `npx knip` | Find all unused exports / dependencies |
 
 #### depcheck
 
-| Commands   | Description                  |
-| ---------- | ---------------------------- |
-| `depcheck` | Find all unused dependencies |
+| Commands       | Description                  |
+| -------------- | ---------------------------- |
+| `npx depcheck` | Find all unused dependencies |

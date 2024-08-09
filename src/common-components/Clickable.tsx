@@ -18,7 +18,7 @@ export function Clickable({
       onPointerUp={(e) => {
         const dx = e.clientX - start.x;
         const dy = e.clientY - start.y;
-        if (Math.abs(dx) === 0 && Math.abs(dy) === 0) onClick(e);
+        if (Math.abs(dx) <= 2 && Math.abs(dy) <= 2) onClick(e);
         console.log("asdf");
       }}
     >

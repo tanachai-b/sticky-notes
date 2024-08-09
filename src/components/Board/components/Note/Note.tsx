@@ -41,7 +41,7 @@ export function Note({
 
   const [previewColor, setPreviewColor] = useState<NoteColor>();
 
-  const { textRef, focusText } = useNoteText({ isEditing });
+  const { textAreaRef, focusTextArea } = useTextArea({ isEditing });
 
   const [isVisible, setIsVisible] = useState(false);
   useEffect(() => setIsVisible(true), []);
@@ -75,7 +75,7 @@ export function Note({
           <Shadings />
 
           <Text
-            ref={textRef}
+            textAreaRef={textAreaRef}
             text={data.text}
             theme={colorTone(previewColor ?? data.color)}
             isEditing={isEditing}
@@ -89,17 +89,17 @@ export function Note({
           onPreviewColor={setPreviewColor}
           onSelectColor={(color) => {
             onChange({ ...data, color });
-            focusText();
+            focusTextArea();
           }}
         />
 
         <Editor isVisible={isVisible && isEditing}>
           <MoveButton
             onDrag={({ dx, dy }) => onChange({ ...data, x: data.x + dx, y: data.y + dy })}
-            onDragStop={focusText}
+            onDragStop={focusTextArea}
           />
 
-          <RotateButton onDragStart={onDragStart} onDrag={onDrag} onDragStop={focusText} />
+          <RotateButton onDragStart={onDragStart} onDrag={onDrag} onDragStop={focusTextArea} />
 
           <DeleteButton
             onClick={() => {
@@ -128,19 +128,22 @@ export function Note({
   }
 }
 
-function useNoteText({ isEditing }: { isEditing: boolean }) {
-  const textRef = useRef<HTMLTextAreaElement>(null);
+function useTextArea({ isEditing }: { isEditing: boolean }) {
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
-    if (isEditing) focusText();
+    if (isEditing) focusTextArea();
   }, [isEditing]);
 
-  function focusText() {
-    if (!textRef.current) return;
+  function focusTextArea() {
+    if (!textAreaRef.current) return;
 
-    textRef.current.focus();
-    textRef.current.setSelectionRange(textRef.current.value.length, textRef.current.value.length);
+    textAreaRef.current.focus();
+    textAreaRef.current.setSelectionRange(
+      textAreaRef.current.value.length,
+      textAreaRef.current.value.length,
+    );
   }
 
-  return { textRef, focusText };
+  return { textAreaRef, focusTextArea };
 }

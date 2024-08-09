@@ -17,7 +17,13 @@ export function Backdrop({
 
   return (
     <Draggable
-      className={cx("absolute", "size-full", "cursor-grab", "active:cursor-grabbing")}
+      className={cx(
+        "absolute",
+        "size-full",
+
+        "cursor-grab",
+        "active:cursor-grabbing",
+      )}
       onDragStart={() => setIsDragging(true)}
       onDrag={onDrag}
       onDragStop={() => setIsDragging(false)}

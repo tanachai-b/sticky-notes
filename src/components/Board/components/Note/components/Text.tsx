@@ -1,22 +1,34 @@
 import cx from "classnames";
-import { ForwardedRef, forwardRef } from "react";
+import { ChangeEventHandler, LegacyRef, ReactNode } from "react";
 
-export { RefText as Text };
-const RefText = forwardRef(Text);
-function Text(
-  {
-    text,
-    theme,
-    isEditing,
-    onChange,
-  }: {
-    text: string;
-    theme: "light" | "dark";
-    isEditing: boolean;
-    onChange: (text: string) => void;
-  },
-  ref: ForwardedRef<HTMLTextAreaElement>,
-) {
+export function Text({
+  textAreaRef,
+  text,
+  theme,
+  isEditing,
+  onChange,
+}: {
+  textAreaRef: LegacyRef<HTMLTextAreaElement>;
+  text: string;
+  theme: "light" | "dark";
+  isEditing: boolean;
+  onChange: (text: string) => void;
+}) {
+  return (
+    <Container theme={theme}>
+      <StaticText text={text} isVisible={!isEditing} />
+
+      <TextArea
+        textAreaRef={textAreaRef}
+        isVisible={isEditing}
+        text={text}
+        onChange={(e) => onChange(e.target.value)}
+      />
+    </Container>
+  );
+}
+
+function Container({ theme, children }: { theme: "light" | "dark"; children: ReactNode }) {
   return (
     <div
       className={cx(
@@ -26,8 +38,6 @@ function Text(
         "flex",
         "items-center",
         "justify-center",
-
-        "overflow-clip",
       )}
     >
       <div
@@ -47,41 +57,59 @@ function Text(
           "relative",
         )}
       >
-        <div
-          className={cx(
-            "p-[10px]",
-
-            "break-words",
-
-            { "opacity-0": isEditing },
-          )}
-        >
-          {text}
-        </div>
-
-        <textarea
-          ref={ref}
-          className={cx(
-            "absolute",
-            "left-0",
-            "top-0",
-
-            "size-full",
-
-            "resize-none",
-            "outline-none",
-            "bg-transparent",
-
-            "p-[10px]",
-            "text-center",
-
-            "overflow-clip",
-          )}
-          hidden={!isEditing}
-          value={text}
-          onChange={(e) => onChange(e.target.value)}
-        />
+        {children}
       </div>
     </div>
+  );
+}
+
+function StaticText({ text, isVisible }: { text: string; isVisible: boolean }) {
+  return (
+    <div
+      className={cx(
+        "p-[10px]",
+
+        "break-words",
+
+        { "opacity-0": !isVisible },
+      )}
+    >
+      {text}
+    </div>
+  );
+}
+
+function TextArea({
+  textAreaRef,
+  text,
+  isVisible,
+  onChange,
+}: {
+  textAreaRef: LegacyRef<HTMLTextAreaElement>;
+  text: string;
+  isVisible: boolean;
+  onChange: ChangeEventHandler<HTMLTextAreaElement>;
+}) {
+  return (
+    <textarea
+      ref={textAreaRef}
+      className={cx(
+        "absolute",
+        "left-0",
+        "top-0",
+
+        "size-full",
+
+        "resize-none",
+        "outline-none",
+        "bg-transparent",
+
+        "p-[10px]",
+        "text-center",
+      )}
+      hidden={!isVisible}
+      value={text}
+      onChange={onChange}
+    />
   );
 }

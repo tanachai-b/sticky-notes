@@ -11,13 +11,13 @@ import {
 } from "./components";
 import { NoteData, Viewport } from "./configs";
 import { useFileSystemApi } from "./hooks";
-import { sampleNotes } from "./sampleNotes";
+import { sampleNotes, sampleViewportData } from "./sampleNotes";
 
 export default function App() {
   const { toasts, addToast, clearToasts } = useToast();
 
-  const [viewport, setViewport] = useState<Viewport>({ x: 0, y: 0, zoom: 0 });
-  const [notes, setNotes] = useState<NoteData[]>([]);
+  const [viewport, setViewport] = useState<Viewport>(sampleViewportData);
+  const [notes, setNotes] = useState<NoteData[]>(sampleNotes);
 
   const { fileName, isSaved, isAllowFileActions, onNew, onOpen, onSaveAs, onNotesChange } =
     useFileSystemApi({
@@ -27,10 +27,6 @@ export default function App() {
       setNotes,
       clearToasts,
     });
-
-  useEffect(() => {
-    if (notes.length === 0) setNotes(sampleNotes);
-  }, []);
 
   usePreventCloseUnsaved(!isSaved);
 

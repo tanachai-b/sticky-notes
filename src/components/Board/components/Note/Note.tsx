@@ -46,6 +46,13 @@ export function Note({
   const [isVisible, setIsVisible] = useState(false);
   useEffect(() => setIsVisible(true), []);
 
+  useEffect(() => {
+    if (!isEditing && data.text.length === 0) {
+      setIsVisible(false);
+      setTimeout(onDelete, 150);
+    }
+  }, [isEditing]);
+
   const { onDragStart, onDrag } = useRotateButton({
     noteRef,
     noteAngle: data.angle,

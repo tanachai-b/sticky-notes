@@ -39,7 +39,10 @@ export default function App() {
       <Board
         viewport={viewport}
         notes={notes}
-        onViewportChange={setViewport}
+        onViewportChange={(viewport) => {
+          setViewport(viewport);
+          onNotesChange();
+        }}
         onNotesChange={(notes) => {
           setNotes(notes);
           onNotesChange();

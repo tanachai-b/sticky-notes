@@ -61,10 +61,10 @@ export function useFileSystemApi({
       const text = await file.text();
 
       const save = JSON.parse(text);
-      const notes = decodeSave(save);
+      const { viewport, notes } = decodeSave(save);
 
       setFileHandle(fileHandle);
-      setViewport({ x: 0, y: 0, zoom: 0 });
+      setViewport(viewport);
       setNotes(notes);
       clearToasts();
     } catch (error) {

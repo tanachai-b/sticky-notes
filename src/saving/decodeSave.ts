@@ -1,4 +1,4 @@
-import { NoteData } from "src/configs";
+import { NoteData, Viewport } from "src/configs";
 import {
   updateTo_v0_11_0,
   updateTo_v0_2_0,
@@ -18,16 +18,15 @@ import {
 } from "./save-version-checkers";
 import { Save_v0_11_0 } from "./save-versions";
 
-export function decodeSave(input: unknown): NoteData[] {
-  const updatedSave = updateSave(input);
+export function decodeSave(input: unknown): { viewport: Viewport; notes: NoteData[] } {
+  const { viewport, notes } = updateSave(input);
 
-  const notes = updatedSave.notes;
   const notesWithKeys = notes.map((note): NoteData => {
     const key = Math.floor(Math.random() * 36 ** 4).toString(36);
     return { ...note, key };
   });
 
-  return notesWithKeys;
+  return { viewport, notes: notesWithKeys };
 }
 
 function updateSave(input: unknown): Save_v0_11_0 {

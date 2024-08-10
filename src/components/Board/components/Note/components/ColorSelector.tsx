@@ -3,11 +3,13 @@ import { colorTone } from "src/common-functions";
 import { NoteColor, noteColors } from "src/configs";
 
 export function ColorSelector({
+  scale,
   isVisible,
   selectedColor,
   onPreviewColor,
   onSelectColor,
 }: {
+  scale: number;
   isVisible: boolean;
   selectedColor: NoteColor;
   onPreviewColor: (colorIndex?: NoteColor) => void;
@@ -16,9 +18,10 @@ export function ColorSelector({
   return (
     <div
       className={cx(
+        "visible",
+
         "absolute",
         "place-self-center",
-        "left-[calc(100%_+_10px)]",
 
         !isVisible ? ["invisible", "pointer-events-none", "opacity-0"] : "",
         "transition-all",
@@ -34,6 +37,7 @@ export function ColorSelector({
         "p-[10px]",
         "gap-[10px]",
       )}
+      style={{ left: `calc(${50 + 50 * scale}% + 10px)` }}
     >
       {noteColors.map((color, index) => (
         <Color

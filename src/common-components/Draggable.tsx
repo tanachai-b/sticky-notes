@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useRef, useState } from "react";
+import { CSSProperties, ReactNode, useEffect, useRef, useState } from "react";
 
 type Coordinates = {
   x: number;
@@ -11,12 +11,14 @@ type Coordinates = {
 
 export function Draggable({
   className,
+  style,
   onDragStart,
   onDrag,
   onDragStop,
   children,
 }: {
   className?: string;
+  style?: CSSProperties;
   onDragStart?: ({ x, y, dx, dy, mx, my }: Coordinates) => void;
   onDrag: ({ x, y, dx, dy, mx, my }: Coordinates) => void;
   onDragStop?: ({ x, y, dx, dy, mx, my }: Coordinates) => void;
@@ -80,7 +82,7 @@ export function Draggable({
   }
 
   return (
-    <div ref={ref} className={className} onPointerDown={onPointerDown}>
+    <div ref={ref} className={className} style={style} onPointerDown={onPointerDown}>
       {children}
     </div>
   );

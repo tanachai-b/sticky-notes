@@ -90,7 +90,7 @@ export function useFileSystemApi({
     }
   }
 
-  function onNotesChange() {
+  function stampChangeTime() {
     setIsSaved(false);
     setLastChangeTime(Date.now());
   }
@@ -125,6 +125,6 @@ export function useFileSystemApi({
     onNew,
     onOpen,
     onSaveAs,
-    onNotesChange,
+    stampChangeTime,
   };
 }

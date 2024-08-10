@@ -4,6 +4,7 @@ import { Clickable, Draggable } from "src/common-components";
 import { NoteColor } from "src/configs";
 
 export function Paper({
+  scale,
   isVisible,
   isEditing,
   color,
@@ -12,6 +13,7 @@ export function Paper({
   onMove,
   onClick,
 }: {
+  scale: number;
   isVisible: boolean;
   isEditing: boolean;
   color: NoteColor;
@@ -28,6 +30,8 @@ export function Paper({
 
   return (
     <Draggable
+      className={cx("visible")}
+      style={{ scale: `${scale}` }}
       onDragStart={() => {
         onPointerDown();
         setIsDragging(true);

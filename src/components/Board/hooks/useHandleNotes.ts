@@ -6,7 +6,6 @@ import { useNewColor } from "./useNewColor";
 export function useHandleNotes({
   viewport,
   notes,
-  boardSize,
   onViewportChange,
   onNotesChange,
   addToast,
@@ -14,7 +13,6 @@ export function useHandleNotes({
 }: {
   viewport: Viewport;
   notes: NoteData[];
-  boardSize: { width: number; height: number };
   onViewportChange: (viewport: Viewport) => void;
   onNotesChange: (notes: NoteData[]) => void;
   addToast: (toast: ToastData) => void;
@@ -76,8 +74,8 @@ export function useHandleNotes({
       key: Math.floor(Math.random() * 36 ** 4).toString(36),
       text: "",
       color: getNewColor(),
-      x: x + viewport.x - boardSize.width / 2,
-      y: y + viewport.y - boardSize.height / 2,
+      x: viewport.x + x,
+      y: viewport.y + y,
       z: frontZ + 1,
       angle: Math.floor((10 * Math.random() - 10 / 2) * 10) / 10,
     };

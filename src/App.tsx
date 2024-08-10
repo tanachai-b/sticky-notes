@@ -19,7 +19,7 @@ export default function App() {
   const [viewport, setViewport] = useState<Viewport>(sampleViewportData);
   const [notes, setNotes] = useState<NoteData[]>(sampleNotes);
 
-  const { fileName, isSaved, isAllowFileActions, onNew, onOpen, onSaveAs, onNotesChange } =
+  const { fileName, isSaved, isAllowFileActions, onNew, onOpen, onSaveAs, stampChangeTime } =
     useFileSystemApi({
       viewport,
       notes,
@@ -30,19 +30,33 @@ export default function App() {
 
   usePreventCloseUnsaved(!isSaved);
 
+  const onViewportChange = ({ x, y, zoom }: Viewport) => {
+    const roundedViewport = {
+      x: Math.round(x),
+      y: Math.round(y),
+      zoom: Math.round(zoom * 2) / 2,
+    };
+    setViewport(roundedViewport);
+    stampChangeTime();
+  };
+
+  const onNotesChange = (notes: NoteData[]) => {
+    const roundedNotes = notes.map(({ x, y, ...rest }) => ({
+      ...rest,
+      x: Math.round(x),
+      y: Math.round(y),
+    }));
+    setNotes(roundedNotes);
+    stampChangeTime();
+  };
+
   return (
     <Container>
       <Board
         viewport={viewport}
         notes={notes}
-        onViewportChange={(viewport) => {
-          setViewport(viewport);
-          onNotesChange();
-        }}
-        onNotesChange={(notes) => {
-          setNotes(notes);
-          onNotesChange();
-        }}
+        onViewportChange={onViewportChange}
+        onNotesChange={onNotesChange}
         addToast={addToast}
       />
 

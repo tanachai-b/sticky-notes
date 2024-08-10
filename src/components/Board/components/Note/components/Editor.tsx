@@ -1,13 +1,22 @@
 import cx from "classnames";
 import { ReactNode } from "react";
 
-export function Editor({ isVisible, children }: { isVisible: boolean; children: ReactNode }) {
+export function Editor({
+  scale,
+  isVisible,
+  children,
+}: {
+  scale: number;
+  isVisible: boolean;
+  children: ReactNode;
+}) {
   return (
     <div
       className={cx(
+        "visible",
+
         "absolute",
         "place-self-center",
-        "top-[calc(100%_+_10px)]",
 
         !isVisible ? ["invisible", "pointer-events-none", "opacity-0"] : "",
         "transition-all",
@@ -23,6 +32,7 @@ export function Editor({ isVisible, children }: { isVisible: boolean; children: 
         "p-[10px]",
         "gap-[10px]",
       )}
+      style={{ top: `calc(${50 + 50 * scale}% + 10px)` }}
     >
       {children}
     </div>

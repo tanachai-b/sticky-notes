@@ -5,7 +5,7 @@ export function Resizable({
   onResize,
   children,
 }: {
-  className: string;
+  className?: string;
   onResize: (boundingClientRect: DOMRect) => void;
   children: ReactNode;
 }) {

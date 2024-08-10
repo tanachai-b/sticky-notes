@@ -35,6 +35,8 @@ export function Note({
   onChange: (noteData: NoteData) => void;
   onDelete: () => void;
 }) {
+  const scale = 2 ** viewport.zoom;
+
   const noteRef = useRef<HTMLDivElement>(null);
 
   const { inScreenX, inScreenY, isInScreen } = inScreenXY();
@@ -62,20 +64,21 @@ export function Note({
   return (
     <div
       ref={noteRef}
-      className={cx("absolute")}
+      className={cx("absolute", "invisible")}
       style={{
-        left: inScreenX + (boardSize.width - 250) / 2,
-        top: inScreenY + (boardSize.height - 250) / 2,
+        left: boardSize.width / 2 + inScreenX + -250 / 2,
+        top: boardSize.height / 2 + inScreenY + -250 / 2,
       }}
     >
       <div className={cx("relative", "grid")} style={{ transform: `rotate(${data.angle}deg)` }}>
         <Paper
+          scale={scale}
           isVisible={isVisible}
           isEditing={isEditing}
           color={previewColor ?? data.color}
           onPointerDown={isInScreen ? onBringToFront : () => {}}
           onMove={({ dx, dy }) =>
-            isInScreen && onChange({ ...data, x: data.x + dx, y: data.y + dy })
+            isInScreen && onChange({ ...data, x: data.x + dx / scale, y: data.y + dy / scale })
           }
           onClick={isInScreen ? onStartEditing : onPanTo}
         >
@@ -91,6 +94,7 @@ export function Note({
         </Paper>
 
         <ColorSelector
+          scale={scale}
           isVisible={isVisible && isEditing}
           selectedColor={data.color}
           onPreviewColor={setPreviewColor}
@@ -100,9 +104,11 @@ export function Note({
           }}
         />
 
-        <Editor isVisible={isVisible && isEditing}>
+        <Editor scale={scale} isVisible={isVisible && isEditing}>
           <MoveButton
-            onDrag={({ dx, dy }) => onChange({ ...data, x: data.x + dx, y: data.y + dy })}
+            onDrag={({ dx, dy }) =>
+              onChange({ ...data, x: data.x + dx / scale, y: data.y + dy / scale })
+            }
             onDragStop={focusTextArea}
           />
 
@@ -122,14 +128,17 @@ export function Note({
   function inScreenXY() {
     const peek = 20;
 
-    const minX = -(boardSize.width + 250) / 2 + peek;
-    const minY = -(boardSize.height + 250) / 2 + peek;
-    const maxX = (boardSize.width + 250) / 2 - peek;
-    const maxY = (boardSize.height + 250) / 2 - peek;
+    const x = (data.x - viewport.x) * scale;
+    const y = (data.y - viewport.y) * scale;
 
-    const inScreenX = Math.min(Math.max(data.x - viewport.x, minX), maxX);
-    const inScreenY = Math.min(Math.max(data.y - viewport.y, minY), maxY);
-    const isInScreen = data.x - viewport.x === inScreenX && data.y - viewport.y === inScreenY;
+    const minX = -boardSize.width / 2 + (-250 / 2 + peek) * scale;
+    const minY = -boardSize.height / 2 + (-250 / 2 + peek) * scale;
+    const maxX = boardSize.width / 2 + (250 / 2 - peek) * scale;
+    const maxY = boardSize.height / 2 + (250 / 2 - peek) * scale;
+
+    const inScreenX = Math.min(Math.max(x, minX), maxX);
+    const inScreenY = Math.min(Math.max(y, minY), maxY);
+    const isInScreen = x === inScreenX && y === inScreenY;
 
     return { inScreenX, inScreenY, isInScreen };
   }

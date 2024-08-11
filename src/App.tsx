@@ -100,13 +100,11 @@ function Container({ children }: { children: ReactNode }) {
         "size-full",
         "bg-[#202020]",
 
-        "grid",
-
+        "overflow-clip",
         "select-none",
         "touch-none",
 
-        "overflow-clip",
-
+        "grid",
         "relative",
       )}
       onContextMenu={(e) => e.preventDefault()}

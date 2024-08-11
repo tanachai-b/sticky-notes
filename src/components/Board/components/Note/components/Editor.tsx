@@ -18,7 +18,7 @@ export function Editor({
         "absolute",
         "place-self-center",
 
-        !isVisible ? ["invisible", "pointer-events-none", "opacity-0"] : "",
+        !isVisible ? ["invisible", "opacity-0"] : "",
         "transition-all",
 
         "rounded-[10px]",

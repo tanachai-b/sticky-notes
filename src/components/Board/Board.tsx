@@ -1,6 +1,6 @@
-import cx from "classnames";
+import { default as cx } from "classnames";
 import { useState } from "react";
-import { Resizable } from "src/common-components";
+import { Resizable, Zoomable } from "src/common-components";
 import { NoteData, Viewport } from "src/configs";
 import { ToastData } from "../Toasts";
 import { Backdrop, Note } from "./components";
@@ -36,11 +36,12 @@ export function Board({
 
   return (
     <Resizable onResize={setBoardSize}>
-      <div
+      <Zoomable
         className={cx("size-full", "relative")}
-        onWheel={({ deltaY }) => {
+        zoom={viewport.zoom}
+        onZoom={(zoom) => {
           setEditingNote(undefined);
-          onViewportChange({ ...viewport, zoom: viewport.zoom - deltaY / 100 / 2 });
+          onViewportChange({ ...viewport, zoom });
         }}
       >
         <Backdrop
@@ -81,7 +82,7 @@ export function Board({
               onDelete={() => deleteNote(key)}
             />
           ))}
-      </div>
+      </Zoomable>
     </Resizable>
   );
 }

@@ -34,7 +34,7 @@ export default function App() {
     const roundedViewport = {
       x: Math.round(x),
       y: Math.round(y),
-      zoom: Math.round(zoom * 2) / 2,
+      zoom: Math.round(zoom * 100) / 100,
     };
     setViewport(roundedViewport);
     stampChangeTime();

@@ -32,7 +32,9 @@ export function Editor({
         "p-[10px]",
         "gap-[10px]",
       )}
-      style={{ top: `calc(${50 + 50 * scale}% + 10px)` }}
+      style={{
+        top: `calc(${50 + 50 * scale}% + ${isVisible ? 10 : 50}px)`,
+      }}
     >
       {children}
     </div>

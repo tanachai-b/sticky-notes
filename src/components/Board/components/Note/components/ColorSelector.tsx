@@ -37,7 +37,9 @@ export function ColorSelector({
         "p-[10px]",
         "gap-[10px]",
       )}
-      style={{ left: `calc(${50 + 50 * scale}% + 10px)` }}
+      style={{
+        left: `calc(${50 + 50 * scale}% + ${isVisible ? 10 : 50}px)`,
+      }}
     >
       {noteColors.map((color, index) => (
         <Color

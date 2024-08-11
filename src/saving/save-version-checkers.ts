@@ -1,5 +1,6 @@
 import {
   Save_v0_11_0,
+  Save_v0_13_0,
   Save_v0_1_0,
   Save_v0_2_0,
   Save_v0_3_0,
@@ -61,4 +62,8 @@ export function isSave_v0_9_0(input: unknown): input is Save_v0_9_0 {
 
 export function isSave_v0_11_0(input: unknown): input is Save_v0_11_0 {
   return isLikeSave_v0_3_0(input) && input.saveApi === "0.11.0";
+}
+
+export function isSave_v0_13_0(input: unknown): input is Save_v0_13_0 {
+  return isLikeSave_v0_3_0(input) && input.saveApi === "0.13.0";
 }

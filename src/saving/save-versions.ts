@@ -93,3 +93,22 @@ export type Save_v0_11_0 = {
     angle: number;
   }[];
 };
+
+export type Save_v0_13_0 = {
+  app: "sticky-notes";
+  saveApi: "0.13.0";
+  viewport: {
+    x: number;
+    y: number;
+    zoom: number;
+  };
+  notes: {
+    x: number;
+    y: number;
+    z: number;
+    angle: number;
+    color: NoteColor_v0_9_0;
+    text: string;
+    strikethrough: boolean;
+  }[];
+};

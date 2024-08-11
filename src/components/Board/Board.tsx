@@ -38,9 +38,10 @@ export function Board({
     <Resizable onResize={setBoardSize}>
       <div
         className={cx("size-full", "relative")}
-        onWheel={({ deltaY }) =>
-          onViewportChange({ ...viewport, zoom: viewport.zoom - deltaY / 100 / 2 })
-        }
+        onWheel={({ deltaY }) => {
+          setEditingNote(undefined);
+          onViewportChange({ ...viewport, zoom: viewport.zoom - deltaY / 100 / 2 });
+        }}
       >
         <Backdrop
           onDrag={({ dx, dy }) => {
@@ -70,8 +71,10 @@ export function Board({
                 panToNote(key);
               }}
               onBringToFront={() => {
-                if (key !== editingNote) setEditingNote(undefined);
-                bringNoteToFront(key);
+                if (key !== editingNote) {
+                  setEditingNote(undefined);
+                  bringNoteToFront(key);
+                }
               }}
               onStartEditing={() => setEditingNote(key)}
               onChange={(noteData) => editNote(key, noteData)}

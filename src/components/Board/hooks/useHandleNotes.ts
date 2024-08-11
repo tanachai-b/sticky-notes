@@ -6,6 +6,7 @@ import { useNewColor } from "./useNewColor";
 export function useHandleNotes({
   viewport,
   notes,
+  editingNote,
   onViewportChange,
   onNotesChange,
   addToast,
@@ -13,6 +14,7 @@ export function useHandleNotes({
 }: {
   viewport: Viewport;
   notes: NoteData[];
+  editingNote?: string;
   onViewportChange: (viewport: Viewport) => void;
   onNotesChange: (notes: NoteData[]) => void;
   addToast: (toast: ToastData) => void;
@@ -92,7 +94,8 @@ export function useHandleNotes({
   function deleteNote(key: string) {
     const updatedNotes = notes.filter((note) => note.key !== key);
     onNotesChange(updatedNotes);
-    setEditingNote(undefined);
+
+    if (editingNote === key) setEditingNote(undefined);
 
     const deletedNote = notes.find((note) => note.key === key);
 

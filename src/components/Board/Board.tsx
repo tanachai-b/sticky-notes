@@ -27,6 +27,7 @@ export function Board({
   const { panToNote, bringNoteToFront, addNote, editNote, deleteNote } = useHandleNotes({
     viewport,
     notes,
+    editingNote,
     onViewportChange,
     onNotesChange,
     addToast,

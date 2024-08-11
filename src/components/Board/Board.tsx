@@ -1,4 +1,4 @@
-import { default as cx } from "classnames";
+import cx from "classnames";
 import { useState } from "react";
 import { Resizable, Zoomable } from "src/common-components";
 import { NoteData, Viewport } from "src/data-types";

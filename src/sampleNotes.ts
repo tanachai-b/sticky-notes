@@ -14,7 +14,7 @@ export const sampleNotes: NoteData[] = [
     z: -2,
     angle: -1.4,
     color: "#ffe080",
-    text: "Buy\neggs, pork, pancake mix",
+    text: "Buy\neggs, pork, vegetables",
     strikethrough: false,
   },
   {
@@ -24,7 +24,7 @@ export const sampleNotes: NoteData[] = [
     z: 0,
     angle: -0.3,
     color: "#80c0ff",
-    text: "call Fred\n123-456-7809",
+    text: "call Fred\n123-456-7890",
     strikethrough: false,
   },
   {

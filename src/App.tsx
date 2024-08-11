@@ -3,6 +3,7 @@ import { ReactNode, useEffect, useState } from "react";
 import {
   Board,
   Copyright,
+  EmptyNotePlaceholder,
   FileSaveStatus,
   Toasts,
   ToolBar,
@@ -59,6 +60,8 @@ export default function App() {
         onNotesChange={onNotesChange}
         addToast={addToast}
       />
+
+      <EmptyNotePlaceholder isVisible={notes.length === 0} />
 
       <ToolBar>
         <ToolButton icon="draft" tooltip="New" isEnabled={isAllowFileActions} onClick={onNew} />

@@ -60,6 +60,7 @@ export function MoveButton({
 
           "text-[13px]",
           "text-[#ffffffc0]",
+          "whitespace-pre",
 
           "opacity-0",
           "group-hover:opacity-100",
@@ -68,7 +69,7 @@ export function MoveButton({
           "pointer-events-none",
         )}
       >
-        Move
+        Drag to Move
       </div>
     </Draggable>
   );

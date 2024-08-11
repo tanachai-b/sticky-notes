@@ -65,6 +65,7 @@ export function RotateButton({
 
           "text-[13px]",
           "text-[#ffffffc0]",
+          "whitespace-pre",
 
           "opacity-0",
           "group-hover:opacity-100",
@@ -73,7 +74,7 @@ export function RotateButton({
           "pointer-events-none",
         )}
       >
-        Rotate
+        Drag to Rotate
       </div>
     </Draggable>
   );

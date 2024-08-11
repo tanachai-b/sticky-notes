@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { NoteColor, noteColors } from "src/configs";
+import { NoteColor, noteColors } from "src/data-types";
 
 export function useNewColor() {
   const [latestColors, setLatestColors] = useState<NoteColor[]>([]);

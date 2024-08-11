@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useTrigger } from "src/common-hooks";
-import { NoteData, Viewport } from "src/configs";
+import { NoteData, Viewport } from "src/data-types";
 import { decodeSave, encodeSave } from "src/saving";
 
 export function useFileSystemApi({

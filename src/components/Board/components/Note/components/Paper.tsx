@@ -1,7 +1,7 @@
 import cx from "classnames";
 import { ReactNode, useEffect, useState } from "react";
 import { Clickable, Draggable } from "src/common-components";
-import { NoteColor } from "src/configs";
+import { NoteColor } from "src/data-types";
 
 export function Paper({
   scale,

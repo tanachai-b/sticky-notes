@@ -1,7 +1,7 @@
 import { default as cx } from "classnames";
 import { useState } from "react";
 import { Resizable, Zoomable } from "src/common-components";
-import { NoteData, Viewport } from "src/configs";
+import { NoteData, Viewport } from "src/data-types";
 import { ToastData } from "../Toasts";
 import { Backdrop, Note } from "./components";
 import { useHandleNotes } from "./hooks";

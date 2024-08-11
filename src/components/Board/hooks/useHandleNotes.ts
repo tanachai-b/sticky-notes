@@ -1,6 +1,6 @@
 import { useTrigger } from "src/common-hooks";
 import { ToastData } from "src/components";
-import { NoteData, Viewport } from "src/configs";
+import { NoteData, Viewport } from "src/data-types";
 import { useNewColor } from "./useNewColor";
 
 export function useHandleNotes({

@@ -1,4 +1,4 @@
-import { NoteData, Viewport } from "src/configs";
+import { NoteData, Viewport } from "src/data-types";
 import { Save_v0_13_0 } from "./save-versions";
 
 export function encodeSave(viewport: Viewport, notes: NoteData[]): Save_v0_13_0 {

@@ -1,4 +1,4 @@
-import { NoteColor, noteColors } from "src/configs";
+import { NoteColor, noteColors } from "src/data-types";
 
 export type NoteColor_v0_4_0 = (typeof noteColor_v0_4_0)[number];
 export const noteColor_v0_4_0 = [

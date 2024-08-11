@@ -1,6 +1,6 @@
 import cx from "classnames";
 import { colorTone } from "src/common-functions";
-import { NoteColor, noteColors } from "src/configs";
+import { NoteColor, noteColors } from "src/data-types";
 
 export function ColorSelector({
   scale,

@@ -1,4 +1,4 @@
-import { NoteData, Viewport } from "./configs";
+import { NoteData, Viewport } from "./data-types";
 
 export const sampleViewportData: Viewport = {
   x: 0,

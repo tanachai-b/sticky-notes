@@ -1,7 +1,7 @@
 import cx from "classnames";
 import { useEffect, useRef, useState } from "react";
 import { colorTone } from "src/common-functions";
-import { NoteColor, NoteData, Viewport } from "src/configs";
+import { NoteColor, NoteData, Viewport } from "src/data-types";
 import {
   ColorSelector,
   DeleteButton,

@@ -1,4 +1,4 @@
-import { NoteData, Viewport } from "src/configs";
+import { NoteData, Viewport } from "src/data-types";
 import {
   updateTo_v0_11_0,
   updateTo_v0_13_0,

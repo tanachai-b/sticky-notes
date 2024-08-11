@@ -9,9 +9,9 @@ import {
   ToolButton,
   useToast,
 } from "./components";
-import { NoteData, Viewport } from "./configs";
+import { NoteData, Viewport } from "./data-types";
 import { useFileSystemApi } from "./hooks";
-import { sampleNotes, sampleViewportData } from "./sampleNotes";
+import { sampleNotes, sampleViewportData } from "./sample-data";
 
 export default function App() {
   const { toasts, addToast, clearToasts } = useToast();

@@ -1,0 +1,34 @@
+{
+  "name": "Sticky Notes",
+  "short_name": "Sticky Notes",
+  "icons": [
+    {
+      "src": "/page-icon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any",
+      "purpose": "any"
+    }
+  ],
+
+  "start_url": "/",
+  "id": "/",
+  "display": "standalone",
+  "theme_color": "#202020",
+  "background_color": "#202020",
+
+  "description": "Realistic sticky notes. No more small texts, scrolling, and resizable papers!",
+  "screenshots": [
+    {
+      "src": "/meta-image.png",
+      "type": "image/png",
+      "sizes": "1200x628",
+      "form_factor": "wide"
+    },
+    {
+      "src": "/meta-image.png",
+      "type": "image/png",
+      "sizes": "1200x628",
+      "form_factor": "narrow"
+    }
+  ]
+}

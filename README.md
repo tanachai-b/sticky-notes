@@ -34,7 +34,7 @@ npm run dev
 
 ## Deploy
 
-To deploy the app, follow these steps :
+To deploy the app, follow these steps:
 
 1.  Update version in `package.json`
 2.  Run these commands:
@@ -61,6 +61,12 @@ To deploy the app, follow these steps :
 
 ### Update Dependencies
 
+Run this command:
+
+```
+npm update --save
+```
+
 #### npm-check-updates
 
 | Commands                     | Description                                   |
@@ -68,6 +74,8 @@ To deploy the app, follow these steps :
 | `npx ncu`                    | Check dependencies for latest versions        |
 | `npx ncu -t semver`          | Same as above but without breaking change     |
 | `npx ncu -t semver --update` | Same as above but also updates `package.json` |
+
+> **Notes:** You need to run `npm i` afterwards
 
 ### Clean-up Dependencies
 

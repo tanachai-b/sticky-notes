@@ -2,9 +2,9 @@ import cx from "classnames";
 import { ReactNode, useEffect, useState } from "react";
 import {
   Board,
-  Copyright,
   EmptyNotePlaceholder,
   FileSaveStatus,
+  TBunLogo,
   Toasts,
   ToolBar,
   ToolButton,
@@ -63,6 +63,8 @@ export default function App() {
 
       <EmptyNotePlaceholder isVisible={notes.length === 0} />
 
+      <TBunLogo />
+
       <ToolBar>
         <ToolButton icon="draft" tooltip="New" isEnabled={isAllowFileActions} onClick={onNew} />
 
@@ -82,8 +84,6 @@ export default function App() {
       </ToolBar>
 
       <FileSaveStatus fileName={fileName} isSaving={!isSaved} />
-
-      <Copyright />
 
       <Toasts toasts={toasts} />
     </Container>
